@@ -1,0 +1,28 @@
+.input {
+  @media (max-width: 767px) {
+    font-size: 20px;
+  }
+
+  outline: none;
+  width: 100%;
+  flex: 1 1 100%;
+
+  border: 1px solid #c0c0c0;
+  background: none;
+  border-radius: 4px;
+
+  box-sizing: border-box;
+
+  font-size: 24px;
+  font-weight: 400;
+  color: #737373;
+  padding: 7px 5px;
+
+  &:not(:last-child) {
+    margin-top: 10px;
+  }
+
+  &::placeholder {
+    color: #a0a0a0
+  }
+}

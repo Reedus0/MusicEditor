@@ -1,0 +1,50 @@
+.button {
+  box-shadow: 0px 0px 1px 1px rgb(0, 0, 0, 0.05);
+
+  &._visible {
+    display: block;
+  }
+
+  &._hidden {
+    display: none;
+  }
+
+  &:disabled {
+    cursor: default;
+    color: #acacac;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 20px;
+    flex: 1 1 100%;
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+
+  @media (min-width: 767px) {
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+  outline: none;
+  transition: all 0.1s ease 0s;
+  position: relative;
+
+  flex: auto;
+  width: 100%;
+
+  color: #737373;
+  font-size: 24px;
+  background: #ffffff;
+  border: none;
+
+  padding: 10px 0;
+
+
+}

@@ -1,0 +1,23 @@
+@font-face {
+  font-family: "WenHei";
+  src: url("../fonts/zh-cn.woff2") format("woff2"),
+}
+
+body {
+  &._menu {
+    overflow: hidden;
+  }
+}
+
+* {
+  font-family: "WenHei";
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 15px;
+  max-width: calc(100vw - 30px);
+}
