@@ -2,9 +2,12 @@
     margin-top: 10px;
     display: flex;
 
+    flex-wrap: wrap;
+
     &__tact {
         position: relative;
-        width: 25vw;
+        width: 25%;
+        margin-bottom: 30px;
 
     }
 
@@ -27,7 +30,34 @@
 
         border-radius: 50%;
 
-        
+        &._half {
+            &::after {
+
+                content: '';
+
+                display: block;
+
+                position: absolute;
+                bottom: 0px;
+                right: -4px;
+
+                width: 4px;
+                height: 4px;
+                background: black;
+
+                border-radius: 50%;
+            }
+        }
+
+
+    }
+
+    &__note-flat,
+    &__note-sharp {
+        position: absolute;
+
+        left: -15px;
+        top: -3px;
     }
 
     &__note-line {
