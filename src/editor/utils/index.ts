@@ -9,7 +9,8 @@ export const CMajorMap: any = {
     '1': '17',
     '1.5': '19',
     '2': '20',
-    '2.5': '22'
+    '2.5': '22',
+    '3': '24'
 }
 
 export const CMinorMap: any = {
@@ -22,7 +23,8 @@ export const CMinorMap: any = {
     '1': '16',
     '1.5': '18',
     '2': '20',
-    '2.5': '22'
+    '2.5': '22',
+    '3': '23'
 }
 
 export enum keys {
