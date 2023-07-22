@@ -52,11 +52,6 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, isAdding, isDeleting }) => 
             const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
             const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
 
-            console.log(noteBottom, noteLeft)
-
-            console.log(noteBottom / 12, noteLeft / 5.625)
-
-
             song['tacts'][tactNotes.id[tactNotes.id.length - 1]]['notes'] = song['tacts'][tactNotes.id[tactNotes.id.length - 1]]['notes'].filter((note: Note) => !(note['verticalPosition'] === noteBottom / 12 && note['horizontalPosition'] === noteLeft / 5.625))
             forceUpdate()
             return
