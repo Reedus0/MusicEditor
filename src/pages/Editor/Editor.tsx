@@ -17,65 +17,13 @@ const Editor: FC<EditorProps> = ({ }) => {
     const [isAdding, setIsAdding] = useState<boolean>(false)
     const [isDeleting, setIsDeleting] = useState<boolean>(false)
 
-    const tacts: Tact[] = [new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]),]
+    const tacts: Tact[] = [new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([])]
 
-    const [song, setSong] = useState<Song>(new Song(tacts, 80, keys.Cm))
+    const [song, setSong] = useState<Song>(new Song(tacts, 80, keys.D))
 
     const incrementTact = useRef(null)
     const incrementNotes = useRef(null)
 
-
-    // const tacts: Tact[] = [new Tact([new Note(0, -1.5, 4), new Note(8, -1, 4), new Note(16, -0.5, 4), new Note(24, 0, 4), new Note(32, 0.5, 4), new Note(40, 1, 4), new Note(48, 1.5, 4), new Note(56, 2, 4)])]
-
-    // const tacts: Tact[] = [new Tact([
-    //     new Note(0, -1.5, 4, noteHalf.NONE), new Note(0, -0.5, 4, noteHalf.FLAT), new Note(0, 0.5, 4, noteHalf.NONE),
-    //     new Note(16, -1.5, 4, noteHalf.NONE), new Note(16, -0.5, 4, noteHalf.NONE), new Note(16, 0.5, 4, noteHalf.NONE), new Note(16, 1.5, 4, noteHalf.FLAT),
-    //     new Note(32, 0, 4, noteHalf.NONE), new Note(32, 1, 4, noteHalf.FLAT), new Note(32, 2, 4, noteHalf.NONE)
-    // ]),
-    // new Tact([
-    //     new Note(0, -1.5, 4, noteHalf.NONE), new Note(0, -0.5, 4, noteHalf.FLAT), new Note(0, 0.5, 4, noteHalf.NONE),
-    //     new Note(16, -1.5, 4, noteHalf.NONE), new Note(16, -0.5, 4, noteHalf.NONE), new Note(16, 0.5, 4, noteHalf.NONE), new Note(16, 1.5, 4, noteHalf.FLAT),
-    //     new Note(32, 0, 4, noteHalf.NONE), new Note(32, 1, 4, noteHalf.FLAT), new Note(32, 2, 4, noteHalf.NONE)
-    // ]),
-    // new Tact([
-    //     new Note(0, -1.5, 4, noteHalf.NONE), new Note(0, -0.5, 4, noteHalf.FLAT), new Note(0, 0.5, 4, noteHalf.NONE),
-    //     new Note(16, -1.5, 4, noteHalf.NONE), new Note(16, -0.5, 4, noteHalf.NONE), new Note(16, 0.5, 4, noteHalf.NONE), new Note(16, 1.5, 4, noteHalf.FLAT),
-    //     new Note(32, 0, 4, noteHalf.NONE), new Note(32, 1, 4, noteHalf.FLAT), new Note(32, 2, 4, noteHalf.NONE)
-    // ]),
-    // new Tact([
-    //     new Note(0, -1.5, 4, noteHalf.NONE), new Note(0, -0.5, 4, noteHalf.FLAT), new Note(0, 0.5, 4, noteHalf.NONE),
-    //     new Note(16, -1.5, 4, noteHalf.NONE), new Note(16, -0.5, 4, noteHalf.NONE), new Note(16, 0.5, 4, noteHalf.NONE), new Note(16, 1.5, 4, noteHalf.FLAT),
-    //     new Note(32, 0, 4, noteHalf.NONE), new Note(32, 1, 4, noteHalf.FLAT), new Note(32, 2, 4, noteHalf.NONE)
-    // ]),
-    // new Tact([
-    //     new Note(0, -1.5, 4, noteHalf.NONE), new Note(0, -0.5, 4, noteHalf.FLAT), new Note(0, 0.5, 4, noteHalf.NONE),
-    //     new Note(16, -1.5, 4, noteHalf.NONE), new Note(16, -0.5, 4, noteHalf.NONE), new Note(16, 0.5, 4, noteHalf.NONE), new Note(16, 1.5, 4, noteHalf.FLAT),
-    //     new Note(32, 0, 4, noteHalf.NONE), new Note(32, 1, 4, noteHalf.FLAT), new Note(32, 2, 4, noteHalf.NONE)
-    // ])]
-
-    // const tacts: Tact[] = [
-    //     new Tact([
-    //         new Note(0, -1.5, 4, noteHalf.NONE), new Note(0, -0.5, 4, noteHalf.NONE), new Note(0, 0.5, 4, noteHalf.NONE),
-    //         new Note(16, -1.5, 4, noteHalf.NONE), new Note(16, -0.5, 4, noteHalf.NONE), new Note(16, 0.5, 4, noteHalf.NONE), new Note(16, 1.5, 4, noteHalf.NONE),
-    //         new Note(32, 0, 4, noteHalf.NONE), new Note(32, 1, 4, noteHalf.NONE), new Note(32, 2, 4, noteHalf.NONE),
-    //         new Note(48, -0.5, 4, noteHalf.NONE), new Note(48, 0.5, 4, noteHalf.NONE), new Note(48, 1.5, 4, noteHalf.NONE),
-    //     ]),
-    //     new Tact([
-    //         new Note(0, -1, 4, noteHalf.NONE), new Note(0, 0, 4, noteHalf.NONE), new Note(0, 1, 4, noteHalf.NONE),
-    //         new Note(16, -1.5, 4, noteHalf.NONE), new Note(16, -0.5, 4, noteHalf.NONE), new Note(16, 0.5, 4, noteHalf.NONE),
-    //         new Note(32, -2, 4, noteHalf.NONE), new Note(32, -1, 4, noteHalf.NONE), new Note(32, 0, 4, noteHalf.NONE),
-    //         new Note(48, -1, 4, noteHalf.NONE), new Note(48, 0.5, 4, noteHalf.NONE), new Note(48, 1.5, 4, noteHalf.SHARP),
-    //     ]),
-    //     new Tact([
-    //         new Note(0, -0.5, 4, noteHalf.SHARP), new Note(0, 0.5, 4, noteHalf.NONE), new Note(0, 2, 4, noteHalf.NONE),
-    //     ]),
-    //     new Tact([
-
-    //     ]),
-    //     new Tact([
-
-    //     ]),
-    // ]
 
 
 
@@ -104,12 +52,7 @@ const Editor: FC<EditorProps> = ({ }) => {
         const currentNotes = song['tacts'][position]['notes'].filter((note: Note) => note['horizontalPosition'] === iterratorNote)
         if (currentNotes.length) {
             for (let i = 0; i < currentNotes.length; i++) {
-                const noteNumber: number = currentNotes[i]['half'] === noteHalf.FLAT ? (Number((song['key'] as any)[currentNotes[i]['verticalPosition']]) - 1)
-                    :
-                    currentNotes[i]['half'] === noteHalf.SHARP ? (Number((song['key'] as any)[currentNotes[i]['verticalPosition']]) + 1)
-                        :
-                        Number((song['key'] as any)[currentNotes[i]['verticalPosition']]);
-                (new Audio(require(`./../../editor/piano/key${noteNumber.toString()}.ogg`))).play()
+                (new Audio(require(`./../../editor/piano/${currentNotes[i]['sound']}.mp3`))).play()
             }
         }
         iterratorNote += 1
@@ -138,7 +81,7 @@ const Editor: FC<EditorProps> = ({ }) => {
             <button onClick={() => setIsPlaying(!isPlaying)} >Play/Stop</button>
             <button onClick={() => setIsAdding(!isAdding)} >Add</button>
             <button onClick={() => setIsDeleting(!isDeleting)} >Delete</button>
-            <button onClick={() => console.log(song)} >Song</button>
+            <button onClick={() => console.log(song['tacts'][0]['notes'], song['tacts'][1]['notes'], song['tacts'][2]['notes'], song['tacts'][3]['notes'])} >Song</button>
             <EditorDrawer song={song} isAdding={isAdding} isDeleting={isDeleting} />
         </div>
     )

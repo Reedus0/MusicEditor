@@ -1,33 +1,71 @@
 
 export const CMajorMap: any = {
-    '-2': '7',
-    '-1.5': '8',
-    '-1': '10',
-    '-0.5': '12',
-    '0': '13',
-    '0.5': '15',
-    '1': '17',
-    '1.5': '19',
-    '2': '20',
-    '2.5': '22',
-    '3': '24'
+    '0': 'G',
+    '0.5': 'A',
+    '1': 'B',
+    '1.5': 'C',
+    '2': 'D',
+    '2.5': 'E',
+    '3': 'F',
 }
 
-export const CMinorMap: any = {
-    '-2': '6',
-    '-1.5': '8',
-    '-1': '10',
-    '-0.5': '11',
-    '0': '13',
-    '0.5': '15',
-    '1': '16',
-    '1.5': '18',
-    '2': '20',
-    '2.5': '22',
-    '3': '23'
+
+export const FMajorMap: any = {
+    '0': 'G',
+    '0.5': 'A',
+    '1': 'Bb',
+    '1.5': 'C',
+    '2': 'D',
+    '2.5': 'E',
+    '3': 'F',
 }
+
+export const GMajorMap: any = {
+    '0': 'G',
+    '0.5': 'A',
+    '1': 'B',
+    '1.5': 'C',
+    '2': 'D',
+    '2.5': 'E',
+    '3': 'Gb',
+}
+
+export const DMajorMap: any = {
+    '0': 'G',
+    '0.5': 'A',
+    '1': 'B',
+    '1.5': 'Db',
+    '2': 'D',
+    '2.5': 'E',
+    '3': 'Gb',
+}
+
+export const BbMajorMap: any = {
+    '0': 'G',
+    '0.5': 'A',
+    '1': 'Bb',
+    '1.5': 'C',
+    '2': 'D',
+    '2.5': 'Eb',
+    '3': 'F',
+}
+
 
 export enum keys {
     C = CMajorMap,
-    Cm = CMinorMap
+    Am = CMajorMap,
+
+    F = FMajorMap,
+    Dm = FMajorMap,
+
+    G = GMajorMap,
+    Em = GMajorMap,
+
+    D = DMajorMap,
+    Bm = DMajorMap,
+
+    Bb = BbMajorMap,
+    Gm = BbMajorMap,
+
+
 }
