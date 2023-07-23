@@ -80,13 +80,13 @@ const Editor: FC<EditorProps> = ({ }) => {
     }, [isPlaying])
 
     return (
-        <div className='editor'>
+        <>
             <button onClick={() => setIsPlaying(!isPlaying)} >Play/Stop</button>
             <button onClick={() => setIsAdding(!isAdding)} >Add</button>
             <button onClick={() => setIsDeleting(!isDeleting)} >Delete</button>
             <button onClick={() => console.log(song)} >Song</button>
             <EditorDrawer song={song} isAdding={isAdding} isDeleting={isDeleting} />
-        </div>
+        </>
     )
 }
 

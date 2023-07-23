@@ -37,7 +37,7 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, isAdding, isDeleting }) => 
             const tactOffsetY = cursorY - elementY
 
             
-            const cordsX = (Math.floor(tactOffsetX / (window.innerWidth * 0.25 / 4))) * window.innerWidth * 0.25 / 4
+            const cordsX = (Math.floor(tactOffsetX / (document.body.scrollWidth * 0.20 / 4))) * document.body.scrollWidth * 0.20 / 4
             const cordsY = (60 - (Math.floor(tactOffsetY / 6)) * 6) + 60
 
             const currentTact = currentTactFake.id[currentTactFake.id.length - 1]
@@ -77,7 +77,7 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, isAdding, isDeleting }) => 
             const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
             const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
 
-            const cordsX = noteLeft * 64 / 0.25 / window.innerWidth
+            const cordsX = noteLeft * 64 / 0.20 / document.body.scrollWidth
             const cordsY = noteBottom / 12
 
             const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
@@ -104,9 +104,9 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, isAdding, isDeleting }) => 
             const noteVerticalPosition = ((noteBottom / 12) - clefOffset) % 3.5
             const noteOctave = 5 + Math.floor(((noteBottom / 12) - globalOffset - clefOffset) / 3.5)
 
-            console.log(window.innerWidth * 0.25 / 64)
+            console.log(document.body.scrollWidth * 0.20 / 64)
 
-            const cordsX = noteLeft * 64 / 0.25 / window.innerWidth
+            const cordsX = noteLeft * 64 / 0.20 / document.body.scrollWidth
             const cordsY = noteBottom / 12
 
             song['tacts'][currentTactNumber]['tracks'][currentTrackNumber].addNote(
@@ -141,7 +141,7 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, isAdding, isDeleting }) => 
                                 <div className='editor__lines'>
                                     {[...Array(5)].map(() => <div className='editor__line'></div>)}
                                 </div>
-                                {track['notes'].map((note: Note) => <div className={['editor__note', note['half'] !== noteHalf.NONE ? '_half' : ''].join(' ')} style={{ bottom: (note['verticalPosition'] * 12), left: (window.innerWidth * 0.25 * note['horizontalPosition'] / 64) }}>
+                                {track['notes'].map((note: Note) => <div className={['editor__note', note['half'] !== noteHalf.NONE ? '_half' : ''].join(' ')} style={{ bottom: (note['verticalPosition'] * 12), left: (document.body.scrollWidth * 0.20 * note['horizontalPosition'] / 64) }}>
                                     {note['verticalPosition'] < 2 ? !Number.isInteger(note['verticalPosition']) ? <div className='editor__note-line'></div> : <div className='editor__note-line-up'></div> : ''}
                                     {note['verticalPosition'] > 7 ? !Number.isInteger(note['verticalPosition']) ? <div className='editor__note-line'></div> : <div className='editor__note-line-down'></div> : ''}
                                     {note['half'] === noteHalf.FLAT ? <div className='editor__note-flat'>b</div> : note['half'] === noteHalf.SHARP ? <div className='editor__note-sharp'>#</div> : ''}
