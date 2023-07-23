@@ -24,24 +24,24 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, isAdding, isDeleting }) => 
         const cursorX = e.clientX;
         const cursorY = e.clientY;
 
-        const target = document.elementFromPoint(cursorX, cursorY)
+        const currentTactFake = document.elementFromPoint(cursorX, cursorY)
 
-        if (target?.classList.contains('editor__note')) return
-        if (target?.classList.contains('editor__track-fake')) {
+        if (currentTactFake?.classList.contains('editor__note')) return
+        if (currentTactFake?.classList.contains('editor__track-fake')) {
 
 
-            const { elementX, elementY } = getOffset(target)
+            const { elementX, elementY } = getOffset(currentTactFake)
 
-            const noteOffsetX = cursorX - elementX
-            const noteOffsetY = cursorY - elementY
+            const tactOffsetX = cursorX - elementX
+            const tactOffsetY = cursorY - elementY
 
-            const cordsX = (Math.floor(noteOffsetX / 90)) * 90
-            const cordsY = (60 - (Math.floor(noteOffsetY / 6)) * 6) + 54
+            const cordsX = (Math.floor(tactOffsetX / 90)) * 90
+            const cordsY = (60 - (Math.floor(tactOffsetY / 6)) * 6) + 54
 
-            const currentTact = target.id[target.id.length - 1]
+            const currentTact = currentTactFake.id[currentTactFake.id.length - 1]
             Array.from(document.getElementsByClassName('editor__track-fake')).forEach((element: any) => element.innerHTML = '')
 
-            target.innerHTML = `<div class="editor__note-edit " id="editing-note-${currentTact}" style="bottom: ${cordsY}px; left: ${cordsX}px;"></div>`
+            currentTactFake.innerHTML = `<div class="editor__note-edit " id="editing-note-${currentTact}" style="bottom: ${cordsY}px; left: ${cordsX}px;"></div>`
 
             const editingNote: any = document.getElementById(`editing-note-${currentTact}`)
 
@@ -66,11 +66,11 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, isAdding, isDeleting }) => 
             if (!isDeleting) return
 
             const editingNote = e.target
-            const tactTracks = e.target.closest('.editor__tact')
-            const trackNotes = e.target.closest('.editor__track')
+            const tactElement = e.target.closest('.editor__tact')
+            const trackElement = e.target.closest('.editor__track')
 
-            const currentTact = tactTracks.id[tactTracks.id.length - 1]
-            const currentTrack = trackNotes.id[trackNotes.id.length - 1]
+            const currentTactNumber = tactElement.id[tactElement.id.length - 1]
+            const currentTrackNumber = trackElement.id[trackElement.id.length - 1]
 
             const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
             const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
@@ -78,26 +78,26 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, isAdding, isDeleting }) => 
             const cordsX = noteLeft / 5.625
             const cordsY = noteBottom / 12
 
-            let currentTrackNotes = song['tacts'][currentTact]['tracks'][currentTrack]
-            currentTrackNotes.deleteNote(cordsX, cordsY)
+            const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
+            currentTrack.deleteNote(cordsX, cordsY)
             forceUpdate()
             return
         }
         if (e.target.closest('.editor__track-notes') !== undefined) {
             if (!isAdding) return
-            
-            const tactTracks = e.target.closest('.editor__tact')
-            const trackNotes = e.target.closest('.editor__track')
 
-            const currentTact = tactTracks.id[tactTracks.id.length - 1]
-            const currentTrack = trackNotes.id[trackNotes.id.length - 1]
+            const tactElement = e.target.closest('.editor__tact')
+            const trackElement = e.target.closest('.editor__track')
 
-            const editingNote = document.getElementById('editing-note-' + currentTrack)
+            const currentTactNumber = tactElement.id[tactElement.id.length - 1]
+            const currentTrackNumber = trackElement.id[trackElement.id.length - 1]
+
+            const editingNote = document.getElementById('editing-note-' + currentTrackNumber)
 
             const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
             const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
 
-            const clefOffset = song['tacts'][currentTact]['tracks'][currentTrack]['clef']
+            const clefOffset = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]['clef']
 
             const noteVerticalPosition = ((noteBottom / 12) - clefOffset) % 3.5
             const noteOctave = 5 + Math.floor(((noteBottom / 12) - globalOffset - clefOffset) / 3.5)
@@ -106,7 +106,7 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, isAdding, isDeleting }) => 
             const cordsX = noteLeft / 5.625
             const cordsY = noteBottom / 12
 
-            song['tacts'][currentTact]['tracks'][currentTrack].addNote(
+            song['tacts'][currentTactNumber]['tracks'][currentTrackNumber].addNote(
                 new Note(
                     cordsX,
                     cordsY,
