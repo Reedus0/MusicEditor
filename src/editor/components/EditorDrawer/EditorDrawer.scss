@@ -1,14 +1,18 @@
-.editor-lines {
+.editor {
     margin-top: 10px;
     display: flex;
 
     flex-wrap: wrap;
 
     &__tact {
+        width: 25%;
+
+    }
+
+    &__track {
         height: 130px;
         position: relative;
-        width: 25%;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
 
         display: flex;
         align-items: center;
@@ -16,7 +20,7 @@
 
     }
 
-    &__tact-fake {
+    &__track-fake {
         
         top: 0;
         position: absolute;

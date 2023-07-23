@@ -3,9 +3,10 @@ import { Song } from '../../editor/models/Song';
 import { Tact } from '../../editor/models/Tact';
 import { Note, noteHalf } from '../../editor/models/Note';
 import EditorDrawer from '../../editor/components/EditorDrawer/EditorDrawer';
-import { CMajorMap, keys } from '../../editor/utils';
+import { CMajorMap, clefs, keys } from '../../editor/utils';
 
 import './Editor.scss'
+import { Track } from '../../editor/models/Track';
 
 interface EditorProps {
 
@@ -17,22 +18,19 @@ const Editor: FC<EditorProps> = ({ }) => {
     const [isAdding, setIsAdding] = useState<boolean>(false)
     const [isDeleting, setIsDeleting] = useState<boolean>(false)
 
-    const tacts: Tact[] = [new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([]), new Tact([])]
+    const mainKey = keys.Am
 
-    const [song, setSong] = useState<Song>(new Song(tacts, 80, keys.D))
+    const tacts: Tact[] = [new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)])]
+
+    const [song, setSong] = useState<Song>(new Song(tacts, 140, mainKey))
 
     const incrementTact = useRef(null)
     const incrementNotes = useRef(null)
-
-
-
 
     let iterratorTact: number = 0;
     let iterratorNote: number = 0;
 
     let position: number = 0;
-
-    // const song = new Song(tacts, 80, keys.C)
 
     const countTacts = () => {
         iterratorTact += 1
@@ -49,7 +47,12 @@ const Editor: FC<EditorProps> = ({ }) => {
             return
         }
 
-        const currentNotes = song['tacts'][position]['notes'].filter((note: Note) => note['horizontalPosition'] === iterratorNote)
+        const currentNotes: Note[] = []
+
+        for(let i = 0; i < song['tacts'][position]['tracks'].length; i ++){
+            currentNotes.push(...song['tacts'][position]['tracks'][i]['notes'].filter((note: Note) => note['horizontalPosition'] === iterratorNote))
+        }
+
         if (currentNotes.length) {
             for (let i = 0; i < currentNotes.length; i++) {
                 (new Audio(require(`./../../editor/piano/${currentNotes[i]['sound']}.mp3`))).play()
@@ -81,7 +84,7 @@ const Editor: FC<EditorProps> = ({ }) => {
             <button onClick={() => setIsPlaying(!isPlaying)} >Play/Stop</button>
             <button onClick={() => setIsAdding(!isAdding)} >Add</button>
             <button onClick={() => setIsDeleting(!isDeleting)} >Delete</button>
-            <button onClick={() => console.log(song['tacts'][0]['notes'], song['tacts'][1]['notes'], song['tacts'][2]['notes'], song['tacts'][3]['notes'])} >Song</button>
+            <button onClick={() => console.log(song)} >Song</button>
             <EditorDrawer song={song} isAdding={isAdding} isDeleting={isDeleting} />
         </div>
     )

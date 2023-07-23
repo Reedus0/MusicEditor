@@ -2,5 +2,12 @@ import { keys } from "../utils";
 import { Tact } from "./Tact";
 
 export class Song {
-    constructor(public tacts: Tact[], public tempo: number, public key: keys) { }
+    private tacts: Tact[] = []
+    private tempo: number = 80
+    private key: keys = keys.C
+    constructor(tacts: Tact[], tempo: number, key: keys) {
+        this.tacts = tacts
+        this.tempo = tempo
+        this.key = key
+    }
 }

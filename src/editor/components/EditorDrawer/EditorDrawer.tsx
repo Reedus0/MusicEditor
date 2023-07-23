@@ -5,6 +5,7 @@ import './EditorDrawer.scss'
 import { Tact } from '../../models/Tact';
 import { Note, noteHalf } from '../../models/Note';
 import { getOffset } from '../../../utils';
+import { Track } from '../../models/Track';
 
 interface EditorDrawerProps {
     song: Song,
@@ -25,8 +26,8 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, isAdding, isDeleting }) => 
 
         const target = document.elementFromPoint(cursorX, cursorY)
 
-        if (target?.classList.contains('editor-lines__note')) return
-        if (target?.classList.contains('editor-lines__tact-fake')) {
+        if (target?.classList.contains('editor__note')) return
+        if (target?.classList.contains('editor__track-fake')) {
 
 
             const { elementX, elementY } = getOffset(target)
@@ -38,64 +39,81 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, isAdding, isDeleting }) => 
             const cordsY = (60 - (Math.floor(noteOffsetY / 6)) * 6) + 54
 
             const currentTact = target.id[target.id.length - 1]
-            Array.from(document.getElementsByClassName('editor-lines__tact-fake')).forEach((element: any) => element.innerHTML = '')
+            Array.from(document.getElementsByClassName('editor__track-fake')).forEach((element: any) => element.innerHTML = '')
 
-            target.innerHTML = `<div class="editor-lines__note-edit " id="editing-note-${currentTact}" style="bottom: ${cordsY}px; left: ${cordsX}px;"></div>`
+            target.innerHTML = `<div class="editor__note-edit " id="editing-note-${currentTact}" style="bottom: ${cordsY}px; left: ${cordsX}px;"></div>`
 
             const editingNote: any = document.getElementById(`editing-note-${currentTact}`)
 
             if (cordsY <= 18) {
                 if (cordsY % 12 === 0) {
-                    editingNote.innerHTML = `<div class='editor-lines__note-line-up-edit'></div>`
+                    editingNote.innerHTML = `<div class='editor__note-line-up-edit'></div>`
                 } else {
-                    editingNote.innerHTML = `<div class='editor-lines__note-line-edit'></div>`
+                    editingNote.innerHTML = `<div class='editor__note-line-edit'></div>`
                 }
             } else if (cordsY >= 90) {
                 if (cordsY % 12 === 0) {
-                    editingNote.innerHTML = `<div class='editor-lines__note-line-down-edit'></div>`
+                    editingNote.innerHTML = `<div class='editor__note-line-down-edit'></div>`
                 } else {
-                    editingNote.innerHTML = `<div class='editor-lines__note-line-edit'></div>`
+                    editingNote.innerHTML = `<div class='editor__note-line-edit'></div>`
                 }
             }
-            // cordsY <= 18 ? cordsY % 12 === 0 ?
-            //     `<div class="editor-lines__note-edit " id="editing-note-${currentTact}" style="bottom: ${cordsY}px; left: ${cordsX}px;"><div class='editor-lines__note-line-up-edit'></div>`
-            //     : `<div class="editor-lines__note-edit " id="editing-note-${currentTact}" style="bottom: ${cordsY}px; left: ${cordsX}px;"><div class='editor-lines__note-line-edit'></div></div>`
-            //     : `<div class="editor-lines__note-edit " id="editing-note-${currentTact}" style="bottom: ${cordsY}px; left: ${cordsX}px;"></div>`
         }
     }
 
     document.onclick = (e: any) => {
-        if (e.target.classList.contains('editor-lines__note')) {
+        if (e.target.classList.contains('editor__note')) {
             if (!isDeleting) return
 
             const editingNote = e.target
-            const tactNotes = e.target.closest('.editor-lines__tact')
+            const tactTracks = e.target.closest('.editor__tact')
+            const trackNotes = e.target.closest('.editor__track')
 
+            const currentTact = tactTracks.id[tactTracks.id.length - 1]
+            const currentTrack = trackNotes.id[trackNotes.id.length - 1]
 
             const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
             const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
 
-            song['tacts'][tactNotes.id[tactNotes.id.length - 1]]['notes'] = song['tacts'][tactNotes.id[tactNotes.id.length - 1]]['notes'].filter((note: Note) => !(note['verticalPosition'] === noteBottom / 12 && note['horizontalPosition'] === noteLeft / 5.625))
+            const cordsX = noteLeft / 5.625
+            const cordsY = noteBottom / 12
+
+            let currentTrackNotes = song['tacts'][currentTact]['tracks'][currentTrack]
+            currentTrackNotes.deleteNote(cordsX, cordsY)
             forceUpdate()
             return
         }
-        if (e.target.closest('.editor-lines__tact-notes') !== undefined) {
+        if (e.target.closest('.editor__track-notes') !== undefined) {
             if (!isAdding) return
-            const tactNotes = e.target.closest('.editor-lines__tact')
-            const editingNote = document.getElementById('editing-note-' + tactNotes.id[tactNotes.id.length - 1])
+            
+            const tactTracks = e.target.closest('.editor__tact')
+            const trackNotes = e.target.closest('.editor__track')
+
+            const currentTact = tactTracks.id[tactTracks.id.length - 1]
+            const currentTrack = trackNotes.id[trackNotes.id.length - 1]
+
+            const editingNote = document.getElementById('editing-note-' + currentTrack)
 
             const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
             const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
 
-            const currentTact = tactNotes.id[tactNotes.id.length - 1]
+            const clefOffset = song['tacts'][currentTact]['tracks'][currentTrack]['clef']
 
-            song['tacts'][currentTact]['notes'].push(
+            const noteVerticalPosition = ((noteBottom / 12) - clefOffset) % 3.5
+            const noteOctave = 5 + Math.floor(((noteBottom / 12) - globalOffset - clefOffset) / 3.5)
+
+
+            const cordsX = noteLeft / 5.625
+            const cordsY = noteBottom / 12
+
+            song['tacts'][currentTact]['tracks'][currentTrack].addNote(
                 new Note(
-                    noteLeft / 5.625,
-                    noteBottom / 12,
+                    cordsX,
+                    cordsY,
                     4,
-                    ((song['key'] as any)[(noteBottom / 12) % 3.5] + (5 + Math.floor(((noteBottom / 12) - globalOffset) / 3.5)).toString()),
-                    noteHalf.NONE)
+                    ((song['key'] as any)[noteVerticalPosition >= 0 ? noteVerticalPosition : 3.5 + noteVerticalPosition] + noteOctave.toString()),
+                    noteHalf.NONE
+                )
             )
             forceUpdate()
             return
@@ -104,7 +122,7 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, isAdding, isDeleting }) => 
 
     useEffect(() => {
         if (!isAdding || isDeleting) {
-            Array.from(document.getElementsByClassName('editor-lines__tact-fake')).forEach((element: any) => element.innerHTML = '')
+            Array.from(document.getElementsByClassName('editor__track-fake')).forEach((element: any) => element.innerHTML = '')
         }
     }, [isAdding, isDeleting])
 
@@ -112,19 +130,23 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, isAdding, isDeleting }) => 
 
     return (
         <div>
-            <div className='editor-lines'>
-                {song['tacts'].map((tact: Tact, index: number) =>
-                    <div className='editor-lines__tact' id={'tact-' + index}>
-                        <div className='editor-lines__lines'>
-                            {[...Array(5)].map((element: undefined, index: number) => <div className='editor-lines__line'></div>)}
-                        </div>
-                        {tact['notes'].map((note: Note) => <div className={['editor-lines__note', note['half'] !== noteHalf.NONE ? '_half' : ''].join(' ')} style={{ bottom: (note['verticalPosition'] * 12), left: (5.625 * note['horizontalPosition']) }}>
-                            {note['verticalPosition'] < 2 ? !Number.isInteger(note['verticalPosition']) ? <div className='editor-lines__note-line'></div> : <div className='editor-lines__note-line-up'></div> : ''}
-                            {note['verticalPosition'] > 7 ? !Number.isInteger(note['verticalPosition']) ? <div className='editor-lines__note-line'></div> : <div className='editor-lines__note-line-down'></div> : ''}
-                            {note['half'] === noteHalf.FLAT ? <div className='editor-lines__note-flat'>b</div> : note['half'] === noteHalf.SHARP ? <div className='editor-lines__note-sharp'>#</div> : ''}
-                        </div>)}
-                        <div className='editor-lines__tact-fake' id={'tact-fake-' + index}>
-                        </div>
+            <div className='editor'>
+                {song['tacts'].map((tact: Tact, tactIndex: number) =>
+                    <div className='editor__tact' id={'tact-' + tactIndex}>
+                        {tact['tracks'].map((track: Track, trackIndex: number) =>
+                            <div className='editor__track' id={'track-' + trackIndex}>
+                                <div className='editor__lines'>
+                                    {[...Array(5)].map(() => <div className='editor__line'></div>)}
+                                </div>
+                                {track['notes'].map((note: Note) => <div className={['editor__note', note['half'] !== noteHalf.NONE ? '_half' : ''].join(' ')} style={{ bottom: (note['verticalPosition'] * 12), left: (5.625 * note['horizontalPosition']) }}>
+                                    {note['verticalPosition'] < 2 ? !Number.isInteger(note['verticalPosition']) ? <div className='editor__note-line'></div> : <div className='editor__note-line-up'></div> : ''}
+                                    {note['verticalPosition'] > 7 ? !Number.isInteger(note['verticalPosition']) ? <div className='editor__note-line'></div> : <div className='editor__note-line-down'></div> : ''}
+                                    {note['half'] === noteHalf.FLAT ? <div className='editor__note-flat'>b</div> : note['half'] === noteHalf.SHARP ? <div className='editor__note-sharp'>#</div> : ''}
+                                </div>)}
+                                <div className='editor__track-fake' id={'tact-fake-' + trackIndex}>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )
                 }

@@ -1,6 +1,10 @@
 import { Note } from "./Note"
+import { Track } from "./Track"
 
 export class Tact {
-    duration: number = 64
-    constructor(public notes: Note[]) { }
+    private duration: number = 63
+    private tracks: Track[] = []
+    constructor(tracks: Track[]) {
+        this.tracks = tracks
+    }
 }

@@ -66,6 +66,9 @@ export enum keys {
 
     Bb = BbMajorMap,
     Gm = BbMajorMap,
+}
 
-
+export enum clefs {
+    TREBLE = 0,
+    BASS = 6
 }
