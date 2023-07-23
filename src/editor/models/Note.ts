@@ -11,10 +11,29 @@ export class Note {
 
         if (horizontalPosition >= 0 && horizontalPosition <= 63) {
             this.horizontalPosition = horizontalPosition
+        } else {
+            throw new Error('HorizontalPosition out of range')
         }
 
         if (duration >= 0 && duration <= 63) {
             this.duration = duration
+        } else {
+            throw new Error('Duration out of range')
+        }
+    }
+
+    getSound() {
+        return this.sound
+    }
+
+    setSound(sound: string, half?: noteHalf) {
+        if (/[A-G]{1}(b)?[0-7]{1}$/gm.test(sound)) {
+            this.sound = sound
+            if (half !== undefined) {
+                this.half = half
+            }
+        } else {
+            throw new Error('Sound is not valid: ' + sound)
         }
     }
 }
@@ -22,5 +41,6 @@ export class Note {
 export enum noteHalf {
     FLAT = 'flat',
     SHARP = 'sharp',
+    NATURAL = 'natural',
     NONE = 'none'
 }

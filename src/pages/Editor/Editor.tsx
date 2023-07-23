@@ -1,12 +1,18 @@
+import './Editor.scss'
 import React, { FC, useEffect, useRef, useState } from 'react'
 import { Song } from '../../editor/models/Song';
 import { Tact } from '../../editor/models/Tact';
 import { Note, noteHalf } from '../../editor/models/Note';
 import EditorDrawer from '../../editor/components/EditorDrawer/EditorDrawer';
 import { CMajorMap, clefs, keys } from '../../editor/utils';
-
-import './Editor.scss'
 import { Track } from '../../editor/models/Track';
+import { IInstrument } from '../../editor/models/editor/IInsrument';
+import { NotesAdder } from '../../editor/models/editor/NotesAdder';
+import { NotesDeleter } from '../../editor/models/editor/NotesDeleter';
+import { NotesFlatter } from '../../editor/models/editor/NotesFlatter';
+import { NotesSharper } from '../../editor/models/editor/NotesSharper';
+import { NotesCanceler } from '../../editor/models/editor/NotesCanceler';
+import { NotesNaturaler } from '../../editor/models/editor/NotesNaturaler';
 
 interface EditorProps {
 
@@ -15,14 +21,15 @@ interface EditorProps {
 const Editor: FC<EditorProps> = ({ }) => {
 
     const [isPlaying, setIsPlaying] = useState<boolean>(false)
-    const [isAdding, setIsAdding] = useState<boolean>(false)
-    const [isDeleting, setIsDeleting] = useState<boolean>(false)
+    const [isEditing, setIsEditing] = useState<boolean>(false)
 
-    const mainKey = keys.Am
+    const [instrument, setInstrument] = useState<IInstrument>({} as IInstrument)
 
-    const tacts: Tact[] = [new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]),new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]),new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]),new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]),new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]),new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]),new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]),new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]),new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]),new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]),new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]),new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)])]
+    const mainKey = keys.Em
 
-    const [song, setSong] = useState<Song>(new Song(tacts, 140, mainKey))
+    const tacts: Tact[] = [new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)])]
+
+    const [song, setSong] = useState<Song>(new Song(tacts, 80, mainKey))
 
     const incrementTact = useRef(null)
     const incrementNotes = useRef(null)
@@ -49,7 +56,7 @@ const Editor: FC<EditorProps> = ({ }) => {
 
         const currentNotes: Note[] = []
 
-        for(let i = 0; i < song['tacts'][position]['tracks'].length; i ++){
+        for (let i = 0; i < song['tacts'][position]['tracks'].length; i++) {
             currentNotes.push(...song['tacts'][position]['tracks'][i]['notes'].filter((note: Note) => note['horizontalPosition'] === iterratorNote))
         }
 
@@ -67,8 +74,22 @@ const Editor: FC<EditorProps> = ({ }) => {
         setIsPlaying(false)
     }
 
+    const handleChangeInstrument = (newInstrument: IInstrument) => {
+        if (newInstrument['name'] !== instrument['name']) {
+            setIsEditing(true)
+            setInstrument(newInstrument)
+        } else {
+            setInstrument({} as IInstrument)
+            setIsEditing(false)
+        }
+    }
+
     useEffect(() => {
         if (isPlaying) {
+
+            setIsEditing(false)
+            setInstrument({} as IInstrument)
+
             iterratorTact += 1;
 
             (incrementTact.current as any) = setInterval(countTacts, 54000 / song['tempo']);
@@ -79,13 +100,25 @@ const Editor: FC<EditorProps> = ({ }) => {
         }
     }, [isPlaying])
 
+    useEffect(() => {
+        if(isEditing) {
+            stopPlaying()
+        }
+    }, [isEditing])
+
     return (
         <>
             <button onClick={() => setIsPlaying(!isPlaying)} >Play/Stop</button>
-            <button onClick={() => setIsAdding(!isAdding)} >Add</button>
-            <button onClick={() => setIsDeleting(!isDeleting)} >Delete</button>
+            <button onClick={() => handleChangeInstrument(new NotesAdder())} >Add</button>
+            <button onClick={() => handleChangeInstrument(new NotesDeleter())} >Delete</button>
+            <button onClick={() => handleChangeInstrument(new NotesFlatter())} >Flat</button>
+            <button onClick={() => handleChangeInstrument(new NotesSharper())} >Sharp</button>
+            <button onClick={() => handleChangeInstrument(new NotesNaturaler())} >Natural</button>
+            <button onClick={() => handleChangeInstrument(new NotesCanceler())} >Cancel</button>
             <button onClick={() => console.log(song)} >Song</button>
-            <EditorDrawer song={song} isAdding={isAdding} isDeleting={isDeleting} />
+            <h3>Editing: {isEditing ? 'yes' : 'no'}</h3>
+            <h3>Instrument: {instrument['name']}</h3>
+            <EditorDrawer song={song} isEditing={isEditing} setIsEditing={setIsEditing} instrument={instrument} setInstrument={setInstrument} />
         </>
     )
 }

@@ -85,11 +85,18 @@
         background: rgb(116, 116, 116);
     }
 
-    &__note-flat, &__note-sharp {
+    &__note-flat, &__note-sharp, &__note-natural {
+        font-size: 10px;
         position: absolute;
 
         left: -15px;
-        top: -4px;
+        top: 0px;
+    }
+
+    &__note-natural {
+        font-size: 16px;
+
+        top: -6px;
     }
 
     &__note-line, &__note-line-edit {

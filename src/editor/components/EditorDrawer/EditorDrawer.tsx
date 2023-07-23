@@ -6,131 +6,97 @@ import { Tact } from '../../models/Tact';
 import { Note, noteHalf } from '../../models/Note';
 import { getOffset } from '../../../utils';
 import { Track } from '../../models/Track';
+import { IInstrument } from '../../models/editor/IInsrument';
+import { NotesHoverer } from '../../models/editor/NotesHoverer';
 
 interface EditorDrawerProps {
     song: Song,
-    isAdding: boolean,
-    isDeleting: boolean,
+    isEditing: boolean,
+    setIsEditing: Function,
+    instrument: IInstrument,
+    setInstrument: Function
 }
 
-const EditorDrawer: FC<EditorDrawerProps> = ({ song, isAdding, isDeleting }) => {
+const EditorDrawer: FC<EditorDrawerProps> = ({ song, isEditing, instrument, setIsEditing, setInstrument }) => {
 
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
     const globalOffset = 1.5
 
     document.onmousemove = (e: any) => {
-        if (!isAdding) return
-        const cursorX = e.clientX;
-        const cursorY = e.clientY + window.scrollY;
+        if (!isEditing) return
+        if (!(instrument.name === 'notesAdder')) return
 
-        const currentTactFake = document.elementFromPoint(cursorX, cursorY - window.scrollY)
-        console.log(cursorX, cursorY)
-
-        if (currentTactFake?.classList.contains('editor__note')) return
-        if (currentTactFake?.classList.contains('editor__track-fake')) {
-
-
-            const { elementX, elementY } = getOffset(currentTactFake)
-
-            const tactOffsetX = cursorX - elementX
-            const tactOffsetY = cursorY - elementY
-
-            
-            const cordsX = (Math.floor(tactOffsetX / (document.body.scrollWidth * 0.20 / 4))) * document.body.scrollWidth * 0.20 / 4
-            const cordsY = (60 - (Math.floor(tactOffsetY / 6)) * 6) + 60
-
-            const currentTact = currentTactFake.id[currentTactFake.id.length - 1]
-            Array.from(document.getElementsByClassName('editor__track-fake')).forEach((element: any) => element.innerHTML = '')
-
-            currentTactFake.innerHTML = `<div class="editor__note-edit " id="editing-note-${currentTact}" style="bottom: ${cordsY}px; left: ${cordsX}px;"></div>`
-
-            const editingNote: any = document.getElementById(`editing-note-${currentTact}`)
-
-            if (cordsY <= 18) {
-                if (cordsY % 12 === 0) {
-                    editingNote.innerHTML = `<div class='editor__note-line-up-edit'></div>`
-                } else {
-                    editingNote.innerHTML = `<div class='editor__note-line-edit'></div>`
-                }
-            } else if (cordsY >= 90) {
-                if (cordsY % 12 === 0) {
-                    editingNote.innerHTML = `<div class='editor__note-line-down-edit'></div>`
-                } else {
-                    editingNote.innerHTML = `<div class='editor__note-line-edit'></div>`
-                }
-            }
-        }
+        const notesHoverer = new NotesHoverer()
+        notesHoverer.action(e)
     }
 
     document.onclick = (e: any) => {
         if (e.target.classList.contains('editor__note')) {
-            if (!isDeleting) return
-
-            const editingNote = e.target
-            const tactElement = e.target.closest('.editor__tact')
-            const trackElement = e.target.closest('.editor__track')
-
-            const currentTactNumber = tactElement.id[tactElement.id.length - 1]
-            const currentTrackNumber = trackElement.id[trackElement.id.length - 1]
-
-            const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
-            const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
-
-            const cordsX = noteLeft * 64 / 0.20 / document.body.scrollWidth
-            const cordsY = noteBottom / 12
-
-            const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
-            currentTrack.deleteNote(cordsX, cordsY)
-            forceUpdate()
-            return
+            if (!isEditing) return
+            if (instrument.name === 'notesFlatter') {
+                instrument.action(e.target, song)
+                forceUpdate()
+            }
         }
+
+        if (e.target.classList.contains('editor__note')) {
+            if (!isEditing) return
+            if (instrument.name === 'notesSharper') {
+                instrument.action(e.target, song)
+                forceUpdate()
+            }
+        }
+
+        if (e.target.classList.contains('editor__note')) {
+            if (!isEditing) return
+            if (instrument.name === 'notesCanceler') {
+                instrument.action(e.target, song)
+                forceUpdate()
+            }
+        }
+
+        if (e.target.classList.contains('editor__note')) {
+            if (!isEditing) return
+            if (instrument.name === 'notesNaturaler') {
+                instrument.action(e.target, song)
+                forceUpdate()
+            }
+        }
+
+        if (e.target.classList.contains('editor__note')) {
+            if (!isEditing) return
+            if (instrument.name === 'notesDeleter') {
+                instrument.action(e.target, song)
+                forceUpdate()
+            }
+        }
+
         if (e.target.closest('.editor__track-notes') !== undefined) {
-            if (!isAdding) return
+            if (!isEditing) return
+            if (!(instrument.name === 'notesAdder')) return
 
-            const tactElement = e.target.closest('.editor__tact')
-            const trackElement = e.target.closest('.editor__track')
-
-            const currentTactNumber = tactElement.id[tactElement.id.length - 1]
-            const currentTrackNumber = trackElement.id[trackElement.id.length - 1]
-
-            const editingNote = document.getElementById('editing-note-' + currentTrackNumber)
-
-            const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
-            const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
-
-            const clefOffset = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]['clef']
-
-            const noteVerticalPosition = ((noteBottom / 12) - clefOffset) % 3.5
-            const noteOctave = 5 + Math.floor(((noteBottom / 12) - globalOffset - clefOffset) / 3.5)
-
-            console.log(document.body.scrollWidth * 0.20 / 64)
-
-            const cordsX = noteLeft * 64 / 0.20 / document.body.scrollWidth
-            const cordsY = noteBottom / 12
-
-            song['tacts'][currentTactNumber]['tracks'][currentTrackNumber].addNote(
-                new Note(
-                    cordsX,
-                    cordsY,
-                    4,
-                    ((song['key'] as any)[noteVerticalPosition >= 0 ? noteVerticalPosition : 3.5 + noteVerticalPosition] + noteOctave.toString()),
-                    noteHalf.NONE
-                )
-            )
+            instrument.action(e.target, song)
             forceUpdate()
-            return
         }
     }
 
+    document.oncontextmenu = (e: any) => {
+        e.preventDefault()
+        setIsEditing(false)
+        setInstrument({} as IInstrument)
+    }
+
+    window.onresize = () => {
+        forceUpdate()
+    }
+
     useEffect(() => {
-        if (!isAdding || isDeleting) {
-            Array.from(document.getElementsByClassName('editor__track-fake')).forEach((element: any) => element.innerHTML = '')
-        }
-    }, [isAdding, isDeleting])
+        Array.from(document.getElementsByClassName('editor__track-fake')).forEach((element: any) => element.innerHTML = '')
+    }, [isEditing, instrument])
 
 
-
+    //♮
     return (
         <div className='editor'>
             <div className='editor__inner'>
@@ -144,7 +110,19 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, isAdding, isDeleting }) => 
                                 {track['notes'].map((note: Note) => <div className={['editor__note', note['half'] !== noteHalf.NONE ? '_half' : ''].join(' ')} style={{ bottom: (note['verticalPosition'] * 12), left: (document.body.scrollWidth * 0.20 * note['horizontalPosition'] / 64) }}>
                                     {note['verticalPosition'] < 2 ? !Number.isInteger(note['verticalPosition']) ? <div className='editor__note-line'></div> : <div className='editor__note-line-up'></div> : ''}
                                     {note['verticalPosition'] > 7 ? !Number.isInteger(note['verticalPosition']) ? <div className='editor__note-line'></div> : <div className='editor__note-line-down'></div> : ''}
-                                    {note['half'] === noteHalf.FLAT ? <div className='editor__note-flat'>b</div> : note['half'] === noteHalf.SHARP ? <div className='editor__note-sharp'>#</div> : ''}
+                                    {note['half'] === noteHalf.FLAT
+                                        ?
+                                        <div className='editor__note-flat'>b</div>
+                                        :
+                                        note['half'] === noteHalf.SHARP
+                                            ?
+                                            <div className='editor__note-sharp'>#</div>
+                                            :
+                                            note['half'] === noteHalf.NATURAL
+                                                ?
+                                                <div className='editor__note-natural'>♮</div>
+                                                :
+                                                ''}
                                 </div>)}
                                 <div className='editor__track-fake' id={'tact-fake-' + trackIndex}>
                                 </div>
