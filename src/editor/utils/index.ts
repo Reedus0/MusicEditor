@@ -128,7 +128,14 @@ export enum clefs {
 
 export const calculateHalfNote = (sound: string, halfMap: halfMaps) => {
     const oldSound = sound.slice(0, -1)
-    const oldOctave = sound[sound.length - 1]
+    let oldOctave = Number(sound[sound.length - 1])
+
+    if(oldSound === 'B' && halfMap === halfMaps.SHARP_MAP) {
+        oldOctave += 1
+    }
+    if(oldSound === 'C' && halfMap === halfMaps.FLAT_MAP) {
+        oldOctave -= 1
+    }
 
     return (halfMap as any)[oldSound] + oldOctave
 }

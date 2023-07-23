@@ -25,7 +25,7 @@ const Editor: FC<EditorProps> = ({ }) => {
 
     const [instrument, setInstrument] = useState<IInstrument>({} as IInstrument)
 
-    const mainKey = keys.Em
+    const mainKey = keys.C
 
     const tacts: Tact[] = [new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)])]
 
