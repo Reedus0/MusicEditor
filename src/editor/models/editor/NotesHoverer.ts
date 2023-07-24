@@ -22,7 +22,7 @@ export class NotesHoverer implements IInstrument {
             const tactOffsetX = cursorX - elementX
             const tactOffsetY = cursorY - elementY
 
-            const cordsX = (Math.floor(tactOffsetX / (document.body.scrollWidth * 0.20 / step))) * document.body.scrollWidth * 0.20 / step
+            const cordsX = (Math.floor(tactOffsetX / (document.body.clientWidth * (currentTactFake!.clientWidth / document.body.clientWidth) / step))) * document.body.clientWidth * (currentTactFake!.clientWidth / document.body.clientWidth) / step
             const cordsY = (60 - (Math.floor(tactOffsetY / 6)) * 6) + 60
 
             const currentTact = currentTactFake.id[currentTactFake.id.length - 1]

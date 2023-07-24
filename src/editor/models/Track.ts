@@ -6,14 +6,26 @@ export class Track {
     private notes: Note[] = []
     private key: keys = keys.C
     private clef: clefs = clefs.TREBLE
-    constructor(notes: Note[], key: keys, clef: clefs) {
+    private timeSignature: string = '4/4'
+    constructor(notes: Note[], key: keys, timeSignature: string, clef: clefs) {
         this.notes = notes
         this.key = key
         this.clef = clef
+        if (/[0-9]{1,2}(\/)[1-9]{1,2}/gm.test(timeSignature)) {
+            this.timeSignature = timeSignature
+        }
     }
 
     getKey() {
         return this.key
+    }
+
+    getClef() {
+        return this.clef
+    }
+
+    getTimeSignature() {
+        return this.timeSignature
     }
 
     addNote(note: Note) {
@@ -27,7 +39,7 @@ export class Track {
     getNote(horizontalPosition: number, verticalPosition: number) {
         return this.notes.filter((note: Note) => note['horizontalPosition'] === horizontalPosition && note['verticalPosition'] === verticalPosition)[0]
     }
-    
+
     getNotes() {
         return this.notes
     }

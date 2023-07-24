@@ -14,7 +14,7 @@ describe('NotesDeleter class tests', () => {
     it('Note delete test 1', () => {
         const noteSound = 'D5'
 
-        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.NONE)], keys.C, clefs.TREBLE)
+        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.NONE)], keys.C, '4/4', clefs.TREBLE)
 
         notesDeleter['deleteNote'](cordsX, cordsY, currentTrack) // calling private method
         expect(currentTrack['notes'].length).toEqual(0)
@@ -23,7 +23,7 @@ describe('NotesDeleter class tests', () => {
     it('Note natudeleteral test 2', () => {
         const noteSound = 'G#5'
 
-        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.SHARP)], keys.C, clefs.TREBLE)
+        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.SHARP)], keys.C, '4/4', clefs.TREBLE)
 
         notesDeleter['deleteNote'](cordsX, cordsY, currentTrack) // calling private method
         expect(currentTrack['notes'].length).toEqual(0)
@@ -32,7 +32,7 @@ describe('NotesDeleter class tests', () => {
     it('Note delete test 3', () => {
         const noteSound = 'Bb5'
 
-        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.FLAT)], keys.C, clefs.TREBLE)
+        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.FLAT)], keys.C, '4/4', clefs.TREBLE)
 
         notesDeleter['deleteNote'](cordsX, cordsY, currentTrack) // calling private method
         expect(currentTrack['notes'].length).toEqual(0)

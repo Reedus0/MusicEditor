@@ -25,7 +25,7 @@ const Editor: FC<EditorProps> = ({ }) => {
 
     const mainKey = keys.C
 
-    const tacts: Tact[] = [new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)])]
+    const tacts: Tact[] = [new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]),]
 
     const [song, setSong] = useState<Song>(new Song(tacts, 80, mainKey))
 
@@ -95,12 +95,12 @@ const Editor: FC<EditorProps> = ({ }) => {
     }, [isEditing])
 
     return (
-        <>
+        <div className='editor'>
             <button onClick={() => setIsPlaying(!isPlaying)} >Play/Stop</button>
             <h3 >{isPlaying ? 'playing' : 'stoped'}</h3>
             <EditorInstruments isEditing={isEditing} setIsEditing={setIsEditing} instrument={instrument} setInstrument={setInstrument} />
             <EditorHandler song={song} isEditing={isEditing} setIsEditing={setIsEditing} instrument={instrument} setInstrument={setInstrument} />
-        </>
+        </div>
     )
 }
 

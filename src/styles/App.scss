@@ -3,7 +3,15 @@
   src: url("../fonts/zh-cn.woff2") format("woff2"),
 }
 
+@font-face {
+  font-family: "Maestro";
+  font-weight: 400;
+  src: url("../editor/fonts/Maestro.ttf"),
+}
+
 body {
+  background: #F2F2F2;
+
   &._menu {
     overflow: hidden;
   }
