@@ -15,6 +15,7 @@
         height: 100%;
         border-left: black 2px solid;
         border-right: black 2px solid;
+
         &:nth-child(n+1) {
             margin-left: -2px;
         }

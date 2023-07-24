@@ -28,6 +28,7 @@ const EditorInstruments: FC<EditorInstrumentsProps> = ({ isEditing, instrument, 
 
     return (
         <div className='editor-instruments'>
+            <input onChange={(e) => (instrument as NotesAdder).setStep(Number(e.target.value)) }/>
             <button onClick={() => handleChangeInstrument(new NotesAdder())} >Add</button>
             <button onClick={() => handleChangeInstrument(new NotesDeleter())} >Delete</button>
             <button onClick={() => handleChangeInstrument(new NotesFlatter())} >Flat</button>

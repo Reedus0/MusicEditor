@@ -7,6 +7,18 @@ import { IInstrument } from "./IInsrument"
 
 export class NotesAdder implements IInstrument {
     name: string = 'notesAdder'
+    private step: number = 4
+
+    getStep() {
+        return this.step
+    }
+
+    setStep(step: number) {
+        if(step >= 0 && step <= 32){
+            this.step = step
+        }
+    }
+
     public action = (element: HTMLElement, song: Song) => {
 
         const { cordsX, cordsY, currentTrack, noteSound } = calculateNotePosition(element, song)

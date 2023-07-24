@@ -4,6 +4,7 @@ import { NotesHoverer } from '../../models/editor/NotesHoverer'
 import { Song } from '../../models/Song'
 import EditorDrawer from '../EditorDrawer/EditorDrawer'
 import { clearHoverNote } from '../../utils'
+import { NotesAdder } from '../../models/editor/NotesAdder'
 
 interface EditorHandlerProps {
     song: Song,
@@ -26,7 +27,7 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
         if (!(instrument.name === 'notesAdder')) return
 
         const notesHoverer = new NotesHoverer()
-        notesHoverer.action(e)
+        notesHoverer.action(e, (instrument as NotesAdder)['step'])
     }
 
     document.onclick = (e: any) => {

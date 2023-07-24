@@ -55,7 +55,7 @@ const Editor: FC<EditorProps> = ({ }) => {
         const currentNotes: Note[] = []
 
         for (let i = 0; i < song['tacts'][position]['tracks'].length; i++) {
-            currentNotes.push(...song['tacts'][position]['tracks'][i]['notes'].filter((note: Note) => note['horizontalPosition'] === iterratorNote))
+            currentNotes.push(...song['tacts'][position]['tracks'][i]['notes'].filter((note: Note) => Math.round(note['horizontalPosition']) === iterratorNote))
         }
 
         if (currentNotes.length) {
@@ -97,6 +97,7 @@ const Editor: FC<EditorProps> = ({ }) => {
     return (
         <>
             <button onClick={() => setIsPlaying(!isPlaying)} >Play/Stop</button>
+            <h3 >{isPlaying ? 'playing' : 'stoped'}</h3>
             <EditorInstruments isEditing={isEditing} setIsEditing={setIsEditing} instrument={instrument} setInstrument={setInstrument} />
             <EditorHandler song={song} isEditing={isEditing} setIsEditing={setIsEditing} instrument={instrument} setInstrument={setInstrument} />
         </>

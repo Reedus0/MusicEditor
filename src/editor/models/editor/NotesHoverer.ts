@@ -4,7 +4,7 @@ import { IInstrument } from "./IInsrument";
 
 export class NotesHoverer implements IInstrument {
     name: string = 'notesHoverer'
-    public action = (mouseMoveEvent: MouseEvent) => {
+    public action = (mouseMoveEvent: MouseEvent, step: number) => {
         const cursorX = mouseMoveEvent.clientX;
         const cursorY = mouseMoveEvent.clientY + window.scrollY;
 
@@ -22,14 +22,14 @@ export class NotesHoverer implements IInstrument {
             const tactOffsetX = cursorX - elementX
             const tactOffsetY = cursorY - elementY
 
-            const cordsX = (Math.floor(tactOffsetX / (document.body.scrollWidth * 0.20 / 4))) * document.body.scrollWidth * 0.20 / 4
+            const cordsX = (Math.floor(tactOffsetX / (document.body.scrollWidth * 0.20 / step))) * document.body.scrollWidth * 0.20 / step
             const cordsY = (60 - (Math.floor(tactOffsetY / 6)) * 6) + 60
 
             const currentTact = currentTactFake.id[currentTactFake.id.length - 1]
             
             clearHoverNote()
 
-            currentTactFake.innerHTML = `<div class="editor-drawer__note-edit " id="editing-note-${currentTact}" style="bottom: ${cordsY}px; left: ${cordsX}px;"></div>`
+            currentTactFake.innerHTML = `<div class="editor-drawer__note-edit " id="editing-note-${currentTact}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;"></div>`
 
             const editingNote: any = document.getElementById(`editing-note-${currentTact}`)
 
