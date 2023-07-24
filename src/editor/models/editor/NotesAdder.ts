@@ -1,4 +1,4 @@
-import { calculateNotePosition, globalOffset } from "../../utils"
+import { calculateNotePosition, clearHoverNote, globalOffset } from "../../utils"
 import { Note, noteHalf } from "../Note"
 import { Song } from "../Song"
 import { Track } from "../Track"
@@ -15,6 +15,7 @@ export class NotesAdder implements IInstrument {
     }
 
     private addNote = (cordsX: number, cordsY: number, currentTrack: Track, noteSound: string) => {
+        if(currentTrack.getNote(cordsX, cordsY)) return
         currentTrack.addNote(
             new Note(
                 cordsX,
@@ -24,6 +25,8 @@ export class NotesAdder implements IInstrument {
                 noteHalf.NONE
             )
         )
+        clearHoverNote()
     }
+    
 
 }

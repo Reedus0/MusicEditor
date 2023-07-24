@@ -20,24 +20,30 @@ export class NotesCanceler implements IInstrument {
         if (currentNote['half'] !== noteHalf.NONE) {
             const oldSound = currentNote.getSound()
             const oldOctave = oldSound[oldSound.length - 1]
+            let newOctave: string = oldOctave
             let newNote: string = ''
             let newSound: string = ''
+
             if (currentNote['half'] === noteHalf.SHARP) {
-                newSound = FlatMap[oldSound.slice(0, -1)]
+                const calculatedNote = calculateHalfNote(oldSound, halfMaps.FLAT_MAP)
+                newSound = calculatedNote.slice(0, -1)
+                newOctave = calculatedNote[calculatedNote.length - 1]
             } else if (currentNote['half'] === noteHalf.FLAT) {
-                newSound = SharpMap[oldSound.slice(0, -1)]
+                const calculatedNote = calculateHalfNote(oldSound, halfMaps.SHARP_MAP)
+                newSound = calculatedNote.slice(0, -1)
+                newOctave = calculatedNote[calculatedNote.length - 1]
             } else if (currentNote['half'] === noteHalf.NATURAL) {
                 const keyNotes = Object.values(currentTrack.getKey())
                 for (let i = 0; i < 7; i++) {
-                    if(oldSound.slice(0, -1) === keyNotes[i][0]){
+                    if (oldSound.slice(0, -1) === keyNotes[i][0]) {
                         newSound = keyNotes[i]
-                    } 
+                    }
                 }
             }
             if (!Object.values(currentTrack.getKey()).includes(newSound)) {
-                newNote = InvertMap[newSound] + oldOctave.toString()
+                newNote = InvertMap[newSound] + newOctave.toString()
             } else {
-                newNote = newSound + oldOctave.toString()
+                newNote = newSound + newOctave.toString()
             }
             currentTrack.getNote(cordsX, cordsY).setSound(newNote, noteHalf.NONE)
         }

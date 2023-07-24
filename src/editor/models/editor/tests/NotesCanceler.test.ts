@@ -148,4 +148,22 @@ describe('NotesCanceler class tests', () => {
         expect(currentTrack['notes'][0]).toEqual(new Note(0, 1.5, 4, 'C#6', noteHalf.NONE))
     })
 
+    it('Note cancel test octave 1', () => {
+        const noteSound = 'B4'
+
+        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.FLAT)], keys.C, clefs.TREBLE)
+
+        notesCanceler['cancelNote'](cordsX, cordsY, currentTrack) // calling private method
+        expect(currentTrack['notes'][0]).toEqual(new Note(0, 1.5, 4, 'C5', noteHalf.NONE))
+    })
+
+    it('Note cancel test octave 2', () => {
+        const noteSound = 'C5'
+
+        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.SHARP)], keys.C, clefs.TREBLE)
+
+        notesCanceler['cancelNote'](cordsX, cordsY, currentTrack) // calling private method
+        expect(currentTrack['notes'][0]).toEqual(new Note(0, 1.5, 4, 'B4', noteHalf.NONE))
+    })
+
 })

@@ -138,8 +138,8 @@ export const calculateHalfNote = (sound: string, halfMap: halfMaps) => {
 
 export const getNoteFromHTML = (element: HTMLElement, song: Song): { cordsX: number, cordsY: number, currentTrack: Track } => {
     const editingNote = element
-    const tactElement = element.closest('.editor__tact')
-    const trackElement = element.closest('.editor__track')
+    const tactElement = element.closest('.editor-drawer__tact')
+    const trackElement = element.closest('.editor-drawer__track')
 
     const currentTactNumber = Number(tactElement!.id[tactElement!.id.length - 1])
     const currentTrackNumber = Number(trackElement!.id[trackElement!.id.length - 1])
@@ -156,8 +156,8 @@ export const getNoteFromHTML = (element: HTMLElement, song: Song): { cordsX: num
 }
 
 export const calculateNotePosition = (element: HTMLElement, song: Song): { cordsX: number, cordsY: number, currentTrack: Track, noteSound: string } => {
-    const tactElement = element.closest('.editor__tact')
-    const trackElement = element.closest('.editor__track')
+    const tactElement = element.closest('.editor-drawer__tact')
+    const trackElement = element.closest('.editor-drawer__track')
 
     const currentTactNumber = Number(tactElement!.id[tactElement!.id.length - 1])
     const currentTrackNumber = Number(trackElement!.id[trackElement!.id.length - 1])
@@ -170,7 +170,7 @@ export const calculateNotePosition = (element: HTMLElement, song: Song): { cords
     const clefOffset = song['tacts'][currentTactNumber as number]['tracks'][currentTrackNumber]['clef']
 
     const noteVerticalPosition = ((noteBottom / 12) - clefOffset) % 3.5
-    const noteOctave = 5 + Math.floor(((noteBottom / 12) - globalOffset - clefOffset) / 3.5)
+    const noteOctave = 4 + Math.floor(((noteBottom / 12) - globalOffset - clefOffset) / 3.5)
 
     const cordsX = noteLeft * 64 / 0.20 / document.body.scrollWidth
     const cordsY = noteBottom / 12
@@ -192,4 +192,8 @@ export const formatNoteForPlay = (sound: string) => {
     }
 
     return result
+}
+
+export const clearHoverNote = () => {
+    Array.from(document.getElementsByClassName('editor-drawer__track-fake')).forEach((element: any) => element.innerHTML = '')
 }
