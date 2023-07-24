@@ -1,5 +1,5 @@
 .editor-drawer {
-    width: 70%;
+    width: 80%;
     margin: 0 auto;
 
     &__inner {
@@ -12,12 +12,11 @@
     }
 
     &__start {
+        position: relative;
         pointer-events: none;
-        position: absolute;
-        left: -100px;
-        top: 45px;
-        width: 100px;
-        height: 100%;
+        width: 140px;
+        height: 60px;
+        margin-bottom: 20px;
     }
 
     &__key {
@@ -42,14 +41,32 @@
     }
 
     &__bracket {
-        position: absolute;
-        height: 100%;
-        top: 45px;
-        left: -120px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+        margin-bottom: 28px;
+
+        &::before {
+            position: absolute;
+            pointer-events: none;
+            top: 45px;
+            right: -10px;
+            content: '';
+            width: 0%;
+            height: 220px;
+            border-left: 2px solid black;
+        }
+    }
+
+    &__bracket-instrument {
+        font-family: 'TimesNewRoman';
+        margin-right: 10px;
+        margin-bottom: 4px;
     }
 
     &__bracket-img {
-        height: calc(100% - 120px);
+        height: 220px;
     }
 
     &__lines-start {
@@ -88,21 +105,11 @@
         flex-wrap: wrap;
         justify-content: center;
 
-        &::after {
-            pointer-events: none;
-            top: 45px;
-            left: -94px;
-            position: absolute;
-            content: '';
-            width: 100%;
-            height: 220px;
-            border-left: 2px solid black;
-        }
 
         &::before {
             pointer-events: none;
             top: 45px;
-            right: 7px;
+            right: -1px;
             position: absolute;
             content: '';
             height: 220px;
@@ -111,22 +118,23 @@
     }
 
     &__tact {
-        width: calc(25% - 4px);
+        flex: 1 1 auto;
         height: 100%;
 
-        max-width: 100%;
-
+    }
+    &__track-wrapper {
+        display: flex;
+        align-items: center;
     }
 
     &__track {
+        width: 100%;
         height: 130px;
         position: relative;
         margin-bottom: 40px;
 
         display: flex;
         align-items: center;
-
-
     }
 
     &__track-fake {

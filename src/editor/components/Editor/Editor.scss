@@ -1,6 +1,18 @@
+@font-face {
+    font-family: "Maestro";
+    font-weight: 400;
+    src: url("./../../fonts/Maestro.ttf"),
+}
+
+@font-face {
+    font-family: "TimesNewRoman";
+    font-weight: 400;
+    src: url("./../../fonts/TimesNewRoman.ttf"),
+}
+
+
 .editor {
     background: white;
-    width: calc(80% - 120px);
+    width: 80%;
     margin: 0 auto;
-    padding-left: 120px;
 }

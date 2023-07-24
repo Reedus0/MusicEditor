@@ -20,12 +20,13 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song }) => {
                 {song['tacts'].map((tact: Tact, sectionIndex: number) => sectionIndex % 4 === 0 ?
                     <div className='editor-drawer__section'>
                         <div className='editor-drawer__bracket'>
+                            {sectionIndex === 0 ? <h3 className='editor-drawer__bracket-instrument'>Piano</h3> : <></>}
                             <img className='editor-drawer__bracket-img' src={require('./../../img/bracket.png')} />
                         </div>
                         {song['tacts'].slice(sectionIndex, sectionIndex + 4).map((tact: Tact, tactIndex: number) =>
                             <div className='editor-drawer__tact' id={'tact-' + (tactIndex + sectionIndex)}>
                                 {tact['tracks'].map((track: Track, trackIndex: number) =>
-                                    <div className='editor-drawer__track' id={'track-' + (trackIndex + sectionIndex)}>
+                                    <div className='editor-drawer__track-wrapper' id={'track-wrapper-' + (trackIndex + sectionIndex)}>
                                         {tactIndex % 4 === 0 ?
                                             <div className='editor-drawer__start'>
                                                 {track.getClef() === clefs.TREBLE ?
@@ -49,27 +50,29 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song }) => {
                                             </div>
                                             :
                                             <></>}
-                                        <div className='editor-drawer__lines'>
-                                            {[...Array(5)].map(() => <div className='editor-drawer__line'></div>)}
-                                        </div>
-                                        {track['notes'].map((note: Note) => <div className={['editor-drawer__note', note['half'] !== noteHalf.NONE ? '_half' : ''].join(' ')} style={{ bottom: (note['verticalPosition'] * 12), left: (document.querySelector('.editor-drawer__tact')!.clientWidth * note['horizontalPosition'] / 64) }}>
-                                            {note['verticalPosition'] < 2 ? !Number.isInteger(note['verticalPosition']) ? <div className='editor-drawer__note-line'></div> : <div className='editor-drawer__note-line-up'></div> : ''}
-                                            {note['verticalPosition'] > 7 ? !Number.isInteger(note['verticalPosition']) ? <div className='editor-drawer__note-line'></div> : <div className='editor-drawer__note-line-down'></div> : ''}
-                                            {note['half'] === noteHalf.FLAT
-                                                ?
-                                                <div className='editor-drawer__note-flat'>b</div>
-                                                :
-                                                note['half'] === noteHalf.SHARP
+                                        <div className={['editor-drawer__track', '_track' + ((tactIndex + 1) * (trackIndex + 1) * (10 ** (trackIndex + 1)) + sectionIndex)].join(' ')} id={'track-' + trackIndex}>
+                                            <div className='editor-drawer__lines'>
+                                                {[...Array(5)].map(() => <div className='editor-drawer__line'></div>)}
+                                            </div>
+                                            {track['notes'].map((note: Note) => <div className={['editor-drawer__note', note['half'] !== noteHalf.NONE ? '_half' : ''].join(' ')} style={{ bottom: (note['verticalPosition'] * 12), left: (document.querySelector('._track' + ((tactIndex + 1) * (trackIndex + 1) * (10 ** (trackIndex + 1)) + sectionIndex))!.clientWidth / 64 * note['horizontalPosition']) }}>
+                                                {note['verticalPosition'] < 2 ? !Number.isInteger(note['verticalPosition']) ? <div className='editor-drawer__note-line'></div> : <div className='editor-drawer__note-line-up'></div> : ''}
+                                                {note['verticalPosition'] > 7 ? !Number.isInteger(note['verticalPosition']) ? <div className='editor-drawer__note-line'></div> : <div className='editor-drawer__note-line-down'></div> : ''}
+                                                {note['half'] === noteHalf.FLAT
                                                     ?
-                                                    <div className='editor-drawer__note-sharp'>#</div>
+                                                    <div className='editor-drawer__note-flat'>b</div>
                                                     :
-                                                    note['half'] === noteHalf.NATURAL
+                                                    note['half'] === noteHalf.SHARP
                                                         ?
-                                                        <div className='editor-drawer__note-natural'>♮</div>
+                                                        <div className='editor-drawer__note-sharp'>#</div>
                                                         :
-                                                        ''}
-                                        </div>)}
-                                        <div className='editor-drawer__track-fake' id={'tact-fake-' + trackIndex}>
+                                                        note['half'] === noteHalf.NATURAL
+                                                            ?
+                                                            <div className='editor-drawer__note-natural'>♮</div>
+                                                            :
+                                                            ''}
+                                            </div>)}
+                                            <div className='editor-drawer__track-fake' id={'tact-fake-' + trackIndex}>
+                                            </div>
                                         </div>
                                     </div>
                                 )}

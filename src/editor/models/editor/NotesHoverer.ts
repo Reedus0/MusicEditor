@@ -8,28 +8,28 @@ export class NotesHoverer implements IInstrument {
         const cursorX = mouseMoveEvent.clientX;
         const cursorY = mouseMoveEvent.clientY + window.scrollY;
 
-        const currentTactFake = document.elementFromPoint(cursorX, cursorY - window.scrollY)
+        const currentTrackFake = document.elementFromPoint(cursorX, cursorY - window.scrollY)
 
-        if (currentTactFake?.classList.contains('editor-drawer__note')) {
+        if (currentTrackFake?.classList.contains('editor-drawer__note')) {
             clearHoverNote()
             return
         }
-        if (currentTactFake?.classList.contains('editor-drawer__track-fake')) {
+        if (currentTrackFake?.classList.contains('editor-drawer__track-fake')) {
 
 
-            const { elementX, elementY } = getOffset(currentTactFake)
+            const { elementX, elementY } = getOffset(currentTrackFake)
 
             const tactOffsetX = cursorX - elementX
             const tactOffsetY = cursorY - elementY
 
-            const cordsX = (Math.floor(tactOffsetX / (document.body.clientWidth * (currentTactFake!.clientWidth / document.body.clientWidth) / step))) * document.body.clientWidth * (currentTactFake!.clientWidth / document.body.clientWidth) / step
+            const cordsX = (Math.floor(tactOffsetX / (document.body.clientWidth * (currentTrackFake!.clientWidth / document.body.clientWidth) / step))) * document.body.clientWidth * (currentTrackFake!.clientWidth / document.body.clientWidth) / step
             const cordsY = (60 - (Math.floor(tactOffsetY / 6)) * 6) + 60
 
-            const currentTact = currentTactFake.id[currentTactFake.id.length - 1]
+            const currentTact = currentTrackFake.id[currentTrackFake.id.length - 1]
             
             clearHoverNote()
 
-            currentTactFake.innerHTML = `<div class="editor-drawer__note-edit " id="editing-note-${currentTact}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;"></div>`
+            currentTrackFake.innerHTML = `<div class="editor-drawer__note-edit " id="editing-note-${currentTact}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;"></div>`
 
             const editingNote: any = document.getElementById(`editing-note-${currentTact}`)
 

@@ -141,13 +141,13 @@ export const getNoteFromHTML = (element: HTMLElement, song: Song): { cordsX: num
     const tactElement = element.closest('.editor-drawer__tact')
     const trackElement = element.closest('.editor-drawer__track')
 
-    const currentTactNumber = Number(tactElement!.id[tactElement!.id.length - 1])
-    const currentTrackNumber = Number(trackElement!.id[trackElement!.id.length - 1])
+    const currentTactNumber = Number(tactElement!.id.split('-')[1])
+    const currentTrackNumber = Number(trackElement!.id.split('-')[1])
 
     const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
     const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
 
-    const cordsX = noteLeft * 64 / tactElement!.clientWidth 
+    const cordsX = noteLeft * 64 / trackElement!.clientWidth 
     const cordsY = noteBottom / 12
 
     const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
@@ -159,8 +159,8 @@ export const calculateNotePosition = (element: HTMLElement, song: Song): { cords
     const tactElement = element.closest('.editor-drawer__tact')
     const trackElement = element.closest('.editor-drawer__track')
 
-    const currentTactNumber = Number(tactElement!.id[tactElement!.id.length - 1])
-    const currentTrackNumber = Number(trackElement!.id[trackElement!.id.length - 1])
+    const currentTactNumber = Number(tactElement!.id.split('-')[1])
+    const currentTrackNumber = Number(trackElement!.id.split('-')[1])
 
     const editingNote = document.getElementById('editing-note-' + currentTrackNumber)
 
@@ -172,10 +172,8 @@ export const calculateNotePosition = (element: HTMLElement, song: Song): { cords
     const noteVerticalPosition = ((noteBottom / 12) - clefOffset) % 3.5
     const noteOctave = 4 + Math.floor(((noteBottom / 12) - globalOffset - clefOffset) / 3.5)
 
-    const cordsX = noteLeft * 64 / tactElement!.clientWidth 
+    const cordsX = noteLeft * 64 / trackElement!.clientWidth 
     const cordsY = noteBottom / 12
-
-    console.log(tactElement!.clientWidth )
 
     const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
 

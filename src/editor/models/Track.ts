@@ -7,12 +7,16 @@ export class Track {
     private key: keys = keys.C
     private clef: clefs = clefs.TREBLE
     private timeSignature: string = '4/4'
-    constructor(notes: Note[], key: keys, timeSignature: string, clef: clefs) {
+    private instrument: string = ''
+    constructor(notes: Note[], key: keys, timeSignature: string, clef: clefs, instrument?: string) {
         this.notes = notes
         this.key = key
         this.clef = clef
         if (/[0-9]{1,2}(\/)[1-9]{1,2}/gm.test(timeSignature)) {
             this.timeSignature = timeSignature
+        }
+        if (instrument !== undefined) {
+            this.instrument = instrument
         }
     }
 
