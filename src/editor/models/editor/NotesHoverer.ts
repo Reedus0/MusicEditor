@@ -18,7 +18,6 @@ export class NotesHoverer implements IInstrument {
             const tactOffsetX = cursorX - elementX
             const tactOffsetY = cursorY - elementY
 
-
             const cordsX = (Math.floor(tactOffsetX / (document.body.scrollWidth * 0.20 / 4))) * document.body.scrollWidth * 0.20 / 4
             const cordsY = (60 - (Math.floor(tactOffsetY / 6)) * 6) + 60
 

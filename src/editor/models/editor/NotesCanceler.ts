@@ -1,6 +1,7 @@
-import { calculateHalfNote, halfMaps } from "../../utils"
+import { FlatMap, SharpMap, calculateHalfNote, getNoteFromHTML, halfMaps } from "../../utils"
 import { noteHalf } from "../Note"
 import { Song } from "../Song"
+import { Track } from "../Track"
 import { IInstrument } from "./IInsrument"
 
 export class NotesCanceler implements IInstrument {
@@ -8,25 +9,24 @@ export class NotesCanceler implements IInstrument {
 
 
     public action = (element: HTMLElement, song: Song) => {
-        const editingNote = element
-        const tactElement = element.closest('.editor__tact')
-        const trackElement = element.closest('.editor__track')
 
-        const currentTactNumber = Number(tactElement!.id[tactElement!.id.length - 1])
-        const currentTrackNumber = Number(trackElement!.id[trackElement!.id.length - 1])
+        const { cordsX, cordsY, currentTrack } = getNoteFromHTML(element, song)
 
-        const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
-        const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
+        this.cancelNote(cordsX, cordsY, currentTrack)
+    }
 
-        const cordsX = noteLeft * 64 / 0.20 / document.body.scrollWidth
-        const cordsY = noteBottom / 12
-
-        const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
-
-        if (currentTrack.getNote(cordsX, cordsY)['half'] !== noteHalf.NONE) {
-            const oldNote = currentTrack.getNote(cordsX, cordsY).getSound()
-            const newNote = (song['key'] as any)[cordsY % 3.5] + oldNote[oldNote.length - 1]
-            currentTrack.getNote(cordsX, cordsY).setSound(newNote, noteHalf.NONE)
+    private cancelNote = (cordsX: number, cordsY: number, currentTrack: Track) => {
+        const currentNote = currentTrack.getNote(cordsX, cordsY)
+        if (currentNote['half'] !== noteHalf.NONE) {
+            const oldSound = currentNote.getSound()
+            const oldOctave = oldSound[oldSound.length - 1]
+            let newNote: string = ''
+            if (currentNote['half'] === noteHalf.SHARP) {
+                newNote = FlatMap[oldSound.slice(0, -1)] + oldOctave.toString()
+            } else if (currentNote['half'] === noteHalf.FLAT) {
+                newNote = SharpMap[oldSound.slice(0, -1)] + oldOctave.toString()
+            }
+            currentNote.setSound(newNote, noteHalf.NONE)
         }
     }
 }

@@ -1,3 +1,6 @@
+import { Song } from "../models/Song"
+import { Track } from "../models/Track"
+
 export const globalOffset = 1.5
 
 export const CMajorMap: any = {
@@ -100,7 +103,7 @@ export const CancelMap: any = {
 export enum halfMaps {
     SHARP_MAP = SharpMap,
     FLAT_MAP = FlatMap,
-    CANCEL_MAP =CancelMap
+    CANCEL_MAP = CancelMap
 }
 
 
@@ -130,12 +133,58 @@ export const calculateHalfNote = (sound: string, halfMap: halfMaps) => {
     const oldSound = sound.slice(0, -1)
     let oldOctave = Number(sound[sound.length - 1])
 
-    if(oldSound === 'B' && halfMap === halfMaps.SHARP_MAP) {
+    if (oldSound === 'B' && halfMap === halfMaps.SHARP_MAP) {
         oldOctave += 1
     }
-    if(oldSound === 'C' && halfMap === halfMaps.FLAT_MAP) {
+    if (oldSound === 'C' && halfMap === halfMaps.FLAT_MAP) {
         oldOctave -= 1
     }
 
     return (halfMap as any)[oldSound] + oldOctave
+}
+
+export const getNoteFromHTML = (element: HTMLElement, song: Song): { cordsX: number, cordsY: number, currentTrack: Track } => {
+    const editingNote = element
+    const tactElement = element.closest('.editor__tact')
+    const trackElement = element.closest('.editor__track')
+
+    const currentTactNumber = Number(tactElement!.id[tactElement!.id.length - 1])
+    const currentTrackNumber = Number(trackElement!.id[trackElement!.id.length - 1])
+
+    const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
+    const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
+
+    const cordsX = noteLeft * 64 / 0.20 / document.body.scrollWidth
+    const cordsY = noteBottom / 12
+
+    const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
+
+    return { cordsX, cordsY, currentTrack }
+}
+
+export const calculateNotePosition = (element: HTMLElement, song: Song): { cordsX: number, cordsY: number, currentTrack: Track, noteSound: string } => {
+    const tactElement = element.closest('.editor__tact')
+    const trackElement = element.closest('.editor__track')
+
+    const currentTactNumber = Number(tactElement!.id[tactElement!.id.length - 1])
+    const currentTrackNumber = Number(trackElement!.id[trackElement!.id.length - 1])
+
+    const editingNote = document.getElementById('editing-note-' + currentTrackNumber)
+
+    const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
+    const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
+
+    const clefOffset = song['tacts'][currentTactNumber as number]['tracks'][currentTrackNumber]['clef']
+
+    const noteVerticalPosition = ((noteBottom / 12) - clefOffset) % 3.5
+    const noteOctave = 5 + Math.floor(((noteBottom / 12) - globalOffset - clefOffset) / 3.5)
+
+    const cordsX = noteLeft * 64 / 0.20 / document.body.scrollWidth
+    const cordsY = noteBottom / 12
+
+    const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
+
+    const noteSound = ((song['key'] as any)[noteVerticalPosition >= 0 ? noteVerticalPosition : 3.5 + noteVerticalPosition] + noteOctave.toString())
+
+    return { cordsX, cordsY, currentTrack, noteSound }
 }
