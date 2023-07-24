@@ -27,7 +27,7 @@ export class Note {
     }
 
     setSound(sound: string, half?: noteHalf) {
-        if (/[A-G]{1}(b)?[0-7]{1}$/gm.test(sound)) {
+        if (/[A-G]{1}[#b]?[0-7]{1}$/gm.test(sound)) {
             this.sound = sound
             if (half !== undefined) {
                 this.half = half

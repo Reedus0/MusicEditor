@@ -3,57 +3,6 @@ import { Track } from "../models/Track"
 
 export const globalOffset = 1.5
 
-export const CMajorMap: any = {
-    '0': 'G',
-    '0.5': 'A',
-    '1': 'B',
-    '1.5': 'C',
-    '2': 'D',
-    '2.5': 'E',
-    '3': 'F',
-}
-
-
-export const FMajorMap: any = {
-    '0': 'G',
-    '0.5': 'A',
-    '1': 'Bb',
-    '1.5': 'C',
-    '2': 'D',
-    '2.5': 'E',
-    '3': 'F',
-}
-
-export const GMajorMap: any = {
-    '0': 'G',
-    '0.5': 'A',
-    '1': 'B',
-    '1.5': 'C',
-    '2': 'D',
-    '2.5': 'E',
-    '3': 'Gb',
-}
-
-export const DMajorMap: any = {
-    '0': 'G',
-    '0.5': 'A',
-    '1': 'B',
-    '1.5': 'Db',
-    '2': 'D',
-    '2.5': 'E',
-    '3': 'Gb',
-}
-
-export const BbMajorMap: any = {
-    '0': 'G',
-    '0.5': 'A',
-    '1': 'Bb',
-    '1.5': 'C',
-    '2': 'D',
-    '2.5': 'Eb',
-    '3': 'F',
-}
-
 export const FlatMap: any = {
     'A': 'Ab',
     'B': 'Bb',
@@ -70,16 +19,24 @@ export const FlatMap: any = {
     'Eb': 'D',
     'Fb': 'Eb',
     'Gb': 'F',
+
+    'A#': 'A',
+    'B#': 'B',
+    'C#': 'C',
+    'D#': 'D',
+    'E#': 'E',
+    'F#': 'F',
+    'G#': 'G',
 }
 
 export const SharpMap: any = {
-    'A': 'Bb',
+    'A': 'A#',
     'B': 'C',
-    'C': 'Db',
-    'D': 'Eb',
+    'C': 'C#',
+    'D': 'D#',
     'E': 'F',
-    'F': 'Gb',
-    'G': 'Ab',
+    'F': 'F#',
+    'G': 'G#',
 
     'Ab': 'A',
     'Bb': 'B',
@@ -88,6 +45,14 @@ export const SharpMap: any = {
     'Eb': 'E',
     'Fb': 'F',
     'Gb': 'G',
+
+    'A#': 'B',
+    'B#': 'C#',
+    'C#': 'D',
+    'D#': 'E',
+    'E#': 'F#',
+    'F#': 'G',
+    'G#': 'A',
 }
 
 export const CancelMap: any = {
@@ -98,30 +63,58 @@ export const CancelMap: any = {
     'Eb': 'E',
     'Fb': 'F',
     'Gb': 'G',
+
+    'A#': 'A',
+    'B#': 'B',
+    'C#': 'C',
+    'D#': 'D',
+    'E#': 'E',
+    'F#': 'F',
+    'G#': 'G',
+}
+
+export const SharpToFlatMap: any = {
+    'A#': 'Bb',
+    'B#': 'C',
+    'C#': 'Db',
+    'D#': 'Eb',
+    'E#': 'F',
+    'F#': 'Gb',
+    'G#': 'Ab',
+}
+
+export const FlatToSharpMap: any = {
+    'Ab': 'G#',
+    'Bb': 'A#',
+    'Cb': 'B',
+    'Db': 'C#',
+    'Eb': 'D#',
+    'Fb': 'E',
+    'Gb': 'F#',
+}
+
+export const InvertMap: any = {
+    'Ab': 'G#',
+    'Bb': 'A#',
+    'Cb': 'B',
+    'Db': 'C#',
+    'Eb': 'D#',
+    'Fb': 'E',
+    'Gb': 'F#',
+
+    'A#': 'Bb',
+    'B#': 'C',
+    'C#': 'Db',
+    'D#': 'Eb',
+    'E#': 'F',
+    'F#': 'Gb',
+    'G#': 'Ab',
 }
 
 export enum halfMaps {
     SHARP_MAP = SharpMap,
     FLAT_MAP = FlatMap,
     CANCEL_MAP = CancelMap
-}
-
-
-export enum keys {
-    C = CMajorMap,
-    Am = CMajorMap,
-
-    F = FMajorMap,
-    Dm = FMajorMap,
-
-    G = GMajorMap,
-    Em = GMajorMap,
-
-    D = DMajorMap,
-    Bm = DMajorMap,
-
-    Bb = BbMajorMap,
-    Gm = BbMajorMap,
 }
 
 export enum clefs {
@@ -140,7 +133,7 @@ export const calculateHalfNote = (sound: string, halfMap: halfMaps) => {
         oldOctave -= 1
     }
 
-    return (halfMap as any)[oldSound] + oldOctave
+    return (halfMap as any)[oldSound] + oldOctave.toString()
 }
 
 export const getNoteFromHTML = (element: HTMLElement, song: Song): { cordsX: number, cordsY: number, currentTrack: Track } => {
@@ -187,4 +180,16 @@ export const calculateNotePosition = (element: HTMLElement, song: Song): { cords
     const noteSound = ((song['key'] as any)[noteVerticalPosition >= 0 ? noteVerticalPosition : 3.5 + noteVerticalPosition] + noteOctave.toString())
 
     return { cordsX, cordsY, currentTrack, noteSound }
+}
+
+export const formatNoteForPlay = (sound: string) => {
+    const oldSound = sound.slice(0, -1)
+    const oldOctave = Number(sound[sound.length - 1])
+    let result = oldSound + oldOctave
+
+    if (Object.keys(SharpToFlatMap).includes(oldSound)) {
+        result = SharpToFlatMap[oldSound] + oldOctave.toString()
+    }
+
+    return result
 }

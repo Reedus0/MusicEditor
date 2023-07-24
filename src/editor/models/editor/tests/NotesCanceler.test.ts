@@ -1,4 +1,5 @@
-import { clefs, keys } from "../../../utils"
+import { clefs } from "../../../utils"
+import { keys } from "../../../utils/keys"
 import { Note, noteHalf } from "../../Note"
 import { Track } from "../../Track"
 import { NotesCanceler } from "../NotesCanceler"
@@ -57,12 +58,12 @@ describe('NotesCanceler class tests', () => {
 
 
     it('Note cancel test Bm 1', () => {
-        const noteSound = 'Gb5'
+        const noteSound = 'G5'
 
-        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.FLAT)], keys.Bm, clefs.TREBLE)
+        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.SHARP)], keys.Bm, clefs.TREBLE)
 
         notesCanceler['cancelNote'](cordsX, cordsY, currentTrack) // calling private method
-        expect(currentTrack['notes'][0]).toEqual(new Note(0, 1.5, 4, 'G5', noteHalf.NONE))
+        expect(currentTrack['notes'][0]).toEqual(new Note(0, 1.5, 4, 'F#5', noteHalf.NONE))
     })
 
     it('Note cancel test Bm 2', () => {
@@ -71,7 +72,7 @@ describe('NotesCanceler class tests', () => {
         const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.SHARP)], keys.Bm, clefs.TREBLE)
 
         notesCanceler['cancelNote'](cordsX, cordsY, currentTrack) // calling private method
-        expect(currentTrack['notes'][0]).toEqual(new Note(0, 1.5, 4, 'Db5', noteHalf.NONE))
+        expect(currentTrack['notes'][0]).toEqual(new Note(0, 1.5, 4, 'C#5', noteHalf.NONE))
     })
 
     it('Note cancel test Bm 3', () => {
@@ -80,7 +81,7 @@ describe('NotesCanceler class tests', () => {
         const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.SHARP)], keys.Bm, clefs.TREBLE)
 
         notesCanceler['cancelNote'](cordsX, cordsY, currentTrack) // calling private method
-        expect(currentTrack['notes'][0]).toEqual(new Note(0, 1.5, 4, 'Gb5', noteHalf.NONE))
+        expect(currentTrack['notes'][0]).toEqual(new Note(0, 1.5, 4, 'F#5', noteHalf.NONE))
     })
 
     it('Note cancel test Bm 4', () => {
@@ -90,6 +91,61 @@ describe('NotesCanceler class tests', () => {
 
         notesCanceler['cancelNote'](cordsX, cordsY, currentTrack) // calling private method
         expect(currentTrack['notes'][0]).toEqual(new Note(0, 1.5, 4, 'Gb5', noteHalf.NONE))
+    })
+
+
+    it('Note cancel test Dm 1', () => {
+        const noteSound = 'B5'
+
+        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.SHARP)], keys.Dm, clefs.TREBLE)
+
+        notesCanceler['cancelNote'](cordsX, cordsY, currentTrack) // calling private method
+        expect(currentTrack['notes'][0]).toEqual(new Note(0, 1.5, 4, 'Bb5', noteHalf.NONE))
+    })
+
+    it('Note cancel test Dm 2', () => {
+        const noteSound = 'Cb5'
+
+        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.FLAT)], keys.Dm, clefs.TREBLE)
+
+        notesCanceler['cancelNote'](cordsX, cordsY, currentTrack) // calling private method
+        expect(currentTrack['notes'][0]).toEqual(new Note(0, 1.5, 4, 'C5', noteHalf.NONE))
+    })
+
+    it('Note cancel test Dm 3', () => {
+        const noteSound = 'G5'
+
+        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.NONE)], keys.Dm, clefs.TREBLE)
+
+        notesCanceler['cancelNote'](cordsX, cordsY, currentTrack) // calling private method
+        expect(currentTrack['notes'][0]).toEqual(new Note(0, 1.5, 4, 'G5', noteHalf.NONE))
+    })
+
+    it('Note cancel test Dm 4', () => {
+        const noteSound = 'Db5'
+
+        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.FLAT)], keys.Dm, clefs.TREBLE)
+
+        notesCanceler['cancelNote'](cordsX, cordsY, currentTrack) // calling private method
+        expect(currentTrack['notes'][0]).toEqual(new Note(0, 1.5, 4, 'D5', noteHalf.NONE))
+    })
+
+    it('Note cancel test natural 1 ', () => {
+        const noteSound = 'F5'
+
+        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.NATURAL)], keys.D, clefs.TREBLE)
+
+        notesCanceler['cancelNote'](cordsX, cordsY, currentTrack) // calling private method
+        expect(currentTrack['notes'][0]).toEqual(new Note(0, 1.5, 4, 'F#5', noteHalf.NONE))
+    })
+
+    it('Note cancel test natural 2', () => {
+        const noteSound = 'C6'
+
+        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.NATURAL)], keys.D, clefs.TREBLE)
+
+        notesCanceler['cancelNote'](cordsX, cordsY, currentTrack) // calling private method
+        expect(currentTrack['notes'][0]).toEqual(new Note(0, 1.5, 4, 'C#6', noteHalf.NONE))
     })
 
 })

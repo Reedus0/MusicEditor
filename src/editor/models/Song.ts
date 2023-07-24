@@ -1,4 +1,4 @@
-import { keys } from "../utils";
+import { keys } from "../utils/keys";
 import { Tact } from "./Tact";
 
 export class Song {

@@ -1,4 +1,5 @@
-import { clefs, keys } from "../../../utils"
+import { clefs } from "../../../utils"
+import { keys } from "../../../utils/keys"
 import { Note, noteHalf } from "../../Note"
 import { Track } from "../../Track"
 import { NotesNaturaler } from "../NotesNaturaler"
@@ -20,7 +21,7 @@ describe('NotesNaturaler class tests', () => {
     })
 
     it('Note natural test 2', () => {
-        const noteSound = 'Gb5'
+        const noteSound = 'F#5'
 
         const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.NONE)], keys.Bm, clefs.TREBLE)
 
@@ -29,7 +30,7 @@ describe('NotesNaturaler class tests', () => {
     })
 
     it('Note natural test 3', () => {
-        const noteSound = 'Bb5'
+        const noteSound = 'B#5'
 
         const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.NONE)], keys.Gm, clefs.TREBLE)
 
@@ -38,13 +39,11 @@ describe('NotesNaturaler class tests', () => {
     })
 
     it('Note natural test 4', () => {
-        const noteSound = 'Eb5'
+        const noteSound = 'E#5'
 
         const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.NONE)], keys.Gm, clefs.TREBLE)
 
         notesNaturaler['naturalNote'](cordsX, cordsY, currentTrack) // calling private method
         expect(currentTrack['notes'][0]).toEqual(new Note(0, 1.5, 4, 'E5', noteHalf.NATURAL))
     })
-
-
 })

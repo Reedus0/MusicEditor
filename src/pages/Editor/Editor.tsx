@@ -2,9 +2,9 @@ import './Editor.scss'
 import React, { FC, useEffect, useRef, useState } from 'react'
 import { Song } from '../../editor/models/Song';
 import { Tact } from '../../editor/models/Tact';
-import { Note, noteHalf } from '../../editor/models/Note';
+import { Note } from '../../editor/models/Note';
 import EditorDrawer from '../../editor/components/EditorDrawer/EditorDrawer';
-import { CMajorMap, clefs, keys } from '../../editor/utils';
+import { clefs, formatNoteForPlay } from '../../editor/utils';
 import { Track } from '../../editor/models/Track';
 import { IInstrument } from '../../editor/models/editor/IInsrument';
 import { NotesAdder } from '../../editor/models/editor/NotesAdder';
@@ -13,6 +13,7 @@ import { NotesFlatter } from '../../editor/models/editor/NotesFlatter';
 import { NotesSharper } from '../../editor/models/editor/NotesSharper';
 import { NotesCanceler } from '../../editor/models/editor/NotesCanceler';
 import { NotesNaturaler } from '../../editor/models/editor/NotesNaturaler';
+import { keys } from '../../editor/utils/keys';
 
 interface EditorProps {
 
@@ -25,7 +26,7 @@ const Editor: FC<EditorProps> = ({ }) => {
 
     const [instrument, setInstrument] = useState<IInstrument>({} as IInstrument)
 
-    const mainKey = keys.C
+    const mainKey = keys.D
 
     const tacts: Tact[] = [new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)]), new Tact([new Track([], mainKey, clefs.TREBLE), new Track([], mainKey, clefs.BASS)])]
 
@@ -62,7 +63,7 @@ const Editor: FC<EditorProps> = ({ }) => {
 
         if (currentNotes.length) {
             for (let i = 0; i < currentNotes.length; i++) {
-                (new Audio(require(`./../../editor/piano/${currentNotes[i]['sound']}.mp3`))).play()
+                (new Audio(require(`./../../editor/piano/${formatNoteForPlay(currentNotes[i]['sound'])}.mp3`))).play()
             }
         }
         iterratorNote += 1

@@ -1,4 +1,5 @@
-import { clefs, keys } from "../utils";
+import { clefs } from "../utils";
+import { keys } from "../utils/keys";
 import { Note } from "./Note";
 
 export class Track {
@@ -9,6 +10,10 @@ export class Track {
         this.notes = notes
         this.key = key
         this.clef = clef
+    }
+
+    getKey() {
+        return this.key
     }
 
     addNote(note: Note) {
