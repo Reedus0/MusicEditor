@@ -4,7 +4,7 @@ import { Song } from '../../models/Song'
 import { Tact } from '../../models/Tact'
 import { Track } from '../../models/Track'
 import { IInstrument } from '../../models/editor/IInsrument'
-import { clefs, formatNoteForPlay } from '../../utils'
+import { clearActiveTacts, clefs, formatNoteForPlay, highlightTact } from '../../utils'
 import { keys } from '../../utils/keys'
 import React, { FC, useEffect, useRef, useState } from 'react'
 import EditorInstruments from '../EditorInstruments/EditorInstruments'
@@ -23,7 +23,7 @@ const Editor: FC<EditorProps> = ({ }) => {
 
     const [instrument, setInstrument] = useState<IInstrument>({} as IInstrument)
 
-    const mainKey = keys.D
+    const mainKey = keys.Bb
 
     const tacts: Tact[] = [new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]),]
 
@@ -43,6 +43,7 @@ const Editor: FC<EditorProps> = ({ }) => {
             iterratorTact = 1
             position += 1
         }
+        highlightTact(position)
     }
 
     const countNotes = () => {
@@ -69,12 +70,13 @@ const Editor: FC<EditorProps> = ({ }) => {
     const stopPlaying = () => {
         clearInterval((incrementTact.current as any))
         clearInterval((incrementNotes.current as any))
+        clearActiveTacts()
         setIsPlaying(false)
     }
 
     useEffect(() => {
         if (isPlaying) {
-
+            highlightTact(0)
             setIsEditing(false)
             setInstrument({} as IInstrument)
 

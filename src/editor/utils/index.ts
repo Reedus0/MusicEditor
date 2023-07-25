@@ -120,7 +120,8 @@ export enum halfMaps {
 
 export enum clefs {
     TREBLE = 0,
-    BASS = 6
+    BASS = 6,
+    ALTO = 3
 }
 
 
@@ -201,12 +202,20 @@ export const clearHoverNote = () => {
     Array.from(document.getElementsByClassName('editor-drawer__track-fake')).forEach((element: any) => element.innerHTML = '')
 }
 
+export const clearActiveTacts = () => {
+    Array.from(document.getElementsByClassName('editor-drawer__tact')).forEach((element: any) => element.classList.remove('_active'))
+}
+
+export const highlightTact = (position: number) => {
+    document.getElementById('tact-' + position)?.classList.add('_active')
+    document.getElementById('tact-' + (position - 1))?.classList.remove('_active')
+}
+
 export const getNotesLine = (notes: Note[]): number[] => {
     let result = new Set()
-    for(let i = 0; i < notes.length; i ++){
+    for (let i = 0; i < notes.length; i++) {
         result.add(notes[i]['horizontalPosition'])
     }
-    console.log(Array.from(result))
     return Array.from(result) as number[]
 }
 

@@ -36,10 +36,14 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song }) => {
                                                             <img className='editor-drawer__key-img' width={40} height={100} src={require('./../../img/treble.png')} />
                                                         </div>
                                                         :
-                                                        <div className='editor-drawer__key _bass'>
-                                                            <img className='editor-drawer__key-img _bass' width={40} height={36} src={require('./../../img/bass.png')} />
-
-                                                        </div>
+                                                        track.getClef() === clefs.BASS ?
+                                                            <div className='editor-drawer__key _bass'>
+                                                                <img className='editor-drawer__key-img _bass' width={40} height={36} src={require('./../../img/bass.png')} />
+                                                            </div>
+                                                            :
+                                                            <div className='editor-drawer__key _alto'>
+                                                                <img className='editor-drawer__key-img _alto' width={40} height={50} src={require('./../../img/alto.png')} />
+                                                            </div>
                                                     }
                                                 </div>
                                                 <div className='editor-drawer__start-sings' style={{ width: Math.abs(keysHalfsMap.get(track.getKey())) * 17 }}>
@@ -47,12 +51,12 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song }) => {
                                                         keysHalfsMap.get(track.getKey()) < 0
                                                             ?
                                                             <h4 className='editor-drawer__start-sing'
-                                                                style={{ bottom: keysHalfsPositionMap[(index + 1) * -1], left: 50 + (15 * (index + 1)) }}>
+                                                                style={{ bottom: keysHalfsPositionMap[(index + 1) * -1] + (track.getClef() * -2), left: 50 + (15 * (index + 1)) }}>
                                                                 b
                                                             </h4>
                                                             :
                                                             <h4 className='editor-drawer__start-sing'
-                                                                style={{ bottom: keysHalfsPositionMap[(index + 1)], left: 50 + (15 * (index + 1)) }}>
+                                                                style={{ bottom: keysHalfsPositionMap[(index + 1)] + (track.getClef() * -2), left: 50 + (15 * (index + 1)) }}>
                                                                 #
                                                             </h4>)}
                                                 </div>

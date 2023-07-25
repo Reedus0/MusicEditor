@@ -1,5 +1,5 @@
 .editor-drawer {
-    width: 80%;
+    width: 85%;
     margin: 0 auto;
 
     &__inner {
@@ -141,9 +141,23 @@
     }
 
     &__tact {
+        position: relative;
         flex: 1 1 auto;
         height: 100%;
-
+        &._active {
+            &::before{
+                content: '';
+                width: 100%;
+                height: calc(100% - 120px);
+                position: absolute;
+                top: 45px; 
+                background: rgb(231, 163, 163);
+                left: 0;
+            }
+            .editor-drawer__note::after {
+                background: rgb(231, 163, 163);
+            }
+        }
     }
 
     &__track-wrapper {
