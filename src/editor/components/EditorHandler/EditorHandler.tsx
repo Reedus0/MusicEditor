@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useReducer } from 'react'
+import React, { FC, useEffect, useMemo, useReducer } from 'react'
 import { IInstrument } from '../../models/editor/IInsrument'
 import { NotesHoverer } from '../../models/editor/NotesHoverer'
 import { Song } from '../../models/Song'
@@ -22,6 +22,7 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
         forceUpdate()
     }
 
+
     document.onmousemove = (e: any) => {
         if (!isEditing) return
         if (!(instrument.name === 'notesAdder')) return
@@ -33,43 +34,11 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
     document.onclick = (e: any) => {
         if (e.target.classList.contains('editor-drawer__note')) {
             if (!isEditing) return
-            if (instrument.name === 'notesFlatter') {
-                instrument.action(e.target, song)
-                forceUpdate()
-            }
+            if (instrument.name === 'notesAdder') return
+            instrument.action(e.target, song)
+            forceUpdate()
         }
 
-        if (e.target.classList.contains('editor-drawer__note')) {
-            if (!isEditing) return
-            if (instrument.name === 'notesSharper') {
-                instrument.action(e.target, song)
-                forceUpdate()
-            }
-        }
-
-        if (e.target.classList.contains('editor-drawer__note')) {
-            if (!isEditing) return
-            if (instrument.name === 'notesCanceler') {
-                instrument.action(e.target, song)
-                forceUpdate()
-            }
-        }
-
-        if (e.target.classList.contains('editor-drawer__note')) {
-            if (!isEditing) return
-            if (instrument.name === 'notesNaturaler') {
-                instrument.action(e.target, song)
-                forceUpdate()
-            }
-        }
-
-        if (e.target.classList.contains('editor-drawer__note')) {
-            if (!isEditing) return
-            if (instrument.name === 'notesDeleter') {
-                instrument.action(e.target, song)
-                forceUpdate()
-            }
-        }
 
         if (e.target.closest('.editor-drawer__track-notes') !== undefined) {
             if (!isEditing) return
@@ -90,8 +59,9 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
         clearHoverNote()
     }, [isEditing, instrument])
 
+
     return (
-        <EditorDrawer song={song} />
+        <EditorDrawer song={song} ignored={ignored} />
     )
 }
 

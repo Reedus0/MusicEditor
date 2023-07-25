@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useReducer } from 'react'
+import React, { FC, memo, useEffect, useReducer } from 'react'
 import { Song } from '../../models/Song';
 
 import './EditorDrawer.scss'
@@ -10,12 +10,13 @@ import { CMajorMap, keys, keysHalfsMap, keysHalfsPositionMap } from '../../utils
 
 interface EditorDrawerProps {
     song: Song,
-
+    ignored: number
 }
 
-const EditorDrawer: FC<EditorDrawerProps> = ({ song }) => {
+const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
+    console.log('render')
     return (
-        <div className='editor-drawer'>
+        <div className='editor-drawer' id='#editor-drawer'>
             <div className='editor-drawer__inner'>
                 {song['tacts'].map((tact: Tact, sectionIndex: number) => sectionIndex % 4 === 0 ?
                     <div className='editor-drawer__section'>
@@ -80,9 +81,8 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song }) => {
                                             <div className='editor-drawer__lines'>
                                                 {[...Array(5)].map(() => <div className='editor-drawer__line'></div>)}
                                             </div>
-                                            {getNotesLine(track['notes'].sort((a: Note, b: Note) => a['verticalPosition'] > b['verticalPosition'] ? 1 : -1)).map((line: number, index: number) =>
+                                            {getNotesLine(track['notes']).map((line: number) =>
                                                 <div className='editor-drawer__notes-line'>
-
                                                     {track['notes'].filter((note: Note) => note['horizontalPosition'] === line).sort((a: Note, b: Note) => a['verticalPosition'] > b['verticalPosition'] ? 1 : -1).map((note: Note) =>
                                                         <div
                                                             className={
@@ -128,4 +128,4 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song }) => {
     )
 }
 
-export default EditorDrawer;
+export default memo(EditorDrawer);
