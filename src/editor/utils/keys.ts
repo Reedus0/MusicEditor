@@ -64,3 +64,28 @@ export enum keys {
     Bb = BbMajorMap,
     Gm = BbMajorMap,
 }
+
+export const keysHalfsMap = new Map()
+
+keysHalfsMap.set(keys.C, 0)
+keysHalfsMap.set(keys.F, -1)
+keysHalfsMap.set(keys.Bb, -2)
+keysHalfsMap.set(keys.G, 1)
+keysHalfsMap.set(keys.D, 2)
+
+export const keysHalfsPositionMap: any = {
+    '-7' : -42,
+    '-6' : -18,
+    '-5' : -36,
+    '-4' : -12,
+    '-3' : -30,
+    '-2' : -6,
+    '-1': -24,
+    '1': 0,
+    '2': -18,
+    '3': 6,
+    '4': -12,
+    '5': -30,
+    '6': -6,
+    '7': -24
+}

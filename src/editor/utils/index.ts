@@ -1,3 +1,4 @@
+import { Note } from "../models/Note"
 import { Song } from "../models/Song"
 import { Track } from "../models/Track"
 
@@ -122,6 +123,8 @@ export enum clefs {
     BASS = 6
 }
 
+
+
 export const calculateHalfNote = (sound: string, halfMap: halfMaps) => {
     const oldSound = sound.slice(0, -1)
     let oldOctave = Number(sound[sound.length - 1])
@@ -147,7 +150,7 @@ export const getNoteFromHTML = (element: HTMLElement, song: Song): { cordsX: num
     const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
     const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
 
-    const cordsX = noteLeft * 64 / trackElement!.clientWidth 
+    const cordsX = noteLeft * 64 / trackElement!.clientWidth
     const cordsY = noteBottom / 12
 
     const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
@@ -172,7 +175,7 @@ export const calculateNotePosition = (element: HTMLElement, song: Song): { cords
     const noteVerticalPosition = ((noteBottom / 12) - clefOffset) % 3.5
     const noteOctave = 4 + Math.floor(((noteBottom / 12) - globalOffset - clefOffset) / 3.5)
 
-    const cordsX = noteLeft * 64 / trackElement!.clientWidth 
+    const cordsX = noteLeft * 64 / trackElement!.clientWidth
     const cordsY = noteBottom / 12
 
     const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
@@ -196,4 +199,36 @@ export const formatNoteForPlay = (sound: string) => {
 
 export const clearHoverNote = () => {
     Array.from(document.getElementsByClassName('editor-drawer__track-fake')).forEach((element: any) => element.innerHTML = '')
+}
+
+export const getNotesLine = (notes: Note[]): number[] => {
+    let result = new Set()
+    for(let i = 0; i < notes.length; i ++){
+        result.add(notes[i]['horizontalPosition'])
+    }
+    console.log(Array.from(result))
+    return Array.from(result) as number[]
+}
+
+export const arraySort = (array: any[]): any[] => {
+    const half = array.length / 2
+
+    if (array.length < 2) {
+        return array
+    }
+
+    const left = array.splice(0, half)
+    return mergeArrays(arraySort(left), arraySort(array))
+}
+
+export const mergeArrays = (left: any[], right: any[]): any[] => {
+    let arr = []
+    while (left.length && right.length) {
+        if (left[0] < right[0]) {
+            arr.push(left.shift())
+        } else {
+            arr.push(right.shift())
+        }
+    }
+    return [...arr, ...left, ...right]
 }

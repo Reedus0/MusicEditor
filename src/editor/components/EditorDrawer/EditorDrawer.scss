@@ -12,11 +12,16 @@
     }
 
     &__start {
+        display: flex;
         position: relative;
         pointer-events: none;
-        width: 140px;
-        height: 60px;
-        margin-bottom: 20px;
+        height: 50px;
+        margin-bottom: 30px;
+    }
+
+    &__key-wrapper {
+        width: 70px;
+        height: 100%;
     }
 
     &__key {
@@ -40,6 +45,16 @@
         z-index: 100;
     }
 
+    &__start-sing {
+        position: absolute;
+        font-family: 'Maestro';
+        font-size: 51px;
+    }
+
+    &__start-sings {
+        height: 100%;
+    }
+
     &__bracket {
         position: relative;
         display: flex;
@@ -61,6 +76,7 @@
 
     &__bracket-instrument {
         font-family: 'TimesNewRoman';
+        font-weight: 700;
         margin-right: 10px;
         margin-bottom: 4px;
     }
@@ -70,8 +86,8 @@
     }
 
     &__lines-start {
+        position: absolute;
         pointer-events: none;
-        position: relative;
         top: -10px;
         z-index: 999;
         width: 100%;
@@ -79,21 +95,28 @@
     }
 
     &__signature {
-        top: -9px;
-        left: 64px;
-        position: absolute;
+        padding-right: 20px;
+        margin-top: 2px;
+        height: 100%;
         display: flex;
         flex-direction: column;
+        align-items: center;
         justify-content: space-between;
     }
 
-    &__signature-number {
+    &__signautre-number-wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
+
+    }
+
+    &__signature-number {
         font-family: Maestro;
-        font-size: 46px;
-        line-height: 24px;
+        font-size: 50px;
+        line-height: 0px;
+        height: 25px;
+
     }
 
 
@@ -122,6 +145,7 @@
         height: 100%;
 
     }
+
     &__track-wrapper {
         display: flex;
         align-items: center;
@@ -204,6 +228,14 @@
             width: 10px;
             height: 8px;
             background: white;
+        }
+
+        &._margin {
+            margin-left: 20px;
+
+            &:nth-child(2n + 1) {
+                margin-left: 0;
+            }
         }
 
     }

@@ -28,6 +28,10 @@ export class Track {
         return this.clef
     }
 
+    getInstrument() {
+        return this.instrument
+    }
+
     getTimeSignature() {
         return this.timeSignature
     }
