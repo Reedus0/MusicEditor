@@ -23,11 +23,11 @@ const Editor: FC<EditorProps> = ({ }) => {
 
     const [instrument, setInstrument] = useState<IInstrument>({} as IInstrument)
 
-    const mainKey = keys.Bb
+    const mainKey = keys.Em
 
     const tacts: Tact[] = [new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]),]
 
-    const [song, setSong] = useState<Song>(new Song(tacts, 80, mainKey))
+    const [song, setSong] = useState<Song>(new Song(tacts, 100, mainKey))
 
     const incrementTact = useRef(null)
     const incrementNotes = useRef(null)

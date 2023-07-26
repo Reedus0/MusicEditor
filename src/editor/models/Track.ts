@@ -1,6 +1,6 @@
 import { clefs } from "../utils";
 import { keys } from "../utils/keys";
-import { Note } from "./Note";
+import { Note, noteHalf } from "./Note";
 
 export class Track {
     private notes: Note[] = []

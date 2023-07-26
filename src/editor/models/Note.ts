@@ -36,6 +36,10 @@ export class Note {
             throw new Error('Sound is not valid: ' + sound)
         }
     }
+
+    getHalf(){
+        return this.half
+    }
 }
 
 export enum noteHalf {

@@ -14,7 +14,6 @@ interface EditorDrawerProps {
 }
 
 const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
-    console.log('render')
     return (
         <div className='editor-drawer' id='#editor-drawer'>
             <div className='editor-drawer__inner'>
@@ -100,7 +99,7 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
                                                             {note['verticalPosition'] > 7 ? !Number.isInteger(note['verticalPosition']) ? <div className='editor-drawer__note-line'></div> : <div className='editor-drawer__note-line-down'></div> : ''}
                                                             {note['half'] === noteHalf.FLAT
                                                                 ?
-                                                                <div className='editor-drawer__note-flat'>b</div>
+                                                                <div className={['editor-drawer__note-flat',].join(' ')}>b</div>
                                                                 :
                                                                 note['half'] === noteHalf.SHARP
                                                                     ?
@@ -108,7 +107,7 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
                                                                     :
                                                                     note['half'] === noteHalf.NATURAL
                                                                         ?
-                                                                        <div className='editor-drawer__note-natural'>♮</div>
+                                                                        <div className='editor-drawer__note-natural'>é</div>
                                                                         :
                                                                         ''}
                                                         </div>)}

@@ -144,19 +144,19 @@
         position: relative;
         flex: 1 1 auto;
         height: 100%;
+
         &._active {
-            &::before{
+            &::before {
                 content: '';
                 width: 100%;
                 height: calc(100% - 120px);
                 position: absolute;
-                top: 45px; 
+                top: 45px;
                 background: rgb(231, 163, 163);
                 left: 0;
             }
-            .editor-drawer__note::after {
-                background: rgb(231, 163, 163);
-            }
+
+            .editor-drawer__note::after {}
         }
     }
 
@@ -249,8 +249,52 @@
 
             &:nth-child(2n + 1) {
                 margin-left: 0;
+
+
+            }
+
+            &:nth-child(2n) {
+                @for $i from 1 through 4 {
+                    &:nth-child(#{$i}n of .editor-drawer__note._half) {
+
+                        .editor-drawer__note-flat,
+                        .editor-drawer__note-sharp,
+                        .editor-drawer__note-natural {
+                            left: calc(calc(-#{$i} * 12px) - 24px);
+                        }
+                    }
+
+                }
             }
         }
+
+
+        @for $i from 1 through 4 {
+            &:nth-child(#{$i}n of .editor-drawer__note._half) {
+
+                .editor-drawer__note-flat,
+                .editor-drawer__note-sharp,
+                .editor-drawer__note-natural {
+                    left: calc(calc(-#{$i} * 12px) - 4px);
+                }
+            }
+
+
+        }
+
+
+
+        // &:nth-child(2n) {
+        //     .editor-drawer__note-flat {
+        //         left: -50px;
+
+        //         &._margin {
+
+        //             left: calc(n + -70px);
+
+        //         }
+        //     }
+        // }
 
     }
 
@@ -261,17 +305,28 @@
     &__note-flat,
     &__note-sharp,
     &__note-natural {
-        font-size: 10px;
+        user-select: none;
+        font-family: 'Maestro';
+        font-size: 40px;
+        line-height: 0;
+        height: 40px;
+
         position: absolute;
 
         left: -15px;
-        top: 0px;
+        top: -3px;
+
+
+        &._margin {
+
+            left: -30px;
+
+        }
     }
 
     &__note-natural {
-        font-size: 16px;
-
-        top: -6px;
+        font-size: 50px;
+        top: -5px;
     }
 
     &__note-line,
