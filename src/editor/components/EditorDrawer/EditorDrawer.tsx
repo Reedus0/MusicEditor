@@ -51,12 +51,12 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
                                                         keysHalfsMap.get(track.getKey()) < 0
                                                             ?
                                                             <h4 className='editor-drawer__start-sing'
-                                                                style={{ bottom: keysHalfsPositionMap[(index + 1) * -1] + (track.getClef() * -2), left: 50 + (15 * (index + 1)) }}>
+                                                                style={{ bottom: keysHalfsPositionMap[(index + 1) * -1] + (track.getClef() * -2) - 1, left: 50 + (15 * (index + 1)) }}>
                                                                 b
                                                             </h4>
                                                             :
                                                             <h4 className='editor-drawer__start-sing'
-                                                                style={{ bottom: keysHalfsPositionMap[(index + 1)] + (track.getClef() * -2), left: 50 + (15 * (index + 1)) }}>
+                                                                style={{ bottom: keysHalfsPositionMap[(index + 1)] + (track.getClef() * -2) - 1, left: 50 + (15 * (index + 1)) }}>
                                                                 #
                                                             </h4>)}
                                                 </div>
@@ -86,7 +86,7 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
                                                         <div
                                                             className={
                                                                 ['editor-drawer__note',
-                                                                    note['half'] !== noteHalf.NONE ? '_half' : '', 
+                                                                    note['half'] !== noteHalf.NONE ? '_half' : '',
                                                                     track.getNote(note['horizontalPosition'], note['verticalPosition'] - 0.5) !== undefined
                                                                         ||
                                                                         track.getNote(note['horizontalPosition'], note['verticalPosition'] + 0.5) !== undefined ? '_margin' : ''].join(' ')}
@@ -95,8 +95,8 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
                                                                 left: (document.querySelector('._track' + ((tactIndex + 1) * (trackIndex + 1) * (10 ** (trackIndex + 1)) + sectionIndex))!.clientWidth / 64 * note['horizontalPosition'])
                                                             }}
                                                         >
-                                                            {note['verticalPosition'] < 2 ? !Number.isInteger(note['verticalPosition']) ? <div className='editor-drawer__note-line'></div> : <div className='editor-drawer__note-line-up'></div> : ''}
-                                                            {note['verticalPosition'] > 7 ? !Number.isInteger(note['verticalPosition']) ? <div className='editor-drawer__note-line'></div> : <div className='editor-drawer__note-line-down'></div> : ''}
+                                                            <h3 className='editor-drawer__note-symbol'>w</h3>
+                                                            {!Number.isInteger(note['verticalPosition']) ? <div className='editor-drawer__note-line'></div> : <></>}
                                                             {note['half'] === noteHalf.FLAT
                                                                 ?
                                                                 <div className='editor-drawer__note-flat editor-drawer__note-half'>b</div>

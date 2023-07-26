@@ -155,8 +155,6 @@
                 background: rgb(231, 163, 163);
                 left: 0;
             }
-
-            .editor-drawer__note::after {}
         }
     }
 
@@ -219,30 +217,31 @@
         margin-top: 10px;
     }
 
+    &__note-symbol {
+        pointer-events: none;
+        font-family: Maestro;
+        line-height: 0;
+        font-size: 45px;
+        margin-bottom: 22px;
+    }
+
     &__note,
     &__note-edit {
+
+        font-family: Maestro;
+        user-select: none;
+        font-size: 45px;
+        line-height: 0;
+        z-index: 1001;
+        position: absolute;
+        height: 12px;
         z-index: 1001;
         position: absolute;
 
-        width: 20px;
-        height: 12px;
 
-
-        background: black;
-
-        border-radius: 50%;
-
-        &::after {
-            transform: rotate(60deg);
-            border-radius: 60%;
-            top: 2px;
-            left: 5px;
-            position: absolute;
-            content: '';
-            width: 10px;
-            height: 8px;
-            background: white;
-        }
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         &._margin {
             margin-left: 18px;
@@ -261,7 +260,8 @@
     }
 
     &__note-edit {
-        background: rgb(116, 116, 116);
+        pointer-events: none;
+        color: rgb(116, 116, 116);
     }
 
     &__note-flat,
@@ -286,11 +286,12 @@
 
     &__note-natural {
         font-size: 52px;
-        top: -6px;
+        top: -2px;
     }
 
     &__note-line,
     &__note-line-edit {
+        pointer-events: none;
         z-index: 100;
         position: absolute;
         top: 5px;
@@ -304,7 +305,7 @@
     &__note-line-up,
     &__note-line-up-edit {
         position: absolute;
-        top: -1px;
+        top: 3px;
         left: -4px;
         width: 28px;
         height: 2px;

@@ -10,12 +10,7 @@ export class NotesHoverer implements IInstrument {
 
         const currentTrackFake = document.elementFromPoint(cursorX, cursorY - window.scrollY)
 
-        if (currentTrackFake?.classList.contains('editor-drawer__note')) {
-            clearHoverNote()
-            return
-        }
         if (currentTrackFake?.classList.contains('editor-drawer__track-fake')) {
-
 
             const { elementX, elementY } = getOffset(currentTrackFake)
 
@@ -26,26 +21,29 @@ export class NotesHoverer implements IInstrument {
             const cordsY = (60 - (Math.floor(tactOffsetY / 6)) * 6) + 60
 
             const currentTact = currentTrackFake.id[currentTrackFake.id.length - 1]
-            
+
             clearHoverNote()
 
-            currentTrackFake.innerHTML = `<div class="editor-drawer__note-edit " id="editing-note-${currentTact}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;"></div>`
+            currentTrackFake.innerHTML = `
+            <div class="editor-drawer__note-edit " id="editing-note-${currentTact}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
+            <h3 class='editor-drawer__note-symbol'>w</h3>
+            </div>`
 
             const editingNote: any = document.getElementById(`editing-note-${currentTact}`)
 
-            if (cordsY <= 18) {
-                if (cordsY % 12 === 0) {
-                    editingNote.innerHTML = `<div class='editor-drawer__note-line-up-edit'></div>`
-                } else {
-                    editingNote.innerHTML = `<div class='editor-drawer__note-line-edit'></div>`
-                }
-            } else if (cordsY >= 90) {
-                if (cordsY % 12 === 0) {
-                    editingNote.innerHTML = `<div class='editor-drawer__note-line-down-edit'></div>`
-                } else {
-                    editingNote.innerHTML = `<div class='editor-drawer__note-line-edit'></div>`
-                }
-            }
+            // if (cordsY <= 18) {
+            //     if (cordsY % 12 === 0) {
+            //         editingNote.innerHTML += `<div class='editor-drawer__note-line-up-edit'></div>`
+            //     } else {
+            //         editingNote.innerHTML += `<div class='editor-drawer__note-line-edit'></div>`
+            //     }
+            // } else if (cordsY >= 90) {
+            //     if (cordsY % 12 === 0) {
+            //         editingNote.innerHTML += `<div class='editor-drawer__note-line-down-edit'></div>`
+            //     } else {
+            //         editingNote.innerHTML += `<div class='editor-drawer__note-line-edit'></div>`
+            //     }
+            // }
         }
     }
 }
