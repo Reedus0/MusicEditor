@@ -281,21 +281,6 @@
 
 
         }
-
-
-
-        // &:nth-child(2n) {
-        //     .editor-drawer__note-flat {
-        //         left: -50px;
-
-        //         &._margin {
-
-        //             left: calc(n + -70px);
-
-        //         }
-        //     }
-        // }
-
     }
 
     &__note-edit {
@@ -305,6 +290,7 @@
     &__note-flat,
     &__note-sharp,
     &__note-natural {
+        pointer-events: none;
         user-select: none;
         font-family: 'Maestro';
         font-size: 40px;

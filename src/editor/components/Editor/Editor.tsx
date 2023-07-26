@@ -21,6 +21,8 @@ const Editor: FC<EditorProps> = ({ }) => {
     const [isPlaying, setIsPlaying] = useState<boolean>(false)
     const [isEditing, setIsEditing] = useState<boolean>(false)
 
+    const [canPlay, setCanPlay] = useState<boolean>(false)
+
     const [instrument, setInstrument] = useState<IInstrument>({} as IInstrument)
 
     const mainKey = keys.Em
@@ -29,13 +31,16 @@ const Editor: FC<EditorProps> = ({ }) => {
 
     const [song, setSong] = useState<Song>(new Song(tacts, 100, mainKey))
 
-    const incrementTact = useRef(null)
-    const incrementNotes = useRef(null)
+    let incrementTact = useRef(null)
+    let songIsReady = useRef(null)
+    let incrementNotes = useRef(null)
 
     let iterratorTact: number = 0;
     let iterratorNote: number = 0;
 
     let position: number = 0;
+
+    let songSounds: { [key: number]: HTMLAudioElement }[][] = []
 
     const countTacts = () => {
         iterratorTact += 1
@@ -53,18 +58,58 @@ const Editor: FC<EditorProps> = ({ }) => {
             return
         }
 
-        const currentNotes: Note[] = []
+        playSong(songSounds, position, iterratorNote)
+        iterratorNote += 1
 
-        for (let i = 0; i < song['tacts'][position]['tracks'].length; i++) {
-            currentNotes.push(...song['tacts'][position]['tracks'][i]['notes'].filter((note: Note) => Math.round(note['horizontalPosition']) === iterratorNote))
-        }
 
-        if (currentNotes.length) {
-            for (let i = 0; i < currentNotes.length; i++) {
-                (new Audio(require(`./../../piano/${formatNoteForPlay(currentNotes[i]['sound'])}.mp3`))).play()
+    }
+
+    const loadSong = (song: Song): { [key: number]: HTMLAudioElement }[][] => {
+        const notes: Note[][] = []
+        for (let tact = 0; tact < song['tacts'].length; tact++) {
+            notes.push([])
+            for (let track = 0; track < song['tacts'][tact]['tracks'].length; track++) {
+                for (let note = 0; note < song['tacts'][tact]['tracks'][track].getNotes().length; note++) {
+                    notes[tact].push(song['tacts'][tact]['tracks'][track].getNotes()[note])
+                }
             }
         }
-        iterratorNote += 1
+        const sounds = notes.map((notesArray: Note[]) => notesArray.map((note: Note) => {
+            return { [note['horizontalPosition']]: new Audio(require(`./../../piano/${formatNoteForPlay(note['sound'])}.mp3`)) }
+        }))
+
+        return sounds
+    }
+
+    const checkIfSoundAreLoaded = (sounds: { [key: number]: HTMLAudioElement }[][]): boolean => {
+        let canPlay: boolean[] = []
+        for (let i = 0; i < sounds.length; i++) {
+            for (let j = 0; j < sounds[i].length; j++) {
+                const currentSounds = Object.values(sounds[i][j])
+                for (let k = 0; k < currentSounds.length; k++) {
+                    if (currentSounds[k].readyState === 4) {
+                        canPlay.push(true)
+                    } else {
+                        canPlay.push(false)
+                    }
+                }
+            }
+        }
+        const result: boolean = canPlay.reduce((a: boolean, b: boolean) => a && b)
+        if(result) {
+            (incrementTact.current as any) = setInterval(countTacts, 54000 / song['tempo']);
+            (incrementNotes.current as any) = setInterval(countNotes, 3375 / song['tempo']);
+            clearInterval((songIsReady as any))
+        }
+        return result
+    }
+
+    const playSong = (sounds: { [key: number]: HTMLAudioElement }[][], position: number, iterratorNote: number) => {
+        for (let i = 0; i < sounds[position].length; i++) {
+            if (sounds[position][i][iterratorNote] !== undefined) {
+                sounds[position][i][iterratorNote].play()
+            }
+        }
     }
 
     const stopPlaying = () => {
@@ -76,14 +121,15 @@ const Editor: FC<EditorProps> = ({ }) => {
 
     useEffect(() => {
         if (isPlaying) {
+            songSounds = []
+            songSounds = loadSong(song)
+            checkIfSoundAreLoaded(songSounds)
             highlightTact(0)
             setIsEditing(false)
             setInstrument({} as IInstrument)
 
             iterratorTact += 1;
-
-            (incrementTact.current as any) = setInterval(countTacts, 54000 / song['tempo']);
-            (incrementNotes.current as any) = setInterval(countNotes, 3375 / song['tempo'])
+            (songIsReady as any) = setInterval(() => checkIfSoundAreLoaded(songSounds), 100)
 
         } else {
             stopPlaying()
