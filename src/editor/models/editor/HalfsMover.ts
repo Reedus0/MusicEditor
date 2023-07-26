@@ -25,11 +25,15 @@ export class HalfsMover implements IInstrument {
     private moveHlaf = (element: HTMLElement) => {
         let halfOffset: string = window.getComputedStyle(element).getPropertyValue('left')
         let halfOffsetValue = Number(halfOffset.split('px')[0])
-        if (halfOffsetValue <= -60) {
-            halfOffset = halfOffsetValue + (12 * 4) + 'px'
+
+        if (halfOffsetValue % 60 === 0) {
+            halfOffset = '-12px'
+        } else if (halfOffsetValue % 78 === 0) {
+            halfOffset = '-30px'
         } else {
             halfOffset = (halfOffsetValue - 12) + 'px'
         }
+
         element.style.left = halfOffset
     }
 }

@@ -35,7 +35,7 @@ const EditorInstruments: FC<EditorInstrumentsProps> = ({ isEditing, instrument, 
             <button onClick={() => handleChangeInstrument(new NotesFlatter())} >Flat</button>
             <button onClick={() => handleChangeInstrument(new NotesSharper())} >Sharp</button>
             <button onClick={() => handleChangeInstrument(new NotesNaturaler())} >Natural</button>
-            <button onClick={() => handleChangeInstrument(new HalfsMover())} >Move</button>
+            <button onClick={() => handleChangeInstrument(new HalfsMover())} >Move half</button>
             <button onClick={() => handleChangeInstrument(new NotesCanceler())} >Cancel</button>
             <h3>Editing: {isEditing ? 'yes' : 'no'}</h3>
             <h3>Instrument: {instrument['name']}</h3>

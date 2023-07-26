@@ -257,11 +257,7 @@
                     left: -30px;
                 }
             }
-
-
         }
-
-
     }
 
     &__note-edit {
@@ -289,12 +285,13 @@
     }
 
     &__note-natural {
-        font-size: 50px;
-        top: -5px;
+        font-size: 52px;
+        top: -6px;
     }
 
     &__note-line,
     &__note-line-edit {
+        z-index: 100;
         position: absolute;
         top: 5px;
         left: -4px;
