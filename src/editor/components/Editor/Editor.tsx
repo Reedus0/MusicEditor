@@ -31,28 +31,21 @@ const Editor: FC<EditorProps> = ({ }) => {
 
     const [song, setSong] = useState<Song>(new Song(tacts, 100, mainKey))
 
-    let incrementTact = useRef(null)
     let songIsReady = useRef(null)
     let incrementNotes = useRef(null)
 
-    let iterratorTact: number = 0;
     let iterratorNote: number = 0;
-
     let position: number = 0;
 
     let songSounds: { [key: number]: HTMLAudioElement }[][] = []
 
-    const countTacts = () => {
-        iterratorTact += 1
-        if (iterratorTact > 4) {
-            iterratorTact = 1
-            position += 1
-        }
-        highlightTact(position)
-    }
 
     const countNotes = () => {
-        if (iterratorNote > 64) iterratorNote = 0
+        if (iterratorNote > 64) {
+            iterratorNote = 0
+            position += 1
+            highlightTact(position)
+        }
         if (position >= song['tacts'].length) {
             stopPlaying()
             return
@@ -60,8 +53,6 @@ const Editor: FC<EditorProps> = ({ }) => {
 
         playSong(songSounds, position, iterratorNote)
         iterratorNote += 1
-
-
     }
 
     const loadSong = (song: Song): { [key: number]: HTMLAudioElement }[][] => {
@@ -77,7 +68,6 @@ const Editor: FC<EditorProps> = ({ }) => {
         const sounds = notes.map((notesArray: Note[]) => notesArray.map((note: Note) => {
             return { [note['horizontalPosition']]: new Audio(require(`./../../piano/${formatNoteForPlay(note['sound'])}.mp3`)) }
         }))
-
         return sounds
     }
 
@@ -95,25 +85,32 @@ const Editor: FC<EditorProps> = ({ }) => {
                 }
             }
         }
-        const result: boolean = canPlay.reduce((a: boolean, b: boolean) => a && b)
-        if(result) {
-            (incrementTact.current as any) = setInterval(countTacts, 54000 / song['tempo']);
-            (incrementNotes.current as any) = setInterval(countNotes, 3375 / song['tempo']);
-            clearInterval((songIsReady as any))
+        const result: boolean = canPlay.length ? canPlay.reduce((a: boolean, b: boolean) => a && b) : false
+        if (result) {
+            startPlaying()
         }
         return result
     }
 
     const playSong = (sounds: { [key: number]: HTMLAudioElement }[][], position: number, iterratorNote: number) => {
         for (let i = 0; i < sounds[position].length; i++) {
+            console.log('pos' + position)
+            console.log('i' + i)
+            console.log('iterNote' + iterratorNote)
             if (sounds[position][i][iterratorNote] !== undefined) {
                 sounds[position][i][iterratorNote].play()
             }
         }
     }
 
+    const startPlaying = () => {
+        (incrementNotes.current as any) = setInterval(countNotes, 3375 / song['tempo']);
+        highlightTact(0)
+        clearInterval((songIsReady as any))
+        setIsPlaying(true)
+    }
+
     const stopPlaying = () => {
-        clearInterval((incrementTact.current as any))
         clearInterval((incrementNotes.current as any))
         clearActiveTacts()
         setIsPlaying(false)
@@ -121,18 +118,14 @@ const Editor: FC<EditorProps> = ({ }) => {
 
     useEffect(() => {
         if (isPlaying) {
-            songSounds = []
-            songSounds = loadSong(song)
-            checkIfSoundAreLoaded(songSounds)
-            highlightTact(0)
-            setIsEditing(false)
-            setInstrument({} as IInstrument)
-
-            iterratorTact += 1;
-            (songIsReady as any) = setInterval(() => checkIfSoundAreLoaded(songSounds), 100)
+            setIsEditing(false);
+            setInstrument({} as IInstrument);
+            
+            songSounds = loadSong(song);
+            (songIsReady as any) = setInterval(() => checkIfSoundAreLoaded(songSounds), 100);
 
         } else {
-            stopPlaying()
+            stopPlaying();
         }
     }, [isPlaying])
 

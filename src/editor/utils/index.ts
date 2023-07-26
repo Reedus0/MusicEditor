@@ -219,6 +219,14 @@ export const getNotesLine = (notes: Note[]): number[] => {
     return Array.from(result) as number[]
 }
 
+export const getNotesRow = (notes: Note[]): number[] => {
+    let result = new Set()
+    for (let i = 0; i < notes.length; i++) {
+        result.add(notes[i]['verticalPosition'])
+    }
+    return Array.from(result) as number[]
+}
+
 export const arraySort = (array: any[]): any[] => {
     const half = array.length / 2
 

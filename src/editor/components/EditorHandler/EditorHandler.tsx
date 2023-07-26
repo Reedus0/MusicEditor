@@ -39,7 +39,6 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
             forceUpdate()
         }
 
-
         if (e.target.closest('.editor-drawer__track-notes') !== undefined) {
             if (!isEditing) return
             if (!(instrument.name === 'notesAdder')) return

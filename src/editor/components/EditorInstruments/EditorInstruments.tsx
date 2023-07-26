@@ -6,6 +6,7 @@ import { NotesDeleter } from '../../models/editor/NotesDeleter';
 import { NotesFlatter } from '../../models/editor/NotesFlatter';
 import { NotesNaturaler } from '../../models/editor/NotesNaturaler';
 import { NotesSharper } from '../../models/editor/NotesSharper';
+import { HalfsMover } from '../../models/editor/HalfsMover';
 
 interface EditorInstrumentsProps {
     isEditing: boolean,
@@ -34,6 +35,7 @@ const EditorInstruments: FC<EditorInstrumentsProps> = ({ isEditing, instrument, 
             <button onClick={() => handleChangeInstrument(new NotesFlatter())} >Flat</button>
             <button onClick={() => handleChangeInstrument(new NotesSharper())} >Sharp</button>
             <button onClick={() => handleChangeInstrument(new NotesNaturaler())} >Natural</button>
+            <button onClick={() => handleChangeInstrument(new HalfsMover())} >Move</button>
             <button onClick={() => handleChangeInstrument(new NotesCanceler())} >Cancel</button>
             <h3>Editing: {isEditing ? 'yes' : 'no'}</h3>
             <h3>Instrument: {instrument['name']}</h3>

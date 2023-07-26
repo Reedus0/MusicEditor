@@ -86,7 +86,7 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
                                                         <div
                                                             className={
                                                                 ['editor-drawer__note',
-                                                                    note['half'] !== noteHalf.NONE ? '_half' : '',
+                                                                    note['half'] !== noteHalf.NONE ? '_half' : '', 
                                                                     track.getNote(note['horizontalPosition'], note['verticalPosition'] - 0.5) !== undefined
                                                                         ||
                                                                         track.getNote(note['horizontalPosition'], note['verticalPosition'] + 0.5) !== undefined ? '_margin' : ''].join(' ')}
@@ -99,15 +99,15 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
                                                             {note['verticalPosition'] > 7 ? !Number.isInteger(note['verticalPosition']) ? <div className='editor-drawer__note-line'></div> : <div className='editor-drawer__note-line-down'></div> : ''}
                                                             {note['half'] === noteHalf.FLAT
                                                                 ?
-                                                                <div className={['editor-drawer__note-flat',].join(' ')}>b</div>
+                                                                <div className='editor-drawer__note-flat editor-drawer__note-half'>b</div>
                                                                 :
                                                                 note['half'] === noteHalf.SHARP
                                                                     ?
-                                                                    <div className='editor-drawer__note-sharp'>#</div>
+                                                                    <div className='editor-drawer__note-sharp editor-drawer__note-half'>#</div>
                                                                     :
                                                                     note['half'] === noteHalf.NATURAL
                                                                         ?
-                                                                        <div className='editor-drawer__note-natural'>é</div>
+                                                                        <div className='editor-drawer__note-natural editor-drawer__note-half'>é</div>
                                                                         :
                                                                         ''}
                                                         </div>)}

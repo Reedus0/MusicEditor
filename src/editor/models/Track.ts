@@ -1,4 +1,4 @@
-import { clefs } from "../utils";
+import { clefs, getNotesLine, getNotesRow } from "../utils";
 import { keys } from "../utils/keys";
 import { Note, noteHalf } from "./Note";
 
@@ -40,8 +40,17 @@ export class Track {
         this.notes.push(note)
     }
 
+
     deleteNote(horizontalPosition: number, verticalPosition: number) {
         this.notes = this.notes.filter((note: Note) => !(note['horizontalPosition'] === horizontalPosition && note['verticalPosition'] === verticalPosition))
+    }
+
+    getClosestVerticalNote(horizontalPosition: number, verticalPosition: number) {
+        const result = this.getNote(horizontalPosition, getNotesRow(this.notes.filter((note: Note) => note['horizontalPosition'] === horizontalPosition && note['verticalPosition'] !== verticalPosition)).reduce((previous, current) => {
+            return (Math.abs(current - verticalPosition) < Math.abs(previous - verticalPosition) ? current : previous);
+        }))
+        console.log(Math.abs(verticalPosition - result['verticalPosition']))
+        return result
     }
 
     getNote(horizontalPosition: number, verticalPosition: number) {
