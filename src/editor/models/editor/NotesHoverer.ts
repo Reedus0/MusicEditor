@@ -22,7 +22,7 @@ export class NotesHoverer implements IInstrument, IHoverer {
 
             // TODO: currentTrackFake!.clientWidth / signatureMap[timeSignature[0]] - 10
 
-            const cordsX = (Math.floor((tactOffsetX + 0.001) / (cordsXExpresion))) * cordsXExpresion
+            const cordsX = (Math.floor((tactOffsetX + 0.001) / (cordsXExpresion))) * cordsXExpresion + 10
             const cordsY = (60 - (Math.floor(cordsYExpresion)) * 6) + 60
 
             const currentTrack = currentTrackFake.id[currentTrackFake.id.length - 1]

@@ -31,7 +31,7 @@ const Editor: FC<EditorProps> = ({ }) => {
     const tacts: Tact[] = [new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)])]
 
 
-    const [song, setSong] = useState<Song>(new Song(tacts, 100, mainKey))
+    const [song, setSong] = useState<Song>(new Song(tacts, 100, mainKey, '4/4'))
 
     let songIsReady = useRef(null)
     let incrementNotes = useRef(null)
