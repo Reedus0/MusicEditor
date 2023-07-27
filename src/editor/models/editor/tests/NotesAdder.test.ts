@@ -13,7 +13,7 @@ describe('NotesAdder class tests', () => {
         const cordsX = 0
         const cordsY = 1.5
 
-        const currentTrack = new Track([], keys.C, '4/4', clefs.TREBLE)
+        const currentTrack = new Track([], [], keys.C, '4/4', clefs.TREBLE)
 
         const noteSound = 'C5'
 

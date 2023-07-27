@@ -1,8 +1,9 @@
 import { getOffset } from "../../../utils";
-import { clearHoverNote } from "../../utils";
+import { clearHoverObjects } from "../../utils";
+import { IHoverer } from "./IHoverer";
 import { IInstrument } from "./IInsrument";
 
-export class NotesHoverer implements IInstrument {
+export class NotesHoverer implements IInstrument, IHoverer {
     name: string = 'notesHoverer'
     public action = (mouseMoveEvent: MouseEvent, step: number) => {
         const cursorX = mouseMoveEvent.clientX;
@@ -17,33 +18,36 @@ export class NotesHoverer implements IInstrument {
             const tactOffsetX = cursorX - elementX
             const tactOffsetY = cursorY - elementY
 
-            const cordsX = (Math.floor(tactOffsetX / (document.body.clientWidth * (currentTrackFake!.clientWidth / document.body.clientWidth) / step))) * document.body.clientWidth * (currentTrackFake!.clientWidth / document.body.clientWidth) / step
-            const cordsY = (60 - (Math.floor(tactOffsetY / 6)) * 6) + 60
+            const cordsXExpresion = currentTrackFake!.clientWidth / step
+            const cordsYExpresion = tactOffsetY / 6
 
-            const currentTact = currentTrackFake.id[currentTrackFake.id.length - 1]
+            const cordsX = (Math.floor((tactOffsetX + 1) / (cordsXExpresion))) * cordsXExpresion  + (currentTrackFake.clientWidth / 8) - 9
+            const cordsY = (60 - (Math.floor(cordsYExpresion)) * 6) + 60
 
-            clearHoverNote()
+            const currentTrack = currentTrackFake.id[currentTrackFake.id.length - 1]
+
+            clearHoverObjects()
 
             currentTrackFake.innerHTML = `
-            <div class="editor-drawer__note-edit " id="editing-note-${currentTact}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
+            <div class="editor-drawer__note-edit " id="editing-note-${currentTrack}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
             <h3 class='editor-drawer__note-symbol'>w</h3>
             </div>`
 
-            const editingNote: any = document.getElementById(`editing-note-${currentTact}`)
+            const editingNote: any = document.getElementById(`editing-note-${currentTrack}`)
 
-            // if (cordsY <= 18) {
-            //     if (cordsY % 12 === 0) {
-            //         editingNote.innerHTML += `<div class='editor-drawer__note-line-up-edit'></div>`
-            //     } else {
-            //         editingNote.innerHTML += `<div class='editor-drawer__note-line-edit'></div>`
-            //     }
-            // } else if (cordsY >= 90) {
-            //     if (cordsY % 12 === 0) {
-            //         editingNote.innerHTML += `<div class='editor-drawer__note-line-down-edit'></div>`
-            //     } else {
-            //         editingNote.innerHTML += `<div class='editor-drawer__note-line-edit'></div>`
-            //     }
-            // }
+            if (cordsY <= 18) {
+                if (cordsY % 12 === 0) {
+                    editingNote.innerHTML += `<div class='editor-drawer__note-line-up-edit'></div>`
+                } else {
+                    editingNote.innerHTML += `<div class='editor-drawer__note-line-edit'></div>`
+                }
+            } else if (cordsY >= 90) {
+                if (cordsY % 12 === 0) {
+                    editingNote.innerHTML += `<div class='editor-drawer__note-line-down-edit'></div>`
+                } else {
+                    editingNote.innerHTML += `<div class='editor-drawer__note-line-edit'></div>`
+                }
+            }
         }
     }
 }

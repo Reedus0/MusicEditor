@@ -2,11 +2,13 @@ import React, { FC } from 'react'
 import { IInstrument } from '../../models/editor/IInsrument';
 import { NotesAdder } from '../../models/editor/NotesAdder';
 import { NotesCanceler } from '../../models/editor/NotesCanceler';
-import { NotesDeleter } from '../../models/editor/NotesDeleter';
+import { ObjectsDeleter } from '../../models/editor/ObejctsDeleter';
 import { NotesFlatter } from '../../models/editor/NotesFlatter';
 import { NotesNaturaler } from '../../models/editor/NotesNaturaler';
 import { NotesSharper } from '../../models/editor/NotesSharper';
 import { HalfsMover } from '../../models/editor/HalfsMover';
+import { RestsAdder } from '../../models/editor/RestsAdder';
+import { IAdder } from '../../models/editor/IAdder';
 
 interface EditorInstrumentsProps {
     isEditing: boolean,
@@ -29,9 +31,10 @@ const EditorInstruments: FC<EditorInstrumentsProps> = ({ isEditing, instrument, 
 
     return (
         <div className='editor-instruments'>
-            <input onChange={(e) => (instrument as NotesAdder).setStep(Number(e.target.value)) }/>
-            <button onClick={() => handleChangeInstrument(new NotesAdder())} >Add</button>
-            <button onClick={() => handleChangeInstrument(new NotesDeleter())} >Delete</button>
+            <input onChange={(e) => (instrument as IAdder).step = (Number(e.target.value)) }/>
+            <button onClick={() => handleChangeInstrument(new NotesAdder())} >Add note</button>
+            <button onClick={() => handleChangeInstrument(new RestsAdder())} >Add rest</button>
+            <button onClick={() => handleChangeInstrument(new ObjectsDeleter())} >Delete</button>
             <button onClick={() => handleChangeInstrument(new NotesFlatter())} >Flat</button>
             <button onClick={() => handleChangeInstrument(new NotesSharper())} >Sharp</button>
             <button onClick={() => handleChangeInstrument(new NotesNaturaler())} >Natural</button>

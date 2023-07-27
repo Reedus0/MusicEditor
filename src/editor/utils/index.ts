@@ -159,33 +159,6 @@ export const getNoteFromHTML = (element: HTMLElement, song: Song): { cordsX: num
     return { cordsX, cordsY, currentTrack }
 }
 
-export const calculateNotePosition = (element: HTMLElement, song: Song): { cordsX: number, cordsY: number, currentTrack: Track, noteSound: string } => {
-    const tactElement = element.closest('.editor-drawer__tact')
-    const trackElement = element.closest('.editor-drawer__track')
-
-    const currentTactNumber = Number(tactElement!.id.split('-')[1])
-    const currentTrackNumber = Number(trackElement!.id.split('-')[1])
-
-    const editingNote = document.getElementById('editing-note-' + currentTrackNumber)
-
-    const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
-    const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
-
-    const clefOffset = song['tacts'][currentTactNumber as number]['tracks'][currentTrackNumber]['clef']
-
-    const noteVerticalPosition = ((noteBottom / 12) - clefOffset) % 3.5
-    const noteOctave = 4 + Math.floor(((noteBottom / 12) - globalOffset - clefOffset) / 3.5)
-
-    const cordsX = noteLeft * 64 / trackElement!.clientWidth
-    const cordsY = noteBottom / 12
-
-    const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
-
-    const noteSound = ((song['key'] as any)[noteVerticalPosition >= 0 ? noteVerticalPosition : 3.5 + noteVerticalPosition] + noteOctave.toString())
-
-    return { cordsX, cordsY, currentTrack, noteSound }
-}
-
 export const formatNoteForPlay = (sound: string) => {
     const oldSound = sound.slice(0, -1)
     const oldOctave = Number(sound[sound.length - 1])
@@ -198,9 +171,10 @@ export const formatNoteForPlay = (sound: string) => {
     return result
 }
 
-export const clearHoverNote = () => {
+export const clearHoverObjects = () => {
     Array.from(document.getElementsByClassName('editor-drawer__track-fake')).forEach((element: any) => element.innerHTML = '')
 }
+
 
 export const clearActiveTacts = () => {
     Array.from(document.getElementsByClassName('editor-drawer__tact')).forEach((element: any) => element.classList.remove('_active'))

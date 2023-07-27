@@ -7,6 +7,7 @@ import { Note, noteHalf } from '../../models/Note';
 import { Track } from '../../models/Track';
 import { arraySort, clefs, getNotesLine } from '../../utils';
 import { CMajorMap, keys, keysHalfsMap, keysHalfsPositionMap } from '../../utils/keys';
+import { Rest } from '../../models/Rest';
 
 interface EditorDrawerProps {
     song: Song,
@@ -17,28 +18,28 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
     return (
         <div className='editor-drawer' id='#editor-drawer'>
             <div className='editor-drawer__inner'>
-                {song['tacts'].map((tact: Tact, sectionIndex: number) => sectionIndex % 4 === 0 ?
+                {song['tacts'].map((tact: Tact, sectionIndex: number) => sectionIndex % 5 === 0 ?
                     <div className='editor-drawer__section'>
                         <div className='editor-drawer__bracket'>
                             {sectionIndex === 0 ? <h3 className='editor-drawer__bracket-instrument'>Piano</h3> : <></>}
                             <img className='editor-drawer__bracket-img' src={require('./../../img/bracket.png')} />
                         </div>
-                        {song['tacts'].slice(sectionIndex, sectionIndex + 4).map((tact: Tact, tactIndex: number) =>
+                        {song['tacts'].slice(sectionIndex, sectionIndex + 5).map((tact: Tact, tactIndex: number) =>
                             <div className='editor-drawer__tact' id={'tact-' + (tactIndex + sectionIndex)}>
                                 {tact['tracks'].map((track: Track, trackIndex: number) =>
                                     <div className='editor-drawer__track-wrapper' id={'track-wrapper-' + (trackIndex + sectionIndex)}>
-                                        {tactIndex % 4 === 0 ?
+                                        {tactIndex % 5 === 0 ?
                                             <div className='editor-drawer__start'>
                                                 <div className='editor-drawer__key-wrapper'>
 
                                                     {track.getClef() === clefs.TREBLE ?
                                                         <div className='editor-drawer__key _treble'>
-                                                            <img className='editor-drawer__key-img' width={40} height={100} src={require('./../../img/treble.png')} />
+                                                            <img className='editor-drawer__key-img' width={30} height={80} src={require('./../../img/treble.png')} />
                                                         </div>
                                                         :
                                                         track.getClef() === clefs.BASS ?
                                                             <div className='editor-drawer__key _bass'>
-                                                                <img className='editor-drawer__key-img _bass' width={40} height={36} src={require('./../../img/bass.png')} />
+                                                                <img className='editor-drawer__key-img _bass' width={40} height={40} src={require('./../../img/bass.png')} />
                                                             </div>
                                                             :
                                                             <div className='editor-drawer__key _alto'>
@@ -80,43 +81,63 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
                                             <div className='editor-drawer__lines'>
                                                 {[...Array(5)].map(() => <div className='editor-drawer__line'></div>)}
                                             </div>
-                                            {getNotesLine(track['notes']).map((line: number) =>
-                                                <div className='editor-drawer__notes-line'>
-                                                    {track['notes'].filter((note: Note) => note['horizontalPosition'] === line).sort((a: Note, b: Note) => a['verticalPosition'] > b['verticalPosition'] ? 1 : -1).map((note: Note) =>
-                                                        <div
-                                                            className={
-                                                                ['editor-drawer__note',
-                                                                    note['half'] !== noteHalf.NONE ? '_half' : '',
-                                                                    track.getNote(note['horizontalPosition'], note['verticalPosition'] - 0.5) !== undefined
-                                                                        ||
-                                                                        track.getNote(note['horizontalPosition'], note['verticalPosition'] + 0.5) !== undefined ? '_margin' : ''].join(' ')}
-                                                            style={{
-                                                                bottom: (note['verticalPosition'] * 12),
-                                                                left: (document.querySelector('._track' + ((tactIndex + 1) * (trackIndex + 1) * (10 ** (trackIndex + 1)) + sectionIndex))!.clientWidth / 64 * note['horizontalPosition'])
-                                                            }}
-                                                        >
-                                                            <h3 className='editor-drawer__note-symbol'>w</h3>
-                                                            {!Number.isInteger(note['verticalPosition']) ? <div className='editor-drawer__note-line'></div> : <></>}
-                                                            {note['half'] === noteHalf.FLAT
-                                                                ?
-                                                                <div className='editor-drawer__note-flat editor-drawer__note-half'>b</div>
-                                                                :
-                                                                note['half'] === noteHalf.SHARP
+                                            <div className='editor-drawer__notes'>
+                                                {getNotesLine(track['notes']).map((line: number) =>
+                                                    <div className='editor-drawer__notes-line'>
+                                                        {track['notes'].filter((note: Note) => note['horizontalPosition'] === line).sort((a: Note, b: Note) => a['verticalPosition'] > b['verticalPosition'] ? 1 : -1).map((note: Note, noteIndex: number) =>
+                                                            <div
+                                                                className={
+                                                                    ['editor-drawer__note', 'editor-drawer__object',
+                                                                        note['half'] !== noteHalf.NONE ? '_half' : '',
+                                                                        track.getNote(note['horizontalPosition'], note['verticalPosition'] - 0.5) !== undefined
+                                                                            ||
+                                                                            track.getNote(note['horizontalPosition'], note['verticalPosition'] + 0.5) !== undefined ? '_margin' : ''].join(' ')}
+                                                                style={{
+                                                                    bottom: (note['verticalPosition'] * 12),
+                                                                    left: (document.querySelector('._track' + ((tactIndex + 1) * (trackIndex + 1) * (10 ** (trackIndex + 1)) + sectionIndex))!.clientWidth / 64 * note['horizontalPosition'])
+                                                                }}
+                                                            >
+                                                                <h3 className='editor-drawer__note-symbol'>w</h3>
+                                                                {!Number.isInteger(note['verticalPosition']) ? <div className='editor-drawer__note-line'></div> : <></>}
+                                                                {note['half'] === noteHalf.FLAT
                                                                     ?
-                                                                    <div className='editor-drawer__note-sharp editor-drawer__note-half'>#</div>
+                                                                    <div className='editor-drawer__note-flat editor-drawer__note-half'>b</div>
                                                                     :
-                                                                    note['half'] === noteHalf.NATURAL
+                                                                    note['half'] === noteHalf.SHARP
                                                                         ?
-                                                                        <div className='editor-drawer__note-natural editor-drawer__note-half'>é</div>
+                                                                        <div className='editor-drawer__note-sharp editor-drawer__note-half'>#</div>
                                                                         :
-                                                                        ''}
-                                                        </div>)}
-                                                </div>
-                                            )}
+                                                                        note['half'] === noteHalf.NATURAL
+                                                                            ?
+                                                                            <div className='editor-drawer__note-natural editor-drawer__note-half'>é</div>
+                                                                            :
+                                                                            ''}
+                                                            </div>)}
 
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className='editor-drawer__rests'>
+                                                {track['rests'].map((rest: Rest) =>
+                                                    <div
+                                                        className='editor-drawer__rest editor-drawer__object'
+                                                        style={{
+                                                            bottom: (rest['verticalPosition'] * 12),
+                                                            left: (document.querySelector('._track' + ((tactIndex + 1) * (trackIndex + 1) * (10 ** (trackIndex + 1)) + sectionIndex))!.clientWidth / 64 * rest['horizontalPosition'])
+                                                        }}
+                                                    >
+                                                        <h3 className='editor-drawer__rest-symbol'>·</h3>
+                                                    </div>
+                                                )}
+                                            </div>
                                             <div className='editor-drawer__track-fake' id={'tact-fake-' + trackIndex}>
                                             </div>
                                         </div>
+                                        {tactIndex + sectionIndex === song['tacts'].length - 1 ?
+                                            <div className='editor-drawer__end'>
+                                                <div className='editor-drawer__end-end'></div>
+                                            </div> :
+                                            <></>}
                                     </div>
                                 )}
                             </div>

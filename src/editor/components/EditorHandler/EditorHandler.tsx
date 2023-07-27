@@ -3,8 +3,8 @@ import { IInstrument } from '../../models/editor/IInsrument'
 import { NotesHoverer } from '../../models/editor/NotesHoverer'
 import { Song } from '../../models/Song'
 import EditorDrawer from '../EditorDrawer/EditorDrawer'
-import { clearHoverNote } from '../../utils'
-import { NotesAdder } from '../../models/editor/NotesAdder'
+import { IAdder } from '../../models/editor/IAdder'
+import { clearHoverObjects } from '../../utils'
 
 interface EditorHandlerProps {
     song: Song,
@@ -25,23 +25,23 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
 
     document.onmousemove = (e: any) => {
         if (!isEditing) return
-        if (!(instrument.name === 'notesAdder')) return
+        if (!(instrument.name.includes('Adder'))) return
 
-        const notesHoverer = new NotesHoverer()
-        notesHoverer.action(e, (instrument as NotesAdder)['step'])
+        const hoverer = (instrument as IAdder).hoverer
+        hoverer.action(e, (instrument as IAdder)['step'])
     }
 
     document.onclick = (e: any) => {
-        if (e.target.classList.contains('editor-drawer__note')) {
+        if (e.target.classList.contains('editor-drawer__object')) {
             if (!isEditing) return
-            if (instrument.name === 'notesAdder') return
+            if (instrument.name.includes('Adder')) return
             instrument.action(e.target, song)
             forceUpdate()
         }
 
         if (e.target.closest('.editor-drawer__track-notes') !== undefined) {
             if (!isEditing) return
-            if (!(instrument.name === 'notesAdder')) return
+            if (!(instrument.name.includes('Adder'))) return
 
             instrument.action(e.target, song)
             forceUpdate()
@@ -55,7 +55,7 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
     }
 
     useEffect(() => {
-        clearHoverNote()
+        clearHoverObjects()
     }, [isEditing, instrument])
 
 

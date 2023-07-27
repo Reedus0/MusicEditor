@@ -25,9 +25,11 @@ const Editor: FC<EditorProps> = ({ }) => {
 
     const [instrument, setInstrument] = useState<IInstrument>({} as IInstrument)
 
-    const mainKey = keys.Em
+    const mainKey = keys.C
 
-    const tacts: Tact[] = [new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], mainKey, '4/4', clefs.TREBLE), new Track([], mainKey, '4/4', clefs.BASS)]),]
+    // const tacts: Tact[] = [new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]),]
+    const tacts: Tact[] = [new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)]), new Tact([new Track([], [], mainKey, '4/4', clefs.TREBLE), new Track([], [], mainKey, '4/4', clefs.BASS)])]
+
 
     const [song, setSong] = useState<Song>(new Song(tacts, 100, mainKey))
 
@@ -41,7 +43,7 @@ const Editor: FC<EditorProps> = ({ }) => {
 
 
     const countNotes = () => {
-        if (iterratorNote > 64) {
+        if (iterratorNote > 63) {
             iterratorNote = 0
             position += 1
             highlightTact(position)
@@ -66,7 +68,7 @@ const Editor: FC<EditorProps> = ({ }) => {
             }
         }
         const sounds = notes.map((notesArray: Note[]) => notesArray.map((note: Note) => {
-            return { [note['horizontalPosition']]: new Audio(require(`./../../piano/${formatNoteForPlay(note['sound'])}.mp3`)) }
+            return { [Math.floor(note['horizontalPosition'])]: new Audio(require(`./../../piano/${formatNoteForPlay(note['sound'])}.mp3`)) }
         }))
         return sounds
     }
@@ -94,9 +96,6 @@ const Editor: FC<EditorProps> = ({ }) => {
 
     const playSong = (sounds: { [key: number]: HTMLAudioElement }[][], position: number, iterratorNote: number) => {
         for (let i = 0; i < sounds[position].length; i++) {
-            console.log('pos' + position)
-            console.log('i' + i)
-            console.log('iterNote' + iterratorNote)
             if (sounds[position][i][iterratorNote] !== undefined) {
                 sounds[position][i][iterratorNote].play()
             }
@@ -120,7 +119,7 @@ const Editor: FC<EditorProps> = ({ }) => {
         if (isPlaying) {
             setIsEditing(false);
             setInstrument({} as IInstrument);
-            
+
             songSounds = loadSong(song);
             (songIsReady as any) = setInterval(() => checkIfSoundAreLoaded(songSounds), 100);
 
