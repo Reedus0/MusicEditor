@@ -1,4 +1,4 @@
-import { clearHoverObjects, getOffset, signatureMap } from "../../utils";
+import { clearHoverObjects, getOffset } from "../../utils";
 import { IHoverer } from "./IHoverer";
 import { IInstrument } from "./IInsrument";
 
@@ -20,9 +20,9 @@ export class NotesHoverer implements IInstrument, IHoverer {
             const cordsXExpresion = currentTrackFake!.clientWidth / step
             const cordsYExpresion = tactOffsetY / 6
 
-            // TODO: signatureMap[timeSignature[0]] - 10
+            // TODO: currentTrackFake!.clientWidth / signatureMap[timeSignature[0]] - 10
 
-            const cordsX = (Math.floor((tactOffsetX + 0.001) / (cordsXExpresion))) * cordsXExpresion + currentTrackFake!.clientWidth
+            const cordsX = (Math.floor((tactOffsetX + 0.001) / (cordsXExpresion))) * cordsXExpresion
             const cordsY = (60 - (Math.floor(cordsYExpresion)) * 6) + 60
 
             const currentTrack = currentTrackFake.id[currentTrackFake.id.length - 1]
