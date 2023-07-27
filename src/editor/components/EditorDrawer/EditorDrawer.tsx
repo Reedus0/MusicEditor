@@ -5,8 +5,8 @@ import './EditorDrawer.scss'
 import { Tact } from '../../models/Tact';
 import { Note, noteHalf } from '../../models/Note';
 import { Track } from '../../models/Track';
-import { arraySort, clefs, getNotesLine } from '../../utils';
-import { CMajorMap, keys, keysHalfsMap, keysHalfsPositionMap } from '../../utils/keys';
+import { clefs, getNotesLine } from '../../utils';
+import { keysHalfsMap, keysHalfsPositionMap } from '../../utils/keys';
 import { Rest } from '../../models/Rest';
 
 interface EditorDrawerProps {
@@ -47,16 +47,16 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
                                                             </div>
                                                     }
                                                 </div>
-                                                <div className='editor-drawer__start-sings' style={{ width: Math.abs(keysHalfsMap.get(track.getKey())) * 17 }}>
+                                                <div className='editor-drawer__start-signs' style={{ width: Math.abs(keysHalfsMap.get(track.getKey())) * 20 }}>
                                                     {[...Array(Math.abs(keysHalfsMap.get(track.getKey())))].map((key: number, index: number) =>
                                                         keysHalfsMap.get(track.getKey()) < 0
                                                             ?
-                                                            <h4 className='editor-drawer__start-sing'
+                                                            <h4 className='editor-drawer__start-sign'
                                                                 style={{ bottom: keysHalfsPositionMap[(index + 1) * -1] + (track.getClef() * -2) - 1, left: 50 + (15 * (index + 1)) }}>
                                                                 b
                                                             </h4>
                                                             :
-                                                            <h4 className='editor-drawer__start-sing'
+                                                            <h4 className='editor-drawer__start-sign'
                                                                 style={{ bottom: keysHalfsPositionMap[(index + 1)] + (track.getClef() * -2) - 1, left: 50 + (15 * (index + 1)) }}>
                                                                 #
                                                             </h4>)}

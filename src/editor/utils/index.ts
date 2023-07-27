@@ -124,6 +124,19 @@ export enum clefs {
     ALTO = 3
 }
 
+// TODO
+// export const signatureMap: any = {
+//     '4': 8,
+//     '3': 12
+// }
+
+export const getOffset = (element: any): { elementX: number, elementY: number } => {
+    const rect = element.getBoundingClientRect();
+    return {
+        elementX: rect.left + window.scrollX,
+        elementY: rect.top + window.scrollY
+    };
+}
 
 
 export const calculateHalfNote = (sound: string, halfMap: halfMaps) => {
@@ -151,10 +164,11 @@ export const getNoteFromHTML = (element: HTMLElement, song: Song): { cordsX: num
     const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
     const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
 
+    const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
+
     const cordsX = noteLeft * 64 / trackElement!.clientWidth
     const cordsY = noteBottom / 12
 
-    const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
 
     return { cordsX, cordsY, currentTrack }
 }
@@ -199,27 +213,4 @@ export const getNotesRow = (notes: Note[]): number[] => {
         result.add(notes[i]['verticalPosition'])
     }
     return Array.from(result) as number[]
-}
-
-export const arraySort = (array: any[]): any[] => {
-    const half = array.length / 2
-
-    if (array.length < 2) {
-        return array
-    }
-
-    const left = array.splice(0, half)
-    return mergeArrays(arraySort(left), arraySort(array))
-}
-
-export const mergeArrays = (left: any[], right: any[]): any[] => {
-    let arr = []
-    while (left.length && right.length) {
-        if (left[0] < right[0]) {
-            arr.push(left.shift())
-        } else {
-            arr.push(right.shift())
-        }
-    }
-    return [...arr, ...left, ...right]
 }

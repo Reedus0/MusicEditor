@@ -26,7 +26,7 @@ export class NotesAdder implements IInstrument, IAdder {
             new Note(
                 cordsX,
                 cordsY,
-                4,
+                this.step,
                 noteSound,
                 noteHalf.NONE
             )

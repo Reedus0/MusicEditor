@@ -1,6 +1,6 @@
-import { clefs, getNotesLine, getNotesRow } from "../utils";
+import { clefs, getNotesRow } from "../utils";
 import { keys } from "../utils/keys";
-import { Note, noteHalf } from "./Note";
+import { Note } from "./Note";
 import { Rest } from "./Rest";
 
 export class Track {

@@ -1,6 +1,4 @@
-import { getNoteFromHTML, globalOffset } from "../../utils"
-import { Note, noteHalf } from "../Note"
-import { Rest } from "../Rest"
+import { getNoteFromHTML } from "../../utils"
 import { Song } from "../Song"
 import { Track } from "../Track"
 import { IInstrument } from "./IInsrument"

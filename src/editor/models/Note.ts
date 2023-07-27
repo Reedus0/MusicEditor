@@ -26,6 +26,10 @@ export class Note {
         return this.sound
     }
 
+    getDuration() {
+        return this.duration
+    }
+
     setSound(sound: string, half?: noteHalf) {
         if (/[A-G]{1}[#b]?[0-7]{1}$/gm.test(sound)) {
             this.sound = sound

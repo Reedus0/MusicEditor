@@ -1,5 +1,4 @@
-import { getOffset } from "../../../utils";
-import { clearHoverObjects } from "../../utils";
+import { clearHoverObjects, getOffset } from "../../utils";
 import { IHoverer } from "./IHoverer";
 import { IInstrument } from "./IInsrument";
 

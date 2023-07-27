@@ -36,7 +36,7 @@ export class RestsAdder implements IInstrument, IAdder {
             new Rest(
                 cordsX,
                 cordsY,
-                4
+                this.step
             )
         )
         clearHoverObjects()
@@ -53,8 +53,6 @@ export class RestsAdder implements IInstrument, IAdder {
 
         const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
         const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
-
-        const clefOffset = song['tacts'][currentTactNumber as number]['tracks'][currentTrackNumber]['clef']
 
         const cordsX = noteLeft * 64 / trackElement!.clientWidth
         const cordsY = noteBottom / 12
