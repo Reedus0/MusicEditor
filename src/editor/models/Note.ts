@@ -9,6 +9,12 @@ export class Note {
         this.sound = sound
         this.half = half
 
+        if (/[A-G]{1}[#b]?[0-7]{1}$/gm.test(sound)) {
+            this.sound = sound
+        } else {
+            throw new Error('Sound is not valid: ' + sound)
+        }
+
         if (horizontalPosition >= 0 && horizontalPosition <= 63) {
             this.horizontalPosition = horizontalPosition
         } else {
@@ -41,7 +47,7 @@ export class Note {
         }
     }
 
-    getHalf(){
+    getHalf() {
         return this.half
     }
 }

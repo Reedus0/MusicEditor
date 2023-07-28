@@ -9,12 +9,11 @@ import { NotesHoverer } from "./NotesHoverer"
 
 
 export class NotesAdder implements IInstrument, IAdder {
-    step: number = 4
+    step: number = 1
     name: string = 'notesAdder'
     hoverer: IHoverer = new NotesHoverer()
 
     public action = (element: HTMLElement, song: Song) => {
-
         const { cordsX, cordsY, currentTrack, noteSound } = this.calculateNotePosition(element, song)
 
         this.addNote(cordsX, cordsY, currentTrack, noteSound)
@@ -38,20 +37,22 @@ export class NotesAdder implements IInstrument, IAdder {
         const tactElement = element.closest('.editor-drawer__tact')
         const trackElement = element.closest('.editor-drawer__track')
 
+        
         const currentTactNumber = Number(tactElement!.id.split('-')[1])
         const currentTrackNumber = Number(trackElement!.id.split('-')[1])
-
+        
         const editingNote = document.getElementById('editing-note-' + currentTrackNumber)
-
+        
         const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
         const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
-
+        
+        console.log(trackElement)
         const clefOffset = song['tacts'][currentTactNumber as number]['tracks'][currentTrackNumber]['clef']
 
         const noteVerticalPosition = ((noteBottom / 12) - clefOffset) % 3.5
         const noteOctave = 4 + Math.floor(((noteBottom / 12) - globalOffset - clefOffset) / 3.5)
 
-        const cordsX = noteLeft * 64 / trackElement!.clientWidth
+        const cordsX = (noteLeft - 4) * 64 / trackElement!.clientWidth
         const cordsY = noteBottom / 12
 
         const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]

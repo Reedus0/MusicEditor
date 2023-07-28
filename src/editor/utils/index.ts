@@ -1,5 +1,6 @@
 import { Note } from "../models/Note"
 import { Song } from "../models/Song"
+import { Tact } from "../models/Tact"
 import { Track } from "../models/Track"
 
 export const globalOffset = 1.5
@@ -171,6 +172,16 @@ export const getNoteFromHTML = (element: HTMLElement, song: Song): { cordsX: num
 
 
     return { cordsX, cordsY, currentTrack }
+}
+
+export const getTactFromHTML = (element: HTMLElement, song: Song): { currentTact: Tact } => {
+    const editingTact = element
+
+    const currentTactNumber = Number(editingTact!.id.split('-')[1])
+
+    const currentTact = song['tacts'][currentTactNumber]
+
+    return { currentTact }
 }
 
 export const formatNoteForPlay = (sound: string) => {

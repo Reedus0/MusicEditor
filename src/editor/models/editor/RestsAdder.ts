@@ -9,7 +9,7 @@ import { RestsHoverer } from "./RestsHoverer"
 
 
 export class RestsAdder implements IInstrument, IAdder {
-    step: number = 4
+    step: number = 1
     name: string = 'restsAdder'
     hoverer: IHoverer = new RestsHoverer()
 
@@ -49,13 +49,13 @@ export class RestsAdder implements IInstrument, IAdder {
         const currentTactNumber = Number(tactElement!.id.split('-')[1])
         const currentTrackNumber = Number(trackElement!.id.split('-')[1])
 
-        const editingNote = document.getElementById('editing-rest-' + currentTrackNumber)
+        const editingRest = document.getElementById('editing-rest-' + currentTrackNumber)
 
-        const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
-        const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
+        const restBottom: number = (editingRest?.style['bottom'].split('px')[0] as any) || 0
+        const restLeft: number = (editingRest?.style['left'].split('px')[0] as any) || 0
 
-        const cordsX = noteLeft * 64 / trackElement!.clientWidth
-        const cordsY = noteBottom / 12
+        const cordsX = (restLeft - 4) * 64 / trackElement!.clientWidth
+        const cordsY = restBottom / 12
 
         const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
 

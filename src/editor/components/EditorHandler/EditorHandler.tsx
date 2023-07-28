@@ -28,23 +28,37 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
         if (!(instrument.name.includes('Adder'))) return
 
         const hoverer = (instrument as IAdder).hoverer
-        hoverer.action(e, (instrument as IAdder)['step'])
+        hoverer.action(e, (instrument as IAdder)['step'] * Number(song['timeSignature'][0]))
     }
 
     document.onclick = (e: any) => {
         if (e.target.classList.contains('editor-drawer__object')) {
             if (!isEditing) return
-            if (instrument.name.includes('Adder')) return
-            instrument.action(e.target, song)
-            forceUpdate()
+            if (!instrument.name.includes('Adder')) {
+                instrument.action(e.target, song)
+                forceUpdate()
+                setTimeout(forceUpdate, 0)
+            }
         }
 
         if (e.target.closest('.editor-drawer__track-notes') !== undefined) {
             if (!isEditing) return
-            if (!(instrument.name.includes('Adder'))) return
+            if ((instrument.name.includes('Adder'))) {
+                instrument.action(e.target, song)
+                forceUpdate()
+                setTimeout(forceUpdate, 0)
+            }
+        }
 
-            instrument.action(e.target, song)
-            forceUpdate()
+        if (e.target.closest('.editor-drawer__tact') !== undefined) {
+            if (!isEditing) return
+            if (instrument.name.includes('tact')) {
+
+                instrument.action(e.target.closest('.editor-drawer__tact'), song)
+                forceUpdate()
+                setTimeout(forceUpdate, 0)
+
+            }
         }
     }
 
