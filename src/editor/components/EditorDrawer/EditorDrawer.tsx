@@ -50,7 +50,7 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
                                                         </div>
                                                 }
                                             </div> : <></>}
-                                         
+
                                         {tactCounter === tact.getWidth() || tactIndex === 0 || (song['tacts'][tactIndex - 1] !== undefined && JSON.stringify(song['tacts'][tactIndex - 1]['tracks'][trackIndex].getKey()) !== JSON.stringify(track.getKey())) ?
                                             <div className='editor-drawer__start-signs' style={{ width: Math.abs(keysHalfsMap.get(track.getKey())) * 17 }}>
                                                 {[...Array(Math.abs(keysHalfsMap.get(track.getKey())))].map((key: number, index: number) =>
@@ -101,7 +101,7 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
                                                                 left: (document.querySelector('._track' + ((tactIndex + 1) * (trackIndex + 1) * (10 ** (trackIndex + 1))))!.clientWidth / 64 * note['horizontalPosition'] + 4)
                                                             }}
                                                         >
-                                                            <h3 className='editor-drawer__note-symbol'>w</h3>
+                                                            {note['verticalPosition'] < 4.5 ? <h3 className='editor-drawer__note-symbol'>q</h3> : <h3 className='editor-drawer__note-symbol'>Q</h3>}
                                                             {!Number.isInteger(note['verticalPosition']) ? <div className='editor-drawer__note-line'></div> : <></>}
                                                             {note['half'] === noteHalf.FLAT
                                                                 ?
@@ -148,7 +148,7 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     )
 }
 

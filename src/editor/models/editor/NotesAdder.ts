@@ -46,7 +46,6 @@ export class NotesAdder implements IInstrument, IAdder {
         const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
         const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
         
-        console.log(trackElement)
         const clefOffset = song['tacts'][currentTactNumber as number]['tracks'][currentTrackNumber]['clef']
 
         const noteVerticalPosition = ((noteBottom / 12) - clefOffset) % 3.5

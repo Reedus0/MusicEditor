@@ -29,10 +29,19 @@ export class NotesHoverer implements IInstrument, IHoverer {
 
             clearHoverObjects()
 
-            currentTrackFake.innerHTML = `
-            <div class="editor-drawer__note-edit " id="editing-note-${currentTrack}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
-            <h3 class='editor-drawer__note-symbol'>w</h3>
-            </div>`
+            if (cordsY < 54) {
+                currentTrackFake.innerHTML = `
+                <div class="editor-drawer__note-edit " id="editing-note-${currentTrack}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
+                <h3 class='editor-drawer__note-symbol'>q</h3>
+                </div>`
+
+            } else {
+                currentTrackFake.innerHTML = `
+                <div class="editor-drawer__note-edit " id="editing-note-${currentTrack}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
+                <h3 class='editor-drawer__note-symbol'>Q</h3>
+                </div>`
+            }
+
 
             const editingNote: any = document.getElementById(`editing-note-${currentTrack}`)
 

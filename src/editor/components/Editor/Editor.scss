@@ -12,9 +12,11 @@
 
 
 .editor {
-    background: white;
-    width: 90%;
     margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     @media (max-width: 991px) {
       display: none;
     }
