@@ -20,7 +20,7 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
             <div className='editor-drawer__inner'>
                 {song['tacts'].map((tact: Tact, tactIndex: number) =>
                     <>
-                        <noscript>{tactCounter + tact.getWidth() >= 100 ? tactCounter = tact.getWidth() : tactCounter += tact.getWidth()}</noscript>
+                        <noscript>{tactCounter + tact.getWidth() > 96 ? tactCounter = tact.getWidth() : tactCounter += tact.getWidth()}</noscript>
                         <DrawerTact song={song} tact={tact} tactCounter={tactCounter} tactIndex={tactIndex} />
                     </>
                 )}

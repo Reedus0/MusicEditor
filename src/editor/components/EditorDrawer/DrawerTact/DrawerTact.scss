@@ -18,6 +18,19 @@
         }
     }
 
+    &._last {
+        &::after {
+            position: absolute;
+            pointer-events: none;
+            top: 45px;
+            right: -1px;
+            content: '';
+            width: 0%;
+            height: 220px;
+            border-left: 2px solid black;
+        }
+    }
+
     &__tracks {
         flex: 1 1 auto;
     }
@@ -27,16 +40,16 @@
         display: flex;
         align-items: center;
         margin-right: 10px;
-        margin-bottom: 28px;
+        margin-bottom: 29px;
 
         &::before {
             position: absolute;
             pointer-events: none;
-            top: -1px;
-            right: -10px;
+            top: 0px;
+            right: -12px;
             content: '';
             width: 0%;
-            height: 220px;
+            height: 219px;
             border-left: 2px solid black;
         }
     }

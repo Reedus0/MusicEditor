@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import DrawerTrack from '../DrawerTrack/DrawerTrack';
 import { Song } from '../../../models/Song';
 import { Tact } from '../../../models/Tact';
@@ -14,7 +14,6 @@ interface DrawerTactProps {
 }
 
 const DrawerTact: FC<DrawerTactProps> = ({ song, tact, tactCounter, tactIndex }) => {
-
     return (
         <div className={['editor-drawer-tact', tactCounter === 0 ? '_wrapper' : ''].join(' ')} style={{ flexBasis: tact.getWidth() + '%', flexGrow: 1 }} id={'tact-' + (tactIndex)}>
             {tactCounter === tact.getWidth() || tactIndex === 0 ? <div className='editor-drawer-tact__bracket'>
