@@ -17,9 +17,9 @@ const DrawerTact: FC<DrawerTactProps> = ({ song, tact, tactCounter, tactIndex })
 
     return (
         <div className={['editor-drawer-tact', tactCounter === 0 ? '_wrapper' : ''].join(' ')} style={{ flexBasis: tact.getWidth() + '%', flexGrow: 1 }} id={'tact-' + (tactIndex)}>
-            {tactCounter === tact.getWidth() || tactIndex === 0 ? <div className='editor-drawer__bracket'>
-                {tactIndex === 0 ? <h3 className='editor-drawer__bracket-instrument'>Piano</h3> : <></>}
-                <img className='editor-drawer__bracket-img' src={require('./../../../img/bracket.png')} />
+            {tactCounter === tact.getWidth() || tactIndex === 0 ? <div className='editor-drawer-tact__bracket'>
+                {tactIndex === 0 ? <h3 className='editor-drawer-tact__bracket-instrument'>Piano</h3> : <></>}
+                <img className='editor-drawer-tact__bracket-img' src={require('./../../../img/bracket.png')} />
             </div> : <></>}
             <div className='editor-drawer-tact__tracks' id={'track-tracks-' + (tactIndex)}>
                 {tact['tracks'].map((track: Track, trackIndex: number) =>

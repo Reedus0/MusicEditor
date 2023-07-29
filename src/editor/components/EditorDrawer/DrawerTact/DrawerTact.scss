@@ -18,8 +18,37 @@
         }
     }
 
-
     &__tracks {
         flex: 1 1 auto;
+    }
+
+    &__bracket {
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+        margin-bottom: 28px;
+
+        &::before {
+            position: absolute;
+            pointer-events: none;
+            top: -1px;
+            right: -10px;
+            content: '';
+            width: 0%;
+            height: 220px;
+            border-left: 2px solid black;
+        }
+    }
+
+    &__bracket-instrument {
+        font-family: 'TimesNewRoman';
+        font-weight: 700;
+        margin-right: 10px;
+        margin-bottom: 4px;
+    }
+
+    &__bracket-img {
+        height: 220px;
     }
 }
