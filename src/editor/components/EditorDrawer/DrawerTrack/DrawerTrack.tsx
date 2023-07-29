@@ -25,7 +25,7 @@ const DrawerTrack: FC<DrawerTrackProps> = ({ song, tact, track, tactCounter, tac
         <div className='editor-drawer-track__wrapper' id={'track-wrapper-' + (trackIndex)}>
             <DrawerTrackStart song={song} tact={tact} track={track} tactCounter={tactCounter} tactIndex={tactIndex} trackIndex={trackIndex} />
             <div className={['editor-drawer-track', '_track' + ((tactIndex + 1) * (trackIndex + 1) * (10 ** (trackIndex + 1)))].join(' ')} id={'track-' + trackIndex}>
-                <div className='editor-drawer-track__lines'>
+                <div className={['editor-drawer-track__lines', trackIndex === 0 ? '_top' : ''].join(' ')}>
                     {[...Array(5)].map(() => <div className='editor-drawer-track__line'></div>)}
                 </div>
                 <div className='editor-drawer-track__notes'>
