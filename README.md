@@ -11,6 +11,7 @@
 9. Add free camera
 10. Add A4 orientation
 11. Add notes lines
+12. Make action on adder double add
 
 # Todo list site
 

@@ -15,7 +15,7 @@ export class HalfsMover implements IInstrument {
     private getHalfElement = (element: HTMLElement) => {
         let result: any = null
         for (const child of element.children) {
-            if (child.classList.contains('editor-drawer__note-half')) {
+            if (child.classList.contains('editor-drawer-note__half')) {
                 result = child as HTMLElement
             }
         }
