@@ -5,13 +5,21 @@ import { IInstrument } from "./IInsrument";
 export class TactWider implements IInstrument {
     name: string = 'tactWider'
     public action = (element: HTMLElement, song: Song) => {
+        const currentTactNumber = Number(element!.id.split('-')[1])
+
+        let defaultValue: number = 36
+
+        if (currentTactNumber === 0) {
+            defaultValue -= 12
+        }
+
         const { currentTact } = getTactFromHTML(element, song)
         const tactWidth: number = currentTact.getWidth()
         let newWidth: number = tactWidth
         if (tactWidth <= 36) {
             newWidth = tactWidth + 12
         } else if (tactWidth >= 48) {
-            newWidth = tactWidth - 36
+            newWidth = tactWidth - defaultValue
         }
         currentTact.setWidth(newWidth)
     }

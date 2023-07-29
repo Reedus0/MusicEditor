@@ -1,4 +1,3 @@
-import { Note } from "./Note"
 import { Track } from "./Track"
 
 export class Tact {

@@ -10,6 +10,8 @@ export class ObjectsDeleter implements IInstrument {
 
         const { cordsX, cordsY, currentTrack } = getNoteFromHTML(element, song)
 
+        console.log(cordsX, cordsY)
+
         let obejctType: SongObject = '' as SongObject
 
         if (element.classList.contains('editor-drawer__rest')) {

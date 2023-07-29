@@ -1,4 +1,4 @@
-import { clearHoverObjects, globalOffset } from "../../utils"
+import { clearHoverObjects } from "../../utils"
 import { Rest } from "../Rest"
 import { Song } from "../Song"
 import { Track } from "../Track"
@@ -54,11 +54,11 @@ export class RestsAdder implements IInstrument, IAdder {
         const restBottom: number = (editingRest?.style['bottom'].split('px')[0] as any) || 0
         const restLeft: number = (editingRest?.style['left'].split('px')[0] as any) || 0
 
-        const cordsX = (restLeft - 4) * 64 / trackElement!.clientWidth
-        const cordsY = restBottom / 12
-
         const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
 
+        const cordsX = Math.round((restLeft - 4) * (16 * Number(currentTrack.getTimeSignature()[0])) / trackElement!.clientWidth)
+        const cordsY = restBottom / 12
+        
 
         return { cordsX, cordsY, currentTrack }
     }

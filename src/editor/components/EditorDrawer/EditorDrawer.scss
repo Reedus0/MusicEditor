@@ -1,7 +1,10 @@
 .editor-drawer {
     width: 1360px;
+    height: 2036px;
     background: white;
     padding: 40px;
+    margin: 20px;
+    filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1));
 
     @media (max-width: 1440px) {
         transform: scale(0.65);

@@ -1,6 +1,5 @@
-import React, { FC, useEffect, useMemo, useReducer } from 'react'
+import React, { FC, useEffect, useReducer } from 'react'
 import { IInstrument } from '../../models/editor/IInsrument'
-import { NotesHoverer } from '../../models/editor/NotesHoverer'
 import { Song } from '../../models/Song'
 import EditorDrawer from '../EditorDrawer/EditorDrawer'
 import { IAdder } from '../../models/editor/IAdder'

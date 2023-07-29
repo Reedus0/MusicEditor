@@ -24,7 +24,7 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
             <div className='editor-drawer__inner'>
                 {song['tacts'].map((tact: Tact, tactIndex: number) =>
                     <div className={['editor-drawer__tact', tactCounter === 0 ? '_wrapper' : ''].join(' ')} style={{ flexBasis: tact.getWidth() + '%', flexGrow: 1 }} id={'tact-' + (tactIndex)}>
-                        <noscript>{tactCounter + tact.getWidth() > 100 ? tactCounter = tact.getWidth() : tactCounter += tact.getWidth()}</noscript>
+                        <noscript>{tactCounter + tact.getWidth() >= 100 ? tactCounter = tact.getWidth() : tactCounter += tact.getWidth()}</noscript>
                         {tactCounter === tact.getWidth() || tactIndex === 0 ? <div className='editor-drawer__bracket'>
                             {tactIndex === 0 ? <h3 className='editor-drawer__bracket-instrument'>Piano</h3> : <></>}
                             <img className='editor-drawer__bracket-img' src={require('./../../img/bracket.png')} />
@@ -98,7 +98,7 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
                                                                         track.getNote(note['horizontalPosition'], note['verticalPosition'] + 0.5) !== undefined ? '_margin' : ''].join(' ')}
                                                             style={{
                                                                 bottom: (note['verticalPosition'] * 12),
-                                                                left: (document.querySelector('._track' + ((tactIndex + 1) * (trackIndex + 1) * (10 ** (trackIndex + 1))))!.clientWidth / 64 * note['horizontalPosition'] + 4)
+                                                                left: (document.querySelector('._track' + ((tactIndex + 1) * (trackIndex + 1) * (10 ** (trackIndex + 1))))!.clientWidth / (Number(song['tacts'][tactIndex]['tracks'][trackIndex].getTimeSignature()[0]) * 16) * note['horizontalPosition'] + 4)
                                                             }}
                                                         >
                                                             {note['verticalPosition'] < 4.5 ? <h3 className='editor-drawer__note-symbol'>q</h3> : <h3 className='editor-drawer__note-symbol'>Q</h3>}
