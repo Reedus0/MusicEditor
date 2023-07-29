@@ -13,6 +13,7 @@ export class TactWider implements IInstrument {
             defaultValue -= 12
         }
 
+        
         const { currentTact } = getTactFromHTML(element, song)
         const tactWidth: number = currentTact.getWidth()
         let newWidth: number = tactWidth

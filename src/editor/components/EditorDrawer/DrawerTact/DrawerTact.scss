@@ -1,0 +1,25 @@
+.editor-drawer-tact {
+
+    position: relative;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+
+    &._active {
+        &::before {
+            content: '';
+            width: 100%;
+            height: calc(100% - 120px);
+            position: absolute;
+            top: 45px;
+            background: rgb(231, 163, 163);
+            left: 0px;
+        }
+    }
+
+
+    &__tracks {
+        flex: 1 1 auto;
+    }
+}
