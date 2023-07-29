@@ -53,7 +53,7 @@ export class NotesAdder implements IInstrument, IAdder {
 
         const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
 
-        const cordsX = Math.round((noteLeft - 4) * (16 * Number(currentTrack.getTimeSignature()[0])) / trackElement!.clientWidth)
+        const cordsX = (noteLeft - 4) * (16 * Number(currentTrack.getTimeSignature()[0])) / trackElement!.clientWidth
         const cordsY = noteBottom / 12
 
 
