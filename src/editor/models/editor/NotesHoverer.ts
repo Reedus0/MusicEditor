@@ -10,7 +10,7 @@ export class NotesHoverer implements IInstrument, IHoverer {
 
         const currentTrackFake = document.elementFromPoint(cursorX, cursorY - window.scrollY)
 
-        if (currentTrackFake?.classList.contains('editor-drawer__track-fake')) {
+        if (currentTrackFake?.classList.contains('editor-drawer-track__fake')) {
 
             const { elementX, elementY } = getOffset(currentTrackFake)
 
@@ -31,14 +31,14 @@ export class NotesHoverer implements IInstrument, IHoverer {
 
             if (cordsY < 54) {
                 currentTrackFake.innerHTML = `
-                <div class="editor-drawer__note-edit " id="editing-note-${currentTrack}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
-                <h3 class='editor-drawer__note-symbol'>q</h3>
+                <div class="editor-drawer-note _edit " id="editing-note-${currentTrack}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
+                <h3 class='editor-drawer-note__symbol'>q</h3>
                 </div>`
 
             } else {
                 currentTrackFake.innerHTML = `
-                <div class="editor-drawer__note-edit " id="editing-note-${currentTrack}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
-                <h3 class='editor-drawer__note-symbol'>Q</h3>
+                <div class="editor-drawer-note _edit " id="editing-note-${currentTrack}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
+                <h3 class='editor-drawer-note__symbol'>Q</h3>
                 </div>`
             }
 
@@ -47,15 +47,15 @@ export class NotesHoverer implements IInstrument, IHoverer {
 
             if (cordsY <= 18) {
                 if (cordsY % 12 === 0) {
-                    editingNote.innerHTML += `<div class='editor-drawer__note-line-up-edit'></div>`
+                    editingNote.innerHTML += `<div class='editor-drawer-note__line-up-edit'></div>`
                 } else {
-                    editingNote.innerHTML += `<div class='editor-drawer__note-line-edit'></div>`
+                    editingNote.innerHTML += `<div class='editor-drawer-note__line-edit'></div>`
                 }
             } else if (cordsY >= 90) {
                 if (cordsY % 12 === 0) {
-                    editingNote.innerHTML += `<div class='editor-drawer__note-line-down-edit'></div>`
+                    editingNote.innerHTML += `<div class='editor-drawer-note__line-down-edit'></div>`
                 } else {
-                    editingNote.innerHTML += `<div class='editor-drawer__note-line-edit'></div>`
+                    editingNote.innerHTML += `<div class='editor-drawer-note__line-edit'></div>`
                 }
             }
         }

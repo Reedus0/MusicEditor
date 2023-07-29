@@ -34,8 +34,8 @@ export class NotesAdder implements IInstrument, IAdder {
     }
 
     private calculateNotePosition = (element: HTMLElement, song: Song): { cordsX: number, cordsY: number, currentTrack: Track, noteSound: string } => {
-        const tactElement = element.closest('.editor-drawer__tact')
-        const trackElement = element.closest('.editor-drawer__track')
+        const tactElement = element.closest('.editor-drawer-tact')
+        const trackElement = element.closest('.editor-drawer-track')
 
 
         const currentTactNumber = Number(tactElement!.id.split('-')[1])

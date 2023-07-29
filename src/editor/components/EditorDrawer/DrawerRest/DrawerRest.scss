@@ -1,0 +1,43 @@
+.editor-drawer-rest {
+    font-family: Maestro;
+    user-select: none;
+    font-size: 45px;
+    line-height: 0;
+    z-index: 1001;
+    position: absolute;
+    height: 6px;
+    z-index: 1001;
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &._margin {
+        margin-left: 18px;
+
+        &:nth-child(2n + 1) {
+            margin-left: 0;
+
+        }
+
+        &:nth-child(2n) {
+            .editor-drawer__note-half {
+                left: -30px;
+            }
+        }
+    }
+
+    &._edit {
+        pointer-events: none;
+        color: rgb(116, 116, 116);
+    }
+
+    &__symbol {
+        pointer-events: none;
+        font-family: Maestro;
+        line-height: 0;
+        font-size: 45px;
+        margin-bottom: 6px;
+    }
+}

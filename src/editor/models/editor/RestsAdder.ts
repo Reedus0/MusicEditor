@@ -43,8 +43,8 @@ export class RestsAdder implements IInstrument, IAdder {
     }
 
     private calculateRestPosition = (element: HTMLElement, song: Song): { cordsX: number, cordsY: number, currentTrack: Track } => {
-        const tactElement = element.closest('.editor-drawer__tact')
-        const trackElement = element.closest('.editor-drawer__track')
+        const tactElement = element.closest('.editor-drawer-tact')
+        const trackElement = element.closest('.editor-drawer-track')
 
         const currentTactNumber = Number(tactElement!.id.split('-')[1])
         const currentTrackNumber = Number(trackElement!.id.split('-')[1])

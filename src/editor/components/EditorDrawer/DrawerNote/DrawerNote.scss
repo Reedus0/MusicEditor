@@ -1,0 +1,113 @@
+.editor-drawer-note {
+    font-family: Maestro;
+    user-select: none;
+    font-size: 45px;
+    line-height: 0;
+    z-index: 1001;
+    position: absolute;
+    height: 12px;
+    z-index: 1001;
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &._edit {
+        pointer-events: none;
+        color: rgb(116, 116, 116);
+    }
+
+    &._margin {
+        margin-left: 18px;
+
+        &:nth-child(2n + 1) {
+            margin-left: 0;
+
+        }
+
+        &:nth-child(2n) {
+            .editor-drawer__note-half {
+                left: -30px;
+            }
+        }
+    }
+
+    &__symbol {
+        pointer-events: none;
+        font-family: Maestro;
+        line-height: 0;
+        font-size: 45px;
+        margin-bottom: 10px;
+    }
+
+
+
+
+    &__flat,
+    &__sharp,
+    &__natural {
+        pointer-events: none;
+        user-select: none;
+        font-family: 'Maestro';
+        font-size: 40px;
+        line-height: 0;
+        height: 40px;
+
+        position: absolute;
+
+        left: -12px;
+        top: -3px;
+
+        &._margin {
+            left: -36px;
+        }
+    }
+
+    &__natural {
+        font-size: 52px;
+        top: -7px;
+    }
+
+    &__line,
+    &__line-edit {
+        pointer-events: none;
+        z-index: 100;
+        position: absolute;
+        top: 5px;
+        left: -4px;
+        width: 24px;
+        height: 2px;
+
+        background: black;
+    }
+
+    &__line-up,
+    &__line-up-edit {
+        position: absolute;
+        top: -1px;
+        left: -4px;
+        width: 28px;
+        height: 2px;
+
+        background: black;
+    }
+
+    &__line-down,
+    &__line-down-edit {
+        position: absolute;
+        bottom: -1px;
+        left: -4px;
+        width: 28px;
+        height: 2px;
+
+        background: black;
+    }
+
+    &__line-edit,
+    &__line-up-edit,
+    &__line-down-edit {
+        background: rgb(116, 116, 116);
+
+    }
+}

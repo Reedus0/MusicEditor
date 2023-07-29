@@ -10,7 +10,7 @@ export class RestsHoverer implements IInstrument, IHoverer {
 
         const currentTrackFake = document.elementFromPoint(cursorX, cursorY - window.scrollY)
 
-        if (currentTrackFake?.classList.contains('editor-drawer__track-fake')) {
+        if (currentTrackFake?.classList.contains('editor-drawer-track__fake')) {
 
             const { elementX, elementY } = getOffset(currentTrackFake)
 
@@ -26,8 +26,8 @@ export class RestsHoverer implements IInstrument, IHoverer {
             clearHoverObjects()
 
             currentTrackFake.innerHTML = `
-            <div class="editor-drawer__rest-edit " id="editing-rest-${currentTact}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
-            <h3 class='editor-drawer__rest-symbol'>·</h3>
+            <div class="editor-drawer-rest _edit " id="editing-rest-${currentTact}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
+            <h3 class='editor-drawer-rest__symbol'>·</h3>
             </div>`
 
             const editingNote: any = document.getElementById(`editing-rest-${currentTact}`)

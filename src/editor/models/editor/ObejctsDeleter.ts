@@ -16,7 +16,7 @@ export class ObjectsDeleter implements IInstrument {
 
         if (element.classList.contains('editor-drawer__rest')) {
             obejctType = 'rest'
-        } else if (element.classList.contains('editor-drawer__note')) {
+        } else if (element.classList.contains('editor-drawer-note')) {
             obejctType = 'note'
         }
 

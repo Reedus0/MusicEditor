@@ -5,7 +5,12 @@
 3. Make select tool
 4. Make copy toll
 5. Make move toll
-6. Refactor drawer
+6. Add notes flipper
+7. Make UI for instruments panel
+8. Make song templates system
+9. Add free camera
+10. Add A4 orientation
+11. Add notes lines
 
 # Todo list site
 
