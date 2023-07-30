@@ -18,11 +18,11 @@ export class RestsHoverer implements IInstrument, IHoverer {
 
             const { elementX, elementY } = getOffset(currentTrackFake)
 
-            const tactOffsetX = cursorX - elementX
+            const tactOffsetX = (cursorX - elementX) / scale
 
             const cordsXExpresion = currentTrackFake!.clientWidth / step
 
-            const cordsX = (Math.floor((tactOffsetX / scale + 0.001) / (cordsXExpresion))) * cordsXExpresion + 6
+            const cordsX = (Math.floor((tactOffsetX + 0.001) / (cordsXExpresion))) * cordsXExpresion + 6
             const cordsY = 66
 
             const currentTact = currentTrackFake.id[currentTrackFake.id.length - 1]

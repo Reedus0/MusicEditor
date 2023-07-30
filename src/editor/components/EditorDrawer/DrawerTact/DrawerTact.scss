@@ -8,20 +8,21 @@
     align-items: center;
 
     &._active {
-        user-select: none;
-        &::before {
-            content: '';
-            width: 100%;
-            height: calc(100% - 120px);
-            position: absolute;
-            top: 45px;
-            background: rgb(231, 163, 163);
-            left: 0px;
+        .editor-drawer-tact__tracks {
+            &::before {
+                content: '';
+                width: 100%;
+                z-index: -1;
+                height: calc(100% - 120px);
+                position: absolute;
+                top: 45px;
+                background: rgb(231, 163, 163);
+                left: 0px;
+            }
         }
     }
 
     &._last {
-        user-select: none;
         &::after {
             position: absolute;
             pointer-events: none;
@@ -36,10 +37,12 @@
 
     &__tempo {
         user-select: none;
+
         &._first {
 
             left: 80px;
         }
+
         left: 10px;
         position: absolute;
         display: flex;
@@ -47,7 +50,7 @@
         align-items: flex-end;
     }
 
-    &__tempo-equal{
+    &__tempo-equal {
         user-select: none;
         font-family: "TimesNewRoman";
         font-weight: 700;

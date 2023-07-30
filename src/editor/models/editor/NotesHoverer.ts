@@ -18,15 +18,15 @@ export class NotesHoverer implements IInstrument, IHoverer {
 
             const { elementX, elementY } = getOffset(currentTrackFake)
 
-            const tactOffsetX = cursorX - elementX
-            const tactOffsetY = cursorY - elementY
+            const tactOffsetX = (cursorX - elementX) / scale
+            const tactOffsetY = (cursorY - elementY) / scale
 
             const cordsXExpresion = currentTrackFake!.clientWidth / step
-            const cordsYExpresion = tactOffsetY / 6 / scale
+            const cordsYExpresion = tactOffsetY / 6
 
             // TODO: currentTrackFake!.clientWidth / signatureMap[timeSignature[0]] - 10
 
-            const cordsX = (Math.floor((tactOffsetX / scale + 0.001) / (cordsXExpresion))) * cordsXExpresion + 6
+            const cordsX = (Math.floor((tactOffsetX + 0.001) / (cordsXExpresion))) * cordsXExpresion + 6
             const cordsY = ((60 - (Math.floor(cordsYExpresion)) * 6) + 60)
 
             const currentTrack = currentTrackFake.id[currentTrackFake.id.length - 1]
