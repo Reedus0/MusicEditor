@@ -8,10 +8,11 @@
 6. Add notes flipper
 7. Make UI for instruments panel
 8. Make song templates system
-9. Add free camera
-10. Add A4 orientation
-11. Add notes lines
-12. Make action on adder double add
+9. Add A4 orientation
+10. Add notes lines
+11. Make action on adder double add
+12. Add different notes sizes
+13. Redo player 
 
 # Todo list site
 

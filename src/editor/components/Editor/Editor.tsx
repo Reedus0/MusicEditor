@@ -128,11 +128,14 @@ const Editor: FC<EditorProps> = ({ }) => {
         const width = doc.internal.pageSize.getWidth();
         const height = doc.internal.pageSize.getHeight();
 
-        const canvas: HTMLCanvasElement = await html2canvas(document.querySelector('.editor-drawer')! as HTMLElement, {
-            windowHeight: 3508,
-            windowWidth: 2480
-        })
 
+
+        
+        const canvas: HTMLCanvasElement = await html2canvas(document.querySelector('.editor-drawer')!, {
+            windowHeight: 3508,
+            windowWidth: 2480,
+            scale: 3
+        })
         const imgData: any = canvas.toDataURL('image/png')
 
         doc.addImage(imgData, 'PNG', 0, 0, width, height)

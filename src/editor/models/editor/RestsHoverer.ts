@@ -5,6 +5,10 @@ import { IInstrument } from "./IInsrument";
 export class RestsHoverer implements IInstrument, IHoverer {
     name: string = 'restsHoverer'
     public action = (mouseMoveEvent: MouseEvent, step: number) => {
+        const drawerElement: HTMLElement = document.querySelector('.editor-drawer')!
+        const matrix = new WebKitCSSMatrix((window.getComputedStyle(drawerElement)).transform)
+        const scale = matrix['a']
+
         const cursorX = mouseMoveEvent.clientX;
         const cursorY = mouseMoveEvent.clientY + window.scrollY;
 
@@ -18,7 +22,7 @@ export class RestsHoverer implements IInstrument, IHoverer {
 
             const cordsXExpresion = currentTrackFake!.clientWidth / step
 
-            const cordsX = (Math.floor((tactOffsetX + 0.001) / (cordsXExpresion))) * cordsXExpresion + 6
+            const cordsX = (Math.floor((tactOffsetX / scale + 0.001) / (cordsXExpresion))) * cordsXExpresion + 6
             const cordsY = 66
 
             const currentTact = currentTrackFake.id[currentTrackFake.id.length - 1]
