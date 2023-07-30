@@ -5,11 +5,20 @@ import { IInstrument } from "./IInsrument";
 export class NotesHoverer implements IInstrument, IHoverer {
     name: string = 'notesHoverer'
     public action = (mouseMoveEvent: MouseEvent, step: number) => {
+        // TODO
+        // const drawerElement: HTMLElement = document.querySelector('.editor-drawer')!
+        // const matrix = new WebKitCSSMatrix((window.getComputedStyle(drawerElement)).transform)
+        // const scale = matrix['a']
+        // const drawerElementOffsetTop: number = drawerElement.offsetTop - drawerElement.scrollTop + drawerElement.clientTop
+
         const cursorX = mouseMoveEvent.clientX;
-        const cursorY = mouseMoveEvent.clientY + window.scrollY;
+        const cursorY = mouseMoveEvent.clientY;
+
+        console.log(cursorY)
+
 
         const currentTrackFake = document.elementFromPoint(cursorX, cursorY - window.scrollY)
-
+        if (!currentTrackFake?.classList.contains('editor-drawer-track__fake')) clearHoverObjects()
         if (currentTrackFake?.classList.contains('editor-drawer-track__fake')) {
 
             const { elementX, elementY } = getOffset(currentTrackFake)
@@ -22,8 +31,8 @@ export class NotesHoverer implements IInstrument, IHoverer {
 
             // TODO: currentTrackFake!.clientWidth / signatureMap[timeSignature[0]] - 10
 
-            const cordsX = (Math.floor((tactOffsetX + 0.001) / (cordsXExpresion))) * cordsXExpresion + 4
-            const cordsY = (60 - (Math.floor(cordsYExpresion)) * 6) + 60
+            const cordsX = (Math.floor((tactOffsetX + 0.001) / (cordsXExpresion))) * cordsXExpresion + 6
+            const cordsY = ((60 - (Math.floor(cordsYExpresion)) * 6) + 60)
 
             const currentTrack = currentTrackFake.id[currentTrackFake.id.length - 1]
 

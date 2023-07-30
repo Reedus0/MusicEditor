@@ -14,7 +14,7 @@ export class ObjectsDeleter implements IInstrument {
 
         let obejctType: SongObject = '' as SongObject
 
-        if (element.classList.contains('editor-drawer__rest')) {
+        if (element.classList.contains('editor-drawer-rest')) {
             obejctType = 'rest'
         } else if (element.classList.contains('editor-drawer-note')) {
             obejctType = 'note'

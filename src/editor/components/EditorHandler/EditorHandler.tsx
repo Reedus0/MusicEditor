@@ -17,17 +17,56 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
 
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
+    let isMoving: boolean = false
+
+    let firstCordsX: number = 0
+    let firstCordsY: number = 0
+
     window.onresize = () => {
         forceUpdate()
     }
 
 
     document.onmousemove = (e: any) => {
+        if (isMoving) {
+            const drawerElement: HTMLElement = document.querySelector('.editor-drawer')!
+            const currentX = Number(window.getComputedStyle(drawerElement).left.split('px')[0]);
+            const currentY = Number(window.getComputedStyle(drawerElement).top.split('px')[0]);
+            const moveCoefficient: number = 0.7;
+            (document.querySelector('.editor-drawer')! as any).style.left = currentX + ((e.screenX - firstCordsX) * moveCoefficient) + 'px';
+            (document.querySelector('.editor-drawer')! as any).style.top = currentY + ((e.screenY - firstCordsY) * moveCoefficient) + 'px';
+            firstCordsX = e.screenX
+            firstCordsY = e.screenY
+        }
         if (!isEditing) return
         if (!(instrument.name.includes('Adder'))) return
 
         const hoverer = (instrument as IAdder).hoverer
         hoverer.action(e, (instrument as IAdder)['step'] * Number(song['timeSignature'][0]))
+    }
+
+    document.onmousedown = (e: any) => {
+        firstCordsX = e.screenX
+        firstCordsY = e.screenY
+        isMoving = true
+    }
+
+    document.onmouseup = (e: any) => {
+        firstCordsX = 0
+        firstCordsY = 0
+        isMoving = false
+    }
+
+    document.onwheel = (e: any) => {
+        // TODO
+        // const matrix = new WebKitCSSMatrix((window.getComputedStyle(document.querySelector('.editor-drawer')! as any)).transform)
+        // let editorCurrentScale = matrix['a']
+        // if (e.deltaY < 0 && editorCurrentScale < 3.2) {
+        //     editorCurrentScale += 0.2
+        // } else if (e.deltaY > 0 && editorCurrentScale > 0.2) {
+        //     editorCurrentScale -= 0.2
+        // }
+        // (document.querySelector('.editor-drawer')! as any).style.transform = `scale(${editorCurrentScale})`
     }
 
     document.onclick = (e: any) => {

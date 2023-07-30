@@ -3,8 +3,8 @@
 1. Make notes conector
 2. Make different templates
 3. Make select tool
-4. Make copy toll
-5. Make move toll
+4. Make copy tool
+5. Make move tool
 6. Add notes flipper
 7. Make UI for instruments panel
 8. Make song templates system

@@ -1,5 +1,6 @@
 .editor-drawer-tact {
 
+    user-select: none;
     position: relative;
     height: 100%;
 
@@ -7,6 +8,7 @@
     align-items: center;
 
     &._active {
+        user-select: none;
         &::before {
             content: '';
             width: 100%;
@@ -19,6 +21,7 @@
     }
 
     &._last {
+        user-select: none;
         &::after {
             position: absolute;
             pointer-events: none;
@@ -31,22 +34,63 @@
         }
     }
 
+    &__tempo {
+        user-select: none;
+        &._first {
+
+            left: 80px;
+        }
+        left: 10px;
+        position: absolute;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-end;
+    }
+
+    &__tempo-equal{
+        user-select: none;
+        font-family: "TimesNewRoman";
+        font-weight: 700;
+        font-size: 24px;
+        margin: 0 4px;
+        line-height: 0;
+        height: 9px;
+    }
+
+    &__tempo-note {
+        user-select: none;
+        font-family: Maestro;
+        line-height: 0;
+        height: 9px;
+        font-size: 20px;
+    }
+
+    &__tempo-tempo {
+        user-select: none;
+        font-family: "TimesNewRoman";
+        font-weight: 700;
+        font-size: 20px;
+    }
+
     &__tracks {
+        user-select: none;
+        position: relative;
         flex: 1 1 auto;
     }
 
     &__bracket {
+        user-select: none;
         position: relative;
         display: flex;
         align-items: center;
-        margin-right: 10px;
+        margin-right: 5px;
         margin-bottom: 29px;
 
         &::before {
             position: absolute;
             pointer-events: none;
             top: 0px;
-            right: -12px;
+            right: -7px;
             content: '';
             width: 0%;
             height: 219px;
@@ -55,6 +99,7 @@
     }
 
     &__bracket-instrument {
+        user-select: none;
         font-family: 'TimesNewRoman';
         font-weight: 700;
         margin-right: 10px;
@@ -62,6 +107,7 @@
     }
 
     &__bracket-img {
+        user-select: none;
         height: 220px;
     }
 }

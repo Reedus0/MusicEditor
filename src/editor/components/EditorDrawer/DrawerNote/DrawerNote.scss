@@ -1,8 +1,6 @@
 .editor-drawer-note {
     font-family: Maestro;
     user-select: none;
-    font-size: 45px;
-    line-height: 0;
     z-index: 1001;
     position: absolute;
     height: 12px;
@@ -19,7 +17,7 @@
     }
 
     &._margin {
-        margin-left: 15px;
+        margin-left: 14px;
 
         &:nth-child(2n + 1) {
             margin-left: 0;
@@ -37,12 +35,13 @@
         pointer-events: none;
         font-family: Maestro;
         line-height: 0;
-        font-size: 45px;
-        margin-bottom: 10px;
+        font-size: 48px;
+        height: 9px;
+        margin-bottom: 1px;
+        &._rotated{
+            transform: rotateY(180deg)
+        }
     }
-
-
-
 
     &__flat,
     &__sharp,
@@ -75,8 +74,8 @@
         z-index: 100;
         position: absolute;
         top: 5px;
-        left: -4px;
-        width: 24px;
+        left: -3px;
+        width: 23px;
         height: 2px;
 
         background: black;
@@ -86,8 +85,8 @@
     &__line-up-edit {
         position: absolute;
         top: -1px;
-        left: -4px;
-        width: 28px;
+        left: -3px;
+        width: 23px;
         height: 2px;
 
         background: black;
@@ -97,8 +96,8 @@
     &__line-down-edit {
         position: absolute;
         bottom: -1px;
-        left: -4px;
-        width: 28px;
+        left: -3px;
+        width: 23px;
         height: 2px;
 
         background: black;
