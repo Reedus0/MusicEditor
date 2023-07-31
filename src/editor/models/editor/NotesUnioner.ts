@@ -1,118 +1,90 @@
-import { getNoteSymbolElement } from "../../utils";
+import { getNoteFromHTML, getNoteSymbolElement } from "../../utils";
+import { Note } from "../Note";
 import { Song } from "../Song";
+import { Track } from "../Track";
 import { IInstrument } from "./IInsrument";
 import { IUnion } from "./IUnion";
 
 export class NotesUnioner implements IInstrument, IUnion {
-    firstElement: HTMLElement = null as any
-    secondElement: HTMLElement = null as any
-    currentTrack: HTMLElement = null as any
+    firstNote: Note = {} as Note
+    secondNote: Note = {} as Note
+    currentTrack: Track = {} as Track
     name: string = 'notesUnioner'
     public action = (element: HTMLElement, song: Song) => {
-        if (this.firstElement !== null && this.firstElement !== element) {
-            this.secondElement = element
+        const { cordsX, cordsY, currentTrack } = getNoteFromHTML(element, song)
+        if (Object.keys(this.firstNote).length !== 0) {
+            this.secondNote = currentTrack.getNote(cordsX, cordsY)
         } else {
-            this.firstElement = element
+            this.firstNote = currentTrack.getNote(cordsX, cordsY)
         }
-        if (this.firstElement !== null && this.secondElement !== null) {
+        if (Object.keys(this.firstNote).length !== 0 && Object.keys(this.secondNote).length !== 0) {
             if (!this.checkIfHasUnion()) {
+
                 this.unionNotes()
             } else {
-                this.breakeUnion()
+                this.breakUnion()
             }
         }
+
+        // if (this.firstElement !== null && this.firstElement !== element) {
+        //     this.secondElement = element
+        // } else {
+        //     this.firstElement = element
+        // }
+        // if (this.firstElement !== null && this.secondElement !== null) {
+        //     if (!this.checkIfHasUnion()) {
+        //         this.unionNotes()
+        //     } else {
+        //         this.breakeUnion()
+        //     }
+        // }
     }
 
     private checkIfHasUnion = () => {
-        let firstResult: boolean = false
-        let secondResult: boolean = false
-        const firstElementChildNodes: HTMLElement[] = this.firstElement.childNodes as any
-        for (const node of firstElementChildNodes) {
-            if (node!.classList.contains('editor-drawer-note__union')) {
-                firstResult = true
-            }
-        }
-        const secondElementChildNodes: HTMLElement[] = this.secondElement.childNodes as any
-        for (const node of secondElementChildNodes) {
-            if (node!.classList.contains('editor-drawer-note__union')) {
-                secondResult = true
-            }
-        }
-        return firstResult && secondResult
+        const firstHasUnion: boolean =
+            this.firstNote.getUnionNote()['horizontalPosition'] === this.secondNote['horizontalPosition'] &&
+            this.firstNote.getUnionNote()['verticalPosition'] === this.secondNote['verticalPosition']
+        const secondHasUnion: boolean =
+            this.secondNote.getUnionNote()['horizontalPosition'] === this.firstNote['horizontalPosition'] &&
+            this.secondNote.getUnionNote()['verticalPosition'] === this.firstNote['verticalPosition']
+
+        return firstHasUnion && secondHasUnion
     }
 
     private unionNotes = () => {
+        try{
 
-        let notesOrientation: string = 'top'
-
-        if ((getNoteSymbolElement(this.firstElement).innerHTML !== getNoteSymbolElement(this.secondElement).innerHTML) || (getNoteSymbolElement(this.firstElement).classList.contains('_rotated') || getNoteSymbolElement(this.secondElement).classList.contains('_rotated'))) return
-        if (getNoteSymbolElement(this.firstElement).innerHTML === 'Q') {
-            notesOrientation = 'bottom'
+            this.firstNote.getUnionNote().setUnionNote({} as Note)
+            this.secondNote.getUnionNote().setUnionNote({} as Note)
+        } catch (e) {
+            
         }
 
-        const firstElementLeft: number = Number(window.getComputedStyle(this.firstElement).left.split('px')[0])
-        const firstElementTop: number = Number(window.getComputedStyle(this.firstElement).top.split('px')[0])
+        this.firstNote.setUnionNote(this.secondNote)
+        this.secondNote.setUnionNote(this.firstNote)
 
-        const secondElementLeft: number = Number(window.getComputedStyle(this.secondElement).left.split('px')[0])
-        const secondElementTop: number = Number(window.getComputedStyle(this.secondElement).top.split('px')[0])
+        console.log(this.firstNote, this.secondNote)
 
-        const lastElementRighter = firstElementLeft > secondElementLeft
-        const lastElementLower = firstElementTop < secondElementTop
+        this.firstNote = {} as Note
+        this.secondNote = {} as Note
 
-        const unionWidth: number = Math.sqrt(Math.abs(firstElementLeft - secondElementLeft) ** 2 + Math.abs(firstElementTop - secondElementTop) ** 2)
-
-        const rotateAngle: number = -Math.sin((firstElementTop - secondElementTop) / unionWidth)
-
-        const shitExpression = (lastElementLower && !lastElementRighter) || (!lastElementLower && lastElementRighter)
-
-
-        const unionElement: string = `
-        <div class="editor-drawer-note__union" 
-            style="
-                left: ${notesOrientation === 'top' ? 15 + 'px' : 0 + 'px'};
-                top: ${notesOrientation === 'top' ? -42 + (shitExpression ? Math.abs(firstElementTop - secondElementTop) * (shitExpression ? -Math.round(rotateAngle) : Math.round(rotateAngle)) - (shitExpression ? -Math.abs(firstElementTop - secondElementTop) : Math.abs(firstElementTop - secondElementTop)) : 0) + 'px' : 'unset'};
-                bottom: ${notesOrientation === 'bottom' ? -30 + (!shitExpression ? 0 : Math.abs(firstElementTop - secondElementTop) * (!shitExpression ? -Math.round(rotateAngle) : Math.round(rotateAngle)) - (!shitExpression ? -Math.abs(firstElementTop - secondElementTop) : Math.abs(firstElementTop - secondElementTop))) + 'px' : 'unset'};
-                width: ${unionWidth + 1}px; transform: rotate(${lastElementRighter ? -rotateAngle : rotateAngle}rad)
-            ">
-        </div>`
-
-        if (lastElementRighter) {
-            this.firstElement.innerHTML += `<div class="editor-drawer-note__union"></div>`
-            this.secondElement.innerHTML += unionElement
-        } else {
-            this.firstElement.innerHTML += unionElement
-            this.secondElement.innerHTML += `<div class="editor-drawer-note__union"></div>`
-        }
-
-        this.firstElement = null as any
-        this.secondElement = null as any
+        // `
+        // <div class="editor-drawer-note__union" 
+        //     style="
+        //         left: ${notesOrientation === 'top' ? 15 + 'px' : 0 + 'px'};
+        //         top: ${notesOrientation === 'top' ? -42 + (shitExpression ? Math.abs(firstElementTop - secondElementTop) * (shitExpression ? -Math.round(rotateAngle) : Math.round(rotateAngle)) - (shitExpression ? -Math.abs(firstElementTop - secondElementTop) : Math.abs(firstElementTop - secondElementTop)) : 0) + 'px' : 'unset'};
+        //         bottom: ${notesOrientation === 'bottom' ? -30 + (!shitExpression ? 0 : Math.abs(firstElementTop - secondElementTop) * (!shitExpression ? -Math.round(rotateAngle) : Math.round(rotateAngle)) - (!shitExpression ? -Math.abs(firstElementTop - secondElementTop) : Math.abs(firstElementTop - secondElementTop))) + 'px' : 'unset'};
+        //         width: ${unionWidth + 1}px; transform: rotate(${lastElementRighter ? -rotateAngle : rotateAngle}rad)
+        //     ">
+        // </div>`
     }
 
-    private getUnionElement = (element: HTMLElement) => {
-        const elementChildNodes: HTMLElement[] = element.childNodes as any
-        let unionElement: HTMLElement = null as any
-        for (const node of elementChildNodes) {
-            if (node!.classList.contains('editor-drawer-note__union')) {
-                unionElement = node
-            }
-        }
-        return unionElement
+    private breakUnion = () => {
+        this.firstNote.setUnionNote({} as Note)
+        this.secondNote.setUnionNote({} as Note)
+
+        this.firstNote = {} as Note
+        this.secondNote = {} as Note
     }
 
-    private breakeUnion = () => {
-        const firstElementLeft: number = Number(window.getComputedStyle(this.firstElement).left.split('px')[0])
-        const secondElementLeft: number = Number(window.getComputedStyle(this.secondElement).left.split('px')[0])
-
-        const lastElementRighter = firstElementLeft > secondElementLeft
-        if (lastElementRighter) {
-            this.firstElement.removeChild(this.getUnionElement(this.firstElement))
-            this.secondElement.removeChild(this.getUnionElement(this.secondElement))
-        } else {
-            this.firstElement.removeChild(this.getUnionElement(this.firstElement))
-            this.secondElement.removeChild(this.getUnionElement(this.secondElement))
-        }
-
-        this.firstElement = null as any
-        this.secondElement = null as any
-    }
 }

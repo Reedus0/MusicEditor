@@ -4,6 +4,7 @@ export class Note {
     private duration: number = 0
     private halfPosition: number = 1
     private sound: string = 'C5'
+    private unionNote: Note = {} as Note
     private half: noteHalf = noteHalf.NONE
     constructor(horizontalPosition: number, verticalPosition: number, duration: number, sound: string, half: noteHalf) {
         this.verticalPosition = verticalPosition
@@ -28,9 +29,17 @@ export class Note {
         return this.sound
     }
 
+    setUnionNote(unionNote: Note){
+        this.unionNote = unionNote
+    }
+
+    getUnionNote(){
+        return this.unionNote
+    }
     getHalfPosition() {
         return this.halfPosition
     }
+
 
     setHalfPosition(halfPosition: number) {
         if (this.halfPosition > 0 && this.halfPosition < 6) {
