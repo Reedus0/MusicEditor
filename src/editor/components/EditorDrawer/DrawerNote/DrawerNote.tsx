@@ -50,15 +50,15 @@ const DrawerNote: FC<DrawerNoteProps> = ({ song, note, track, tactIndex, trackIn
                 : ''}
             {note['half'] === noteHalf.FLAT
                 ?
-                <div className='editor-drawer-note__flat editor-drawer-note__half'>b</div>
+                <div className='editor-drawer-note__flat editor-drawer-note__half' style={{left: note.getHalfPosition() * -15}}>b</div>
                 :
                 note['half'] === noteHalf.SHARP
                     ?
-                    <div className='editor-drawer-note__sharp editor-drawer-note__half'>#</div>
+                    <div className='editor-drawer-note__sharp editor-drawer-note__half' style={{left: note.getHalfPosition() * -15}}>#</div>
                     :
                     note['half'] === noteHalf.NATURAL
                         ?
-                        <div className='editor-drawer-note__natural editor-drawer-note__half'>é</div>
+                        <div className='editor-drawer-note__natural editor-drawer-note__half' style={{left: note.getHalfPosition() * -15}}>é</div>
                         :
                         ''}
         </div>)

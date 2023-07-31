@@ -2,6 +2,7 @@ export class Note {
     private horizontalPosition: number = 0
     private verticalPosition: number = 0
     private duration: number = 0
+    private halfPosition: number = 1
     private sound: string = 'C5'
     private half: noteHalf = noteHalf.NONE
     constructor(horizontalPosition: number, verticalPosition: number, duration: number, sound: string, half: noteHalf) {
@@ -25,6 +26,18 @@ export class Note {
 
     getSound() {
         return this.sound
+    }
+
+    getHalfPosition() {
+        return this.halfPosition
+    }
+
+    setHalfPosition(halfPosition: number) {
+        if (this.halfPosition > 0 && this.halfPosition < 6) {
+            this.halfPosition = halfPosition
+        } else {
+            throw new Error('Half position is not valid: ' + halfPosition)
+        }
     }
 
     setSound(sound: string, half?: noteHalf) {

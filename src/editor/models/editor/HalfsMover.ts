@@ -1,4 +1,6 @@
+import { getNoteFromHTML } from "../../utils"
 import { Song } from "../Song"
+import { Track } from "../Track"
 import { IInstrument } from "./IInsrument"
 
 
@@ -8,32 +10,17 @@ export class HalfsMover implements IInstrument {
 
     public action = (element: HTMLElement, song: Song) => {
 
-        const halfElement = this.getHalfElement(element)
-        this.moveHlaf(halfElement)
+        const { cordsX, cordsY, currentTrack } = getNoteFromHTML(element, song)
+
+        this.moveHlaf(cordsX, cordsY, currentTrack)
     }
 
-    private getHalfElement = (element: HTMLElement) => {
-        let result: any = null
-        for (const child of element.children) {
-            if (child.classList.contains('editor-drawer-note__half')) {
-                result = child as HTMLElement
-            }
-        }
-        return result
-    }
-
-    private moveHlaf = (element: HTMLElement) => {
-        let halfOffset: string = window.getComputedStyle(element).getPropertyValue('left')
-        let halfOffsetValue = Number(halfOffset.split('px')[0])
-
-        if (halfOffsetValue % 60 === 0) {
-            halfOffset = '-12px'
-        } else if (halfOffsetValue % 78 === 0) {
-            halfOffset = '-30px'
+    private moveHlaf = (cordsX: number, cordsY: number, currentTrack: Track) => {
+        const currentNote = currentTrack.getNote(cordsX, cordsY)
+        if(currentNote.getHalfPosition() === 5){
+            currentNote.setHalfPosition(1)
         } else {
-            halfOffset = (halfOffsetValue - 12) + 'px'
+            currentNote.setHalfPosition(currentNote.getHalfPosition() + 1)
         }
-
-        element.style.left = halfOffset
     }
 }
