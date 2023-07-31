@@ -63,20 +63,18 @@ export class NotesUnioner implements IInstrument, IUnion {
 
         const rotateAngle: number = -Math.sin((firstElementTop - secondElementTop) / unionWidth)
 
+        const shitExpression = (lastElementLower && !lastElementRighter) || (!lastElementLower && lastElementRighter)
+
 
         const unionElement: string = `
         <div class="editor-drawer-note__union" 
             style="
                 left: ${notesOrientation === 'top' ? 15 + 'px' : 0 + 'px'};
-                top: ${notesOrientation === 'top' ? ((lastElementLower && !lastElementRighter) || (!lastElementLower && lastElementRighter) ? Math.abs(firstElementTop - secondElementTop) : 0) + 'px' : 'unset'};
-                bottom: ${notesOrientation === 'bottom' ? ((lastElementLower && !lastElementRighter) || (!lastElementLower && lastElementRighter) ? 0 : Math.abs(firstElementTop - secondElementTop)) + 'px' : 'unset'};
+                top: ${notesOrientation === 'top' ? -42 + (shitExpression ? Math.abs(firstElementTop - secondElementTop) * (shitExpression ? -Math.round(rotateAngle) : Math.round(rotateAngle)) - (shitExpression ? -Math.abs(firstElementTop - secondElementTop) : Math.abs(firstElementTop - secondElementTop)) : 0) + 'px' : 'unset'};
+                bottom: ${notesOrientation === 'bottom' ? -30 + (!shitExpression ? 0 : Math.abs(firstElementTop - secondElementTop) * (!shitExpression ? -Math.round(rotateAngle) : Math.round(rotateAngle)) - (!shitExpression ? -Math.abs(firstElementTop - secondElementTop) : Math.abs(firstElementTop - secondElementTop))) + 'px' : 'unset'};
                 width: ${unionWidth + 1}px; transform: rotate(${lastElementRighter ? -rotateAngle : rotateAngle}rad)
             ">
         </div>`
-
-
-        // top: ${notesOrientation === 'top' ? -32 + Math.abs(firstElementTop - secondElementTop) - (!lastElementLower ? Math.abs(firstElementTop - secondElementTop) : 0) + 'px' : 'unset'};
-        // bottom: ${notesOrientation === 'bottom' ? -32 + Math.abs(firstElementTop - secondElementTop) - (lastElementLower ? Math.abs(firstElementTop - secondElementTop) : 0) + 'px' : 'unset'};
 
         if (lastElementRighter) {
             this.firstElement.innerHTML += `<div class="editor-drawer-note__union"></div>`
