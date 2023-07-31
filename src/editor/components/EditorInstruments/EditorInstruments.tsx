@@ -14,6 +14,7 @@ import { TactShorter } from '../../models/editor/TactShorter';
 import { NotesViewChanger } from '../../models/editor/NotesViewChanger';
 
 import './EditorInstruments.scss'
+import { NotesUnioner } from '../../models/editor/NotesUnioner';
 
 interface EditorInstrumentsProps {
     isEditing: boolean,
@@ -47,6 +48,7 @@ const EditorInstruments: FC<EditorInstrumentsProps> = ({ isEditing, instrument, 
             <button onClick={() => handleChangeInstrument(new TactWider())} >Wider tact</button>
             <button onClick={() => handleChangeInstrument(new TactShorter())} >Shorter tact</button>
             <button onClick={() => handleChangeInstrument(new NotesViewChanger())} >Change view</button>
+            <button onClick={() => handleChangeInstrument(new NotesUnioner())} >Union notes</button>
             <button onClick={() => handleChangeInstrument(new NotesCanceler())} >Cancel</button>
             <h3>Editing: {isEditing ? 'yes' : 'no'}</h3>
             <h3>Instrument: {instrument['name']}</h3>

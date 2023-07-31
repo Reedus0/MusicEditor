@@ -225,3 +225,14 @@ export const getNotesRow = (notes: Note[]): number[] => {
     }
     return Array.from(result) as number[]
 }
+
+export const getNoteSymbolElement = (element: HTMLElement) => {
+    const elementChildNodes: HTMLElement[] = element.childNodes as any
+    let noteElement: HTMLElement = null as any
+    for (const node of elementChildNodes) {
+        if (node!.classList.contains('editor-drawer-note__symbol')) {
+            noteElement = node
+        }
+    }
+    return noteElement
+}

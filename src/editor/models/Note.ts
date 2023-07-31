@@ -6,6 +6,7 @@ export class Note {
     private half: noteHalf = noteHalf.NONE
     constructor(horizontalPosition: number, verticalPosition: number, duration: number, sound: string, half: noteHalf) {
         this.verticalPosition = verticalPosition
+        this.horizontalPosition = horizontalPosition
         this.sound = sound
         this.half = half
 
@@ -13,12 +14,6 @@ export class Note {
             this.sound = sound
         } else {
             throw new Error('Sound is not valid: ' + sound)
-        }
-
-        if (horizontalPosition >= 0 && horizontalPosition <= 63) {
-            this.horizontalPosition = horizontalPosition
-        } else {
-            throw new Error('HorizontalPosition out of range: ' + horizontalPosition)
         }
 
         if (duration >= 0 && duration <= 63) {

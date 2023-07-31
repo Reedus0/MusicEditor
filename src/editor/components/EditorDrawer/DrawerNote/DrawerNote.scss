@@ -109,4 +109,11 @@
         background: rgb(116, 116, 116);
 
     }
+
+
+    &__union {
+        position: absolute;
+        height: 5px;
+        background: black;
+    }
 }
