@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { Song } from '../../../models/Song';
-import { Note, noteHalf } from '../../../models/Note';
+import { Note, noteHalf, noteStyles } from '../../../models/Note';
 import { Track } from '../../../models/Track';
 
 import "./DrawerNote.scss"
@@ -28,7 +28,7 @@ const DrawerNote: FC<DrawerNoteProps> = ({ song, note, track, tactIndex, trackIn
                 left: widthUnit * note['horizontalPosition'] + 6
             }}
         >
-            {note['verticalPosition'] < 4.5 ? <h3 className='editor-drawer-note__symbol'>q</h3> : <h3 className='editor-drawer-note__symbol'>Q</h3>}
+            {noteStyles[note.getStyle()]}
             {(note['verticalPosition'] < 2.5) && !Number.isInteger(note['verticalPosition']) ?
                 <div className='editor-drawer-note__lines'>
                     {[...Array(Math.floor(Math.abs(2.5 - note['verticalPosition'])))].map((element: number, index: number) => <div className='editor-drawer-note__line' style={{ top: 12 * -(index + 1) + 17 }}></div>)}
@@ -65,11 +65,11 @@ const DrawerNote: FC<DrawerNoteProps> = ({ song, note, track, tactIndex, trackIn
             {Object.keys(note.getUnionNote()).length && note['horizontalPosition'] < note.getUnionNote()['horizontalPosition']?
                 <div className="editor-drawer-note__union"
                 style={{
-                    left: note['verticalPosition'] < 4.5 ? 15 : 1,
+                    left: note['verticalPosition'] < 4.5 ? 15 : 0,
                     top: note['verticalPosition'] <= 4.5 ? 44 : 'unset',
                     bottom: note['verticalPosition'] > 4.5 ? 44 : 'unset',
                     //width: Math.sqrt(Math.abs(note['horizontalPosition']  - note.getUnionNote()['horizontalPosition']) ** 2 + Math.abs(note['verticalPosition']  - note.getUnionNote()['verticalPosition']) ** 2)
-                    width: Math.sqrt((Math.abs((note['verticalPosition'] - note.getUnionNote()['verticalPosition']) * 6) ** 2 ) + (Math.abs(note['horizontalPosition'] - note.getUnionNote()['horizontalPosition']) ** 2)) * widthUnit
+                    width: Math.sqrt((Math.abs((note['verticalPosition'] - note.getUnionNote()['verticalPosition']) * 6) ** 2 ) + (Math.abs(note['horizontalPosition'] - note.getUnionNote()['horizontalPosition']) ** 2)) * widthUnit + 1
                 }}
                 >
                 </div>

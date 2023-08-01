@@ -15,7 +15,7 @@ describe('ObjectsDeleter class tests', () => {
     it('Note delete test 1', () => {
         const noteSound = 'D5'
 
-        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.NONE)], [], keys.C, '4/4', clefs.TREBLE)
+        const currentTrack = new Track([new Note(cordsX, cordsY, 4, 1,noteSound, noteHalf.NONE)], [], keys.C, '4/4', clefs.TREBLE)
 
         notesDeleter['deleteObejct'](cordsX, cordsY, currentTrack, 'note') // calling private method
         expect(currentTrack['notes'].length).toEqual(0)
@@ -24,7 +24,7 @@ describe('ObjectsDeleter class tests', () => {
     it('Note natudeleteral test 2', () => {
         const noteSound = 'G#5'
 
-        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.SHARP)], [], keys.C, '4/4', clefs.TREBLE)
+        const currentTrack = new Track([new Note(cordsX, cordsY, 4, 1,noteSound, noteHalf.SHARP)], [], keys.C, '4/4', clefs.TREBLE)
 
         notesDeleter['deleteObejct'](cordsX, cordsY, currentTrack, 'note') // calling private method
 
@@ -34,7 +34,7 @@ describe('ObjectsDeleter class tests', () => {
     it('Note delete test 3', () => {
         const noteSound = 'Bb5'
 
-        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.FLAT)], [], keys.C, '4/4', clefs.TREBLE)
+        const currentTrack = new Track([new Note(cordsX, cordsY, 4, 1,noteSound, noteHalf.FLAT)], [], keys.C, '4/4', clefs.TREBLE)
 
         notesDeleter['deleteObejct'](cordsX, cordsY, currentTrack, 'note') // calling private method
         expect(currentTrack['notes'].length).toEqual(0)
@@ -43,7 +43,7 @@ describe('ObjectsDeleter class tests', () => {
     it('Rest delete test 4', () => {
         const noteSound = 'Bb5'
 
-        const currentTrack = new Track([new Note(cordsX, cordsY, 4, noteSound, noteHalf.FLAT)], [new Rest(cordsX, cordsY, 4)], keys.C, '4/4', clefs.TREBLE)
+        const currentTrack = new Track([new Note(cordsX, cordsY, 4, 1,noteSound, noteHalf.FLAT)], [new Rest(cordsX, cordsY, 4)], keys.C, '4/4', clefs.TREBLE)
 
         notesDeleter['deleteObejct'](cordsX, cordsY, currentTrack, 'rest') // calling private method
         expect(currentTrack['rests'].length).toEqual(0)
