@@ -36,8 +36,8 @@
         font-family: Maestro;
         line-height: 0;
         font-size: 48px;
-        height: 9px;
-        margin-bottom: 1px;
+        height: 48px;
+        margin-top: 38px;
 
         &._rotated {
             transform: rotateY(180deg)
@@ -113,6 +113,7 @@
 
 
     &__union {
+        z-index: 80;
         position: absolute;
         background: black;
     }

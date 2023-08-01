@@ -1,18 +1,15 @@
 # Todo list editor
 
-1. Make notes conector
-2. Make different templates
-3. Make select tool
-4. Make copy tool
-5. Make move tool
-6. Add notes flipper
-7. Make UI for instruments panel
-8. Make song templates system
-9. Add A4 orientation
-10. Add notes lines
-11. Make action on adder double add
-12. Add different notes sizes
-13. Redo player 
+1. Make different templates
+2. Make select tool
+3. Make copy tool
+4. Make move tool
+5. Add notes flipper / done?
+6. Make UI for instruments panel
+7. Add A4 orientation
+8. Make action on adder double add
+9. Add different notes sizes
+10. Redo player 
 
 # Todo list site
 

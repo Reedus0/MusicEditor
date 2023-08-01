@@ -9,9 +9,14 @@ export class Note {
     private half: noteHalf = noteHalf.NONE
     constructor(horizontalPosition: number, verticalPosition: number, duration: number, style: number, sound: string, half: noteHalf) {
         this.verticalPosition = verticalPosition
-        this.horizontalPosition = horizontalPosition
         this.sound = sound
         this.half = half
+        
+        if(horizontalPosition >= 0){
+            this.horizontalPosition = horizontalPosition
+        }else {
+            throw new Error('Horizontal Position out of range: ' + horizontalPosition)
+        }
 
         if (style >= 1 && style <= 4) {
             this.style = style
@@ -58,7 +63,6 @@ export class Note {
     getHalfPosition() {
         return this.halfPosition
     }
-
 
     setHalfPosition(halfPosition: number) {
         if (this.halfPosition > 0 && this.halfPosition < 6) {

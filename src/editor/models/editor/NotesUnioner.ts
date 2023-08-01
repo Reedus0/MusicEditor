@@ -12,11 +12,12 @@ export class NotesUnioner implements IInstrument, IUnion {
     name: string = 'notesUnioner'
     public action = (element: HTMLElement, song: Song) => {
         const { cordsX, cordsY, currentTrack } = getNoteFromHTML(element, song)
-        if (Object.keys(this.firstNote).length !== 0 && (this.firstNote['horizontalPosition'] !== cordsX && this.firstNote['verticalPosition'] !== cordsY)) {
+        if (Object.keys(this.firstNote).length !== 0 && this.firstNote !== currentTrack.getNote(cordsX, cordsY)) {
             this.secondNote = currentTrack.getNote(cordsX, cordsY)
         } else {
             this.firstNote = currentTrack.getNote(cordsX, cordsY)
         }
+        console.log(this.firstNote, this.secondNote)
         if (Object.keys(this.firstNote).length !== 0 && Object.keys(this.secondNote).length !== 0) {
             if (!this.checkIfHasUnion()) {
                 this.unionNotes()
