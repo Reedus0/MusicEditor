@@ -35,7 +35,7 @@ const Editor: FC<EditorProps> = ({ }) => {
     //const tacts: Tact[] = [new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)]), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)]), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)]), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)]), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)]), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)]), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)]), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)])]
 
 
-    const [song, setSong] = useState<Song>(new Song(tacts, tempo, mainKey, mainTimeSignature))
+    const [song, setSong] = useState<Song>(new Song('Merry-Go-Round of Life', `Howl's moving castle`,'Composer: Joe Hisaishi', tacts, tempo, mainKey, mainTimeSignature))
 
     let songIsReady = useRef(null)
     let incrementNotes = useRef(null)

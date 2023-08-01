@@ -1,4 +1,5 @@
 import { getNoteFromHTML } from "../../utils"
+import { Note } from "../Note"
 import { Song } from "../Song"
 import { Track } from "../Track"
 import { IInstrument } from "./IInsrument"
@@ -27,6 +28,9 @@ export class ObjectsDeleter implements IInstrument {
         if (obejctType === 'rest') {
             currentTrack.deleteRest(cordsX, cordsY)
         } else if (obejctType === 'note') {
+            try {
+                currentTrack.getNote(cordsX, cordsY).getUnionNote().setUnionNote({} as Note)
+            } catch (e) { }
             currentTrack.deleteNote(cordsX, cordsY)
         }
     }

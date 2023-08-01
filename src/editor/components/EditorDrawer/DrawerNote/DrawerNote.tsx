@@ -24,7 +24,7 @@ const DrawerNote: FC<DrawerNoteProps> = ({ song, note, track, tactIndex, trackIn
                         ||
                         track.getNote(note['horizontalPosition'], note['verticalPosition'] + 0.5) !== undefined ? '_margin' : ''].join(' ')}
             style={{
-                bottom: (note['verticalPosition'] * 12),
+                bottom: note['verticalPosition'] * 12,
                 left: widthUnit * note['horizontalPosition'] + 6
             }}
         >
@@ -62,14 +62,35 @@ const DrawerNote: FC<DrawerNoteProps> = ({ song, note, track, tactIndex, trackIn
                         <div className='editor-drawer-note__natural editor-drawer-note__half' style={{ left: note.getHalfPosition() * -15 }}>é</div>
                         :
                         ''}
-            {Object.keys(note.getUnionNote()).length && note['horizontalPosition'] < note.getUnionNote()['horizontalPosition']?
+            {Object.keys(note.getUnionNote()).length && note['verticalPosition'] >= note.getUnionNote()['verticalPosition'] ?
                 <div className="editor-drawer-note__union"
                 style={{
-                    left: note['verticalPosition'] < 4.5 ? 15 : 0,
-                    top: note['verticalPosition'] <= 4.5 ? 44 : 'unset',
-                    bottom: note['verticalPosition'] > 4.5 ? 44 : 'unset',
-                    //width: Math.sqrt(Math.abs(note['horizontalPosition']  - note.getUnionNote()['horizontalPosition']) ** 2 + Math.abs(note['verticalPosition']  - note.getUnionNote()['verticalPosition']) ** 2)
-                    width: Math.sqrt((Math.abs((note['verticalPosition'] - note.getUnionNote()['verticalPosition']) * 6) ** 2 ) + (Math.abs(note['horizontalPosition'] - note.getUnionNote()['horizontalPosition']) ** 2)) * widthUnit + 1
+                    left: note['horizontalPosition'] < note.getUnionNote()['horizontalPosition'] ? note['verticalPosition'] < 4.5 ? 15 : 0 : 'unset',
+                    right: note['horizontalPosition'] > note.getUnionNote()['horizontalPosition'] ? note['verticalPosition'] >= 4.5 ? 15 : 0.4 : 'unset',
+                    top: note['verticalPosition'] >= 4.5 ? note['verticalPosition'] >= 4.5 && note['verticalPosition'] < note.getUnionNote()['verticalPosition'] ? 48 - (Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition']) * 12): 48 : 'unset',
+                    bottom: note['verticalPosition'] < 4.5 ? note['verticalPosition'] < 4.5 && note['verticalPosition'] > note.getUnionNote()['verticalPosition'] ? 48 - (Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition']) * 12) : 48 : 'unset',
+                    width: (Math.abs(note['horizontalPosition'] - note.getUnionNote()['horizontalPosition'])) * widthUnit + 1,
+                    height: Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition']) === 0 ? 5 : (Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition'])) * 12 + 1,
+                    clipPath: note['verticalPosition'] >= 4.5 && (note['verticalPosition'] > note.getUnionNote()['verticalPosition'] && note['horizontalPosition'] < note.getUnionNote()['horizontalPosition'])
+                    ||
+                    note['verticalPosition'] < 4.5 && (note['verticalPosition'] > note.getUnionNote()['verticalPosition'] && note['horizontalPosition'] < note.getUnionNote()['horizontalPosition'])
+                    ? 
+                    `
+                    polygon(
+                    0% calc(0% + 5px),
+                    0% 0%,
+                    100% calc(100% - 5px),
+                    100% 100%
+                    )`
+                    :
+                    `
+                    polygon(
+                    100% calc(0% + 5px),
+                    100% 0%,
+                    0% calc(100% - 5px),
+                    0% 100%
+                    )`
+
                 }}
                 >
                 </div>
@@ -78,14 +99,3 @@ const DrawerNote: FC<DrawerNoteProps> = ({ song, note, track, tactIndex, trackIn
 }
 
 export default DrawerNote;
-
-
-        // `
-        // <div class="editor-drawer-note__union" 
-        //     style="
-        //         left: ${notesOrientation === 'top' ? 15 + 'px' : 0 + 'px'};
-        //         top: ${notesOrientation === 'top' ? -42 + (shitExpression ? Math.abs(firstElementTop - secondElementTop) * (shitExpression ? -Math.round(rotateAngle) : Math.round(rotateAngle)) - (shitExpression ? -Math.abs(firstElementTop - secondElementTop) : Math.abs(firstElementTop - secondElementTop)) : 0) + 'px' : 'unset'};
-        //         bottom: ${notesOrientation === 'bottom' ? -30 + (!shitExpression ? 0 : Math.abs(firstElementTop - secondElementTop) * (!shitExpression ? -Math.round(rotateAngle) : Math.round(rotateAngle)) - (!shitExpression ? -Math.abs(firstElementTop - secondElementTop) : Math.abs(firstElementTop - secondElementTop))) + 'px' : 'unset'};
-        //         width: ${unionWidth + 1}px; transform: rotate(${lastElementRighter ? -rotateAngle : rotateAngle}rad)
-        //     ">
-        // </div>`

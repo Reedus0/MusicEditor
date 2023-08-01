@@ -1,0 +1,26 @@
+.editor-drawer-top{
+    user-select: none;
+    padding: 20px 0;
+    &__name{
+        font-family: 'TimesNewRoman';
+        font-weight: 700;
+        text-align: center;
+        font-size: 52px;
+    }
+
+    &__subtitle{
+        margin-top: 10px;
+        font-family: 'TimesNewRoman';
+        font-weight: 700;
+        text-align: center;
+        font-size: 28px;
+    }
+
+    &__author{
+        margin-top: -22px;
+        font-family: 'TimesNewRoman';
+        font-weight: 700;
+        text-align: right;
+        font-size: 22px;
+    }
+}

@@ -4,6 +4,7 @@ import DrawerTact from './DrawerTact/DrawerTact';
 import { Tact } from '../../models/Tact';
 
 import './EditorDrawer.scss'
+import DrawerTop from './DrawerTop/DrawerTop';
 
 interface EditorDrawerProps {
     song: Song,
@@ -20,6 +21,7 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
 
     return (
         <div className='editor-drawer' id='#editor-drawer'>
+            <DrawerTop name={song['name']} subtitle={song['subtitle']} author={song['author']} />
             <div className='editor-drawer__inner'>
                 {song['tacts'].map((tact: Tact, tactIndex: number) =>
                     <>
