@@ -5,6 +5,7 @@ import { Tact } from '../../models/Tact';
 
 import './EditorDrawer.scss'
 import DrawerTop from './DrawerTop/DrawerTop';
+import DrawerPage from './DrawerPage/DrawerPage';
 
 interface EditorDrawerProps {
     song: Song,
@@ -12,22 +13,52 @@ interface EditorDrawerProps {
 }
 
 const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
-    let tactCounter: number = 0
-    let pageCounter: number = 0
+    let currentPageTacts: number = 0
 
-    const pageThreshold: number = 576
+    const pageThreshold: number = 504
 
-    console.log('Render!')
+    const countTactsOnPage = (song: Song): number[] => {
+        const result: number[] = []
+        let pageCount: number = 0
+        let tactCounter: number = 0
+        let tactLines: number = 0
+        let tactWidth: number = 0
+        let tactLinesThreshold: number = 5
+        for (let i = 0; i < song['tacts'].length; i++) {
+            if (pageCount > 0) tactLinesThreshold = 6
+            tactCounter += 1
+            if (tactWidth + song['tacts'][i].getWidth() > 96) {
+                tactWidth = song['tacts'][i].getWidth()
+                tactLines += 1
+            } else {
+                tactWidth += song['tacts'][i].getWidth()
+            }
+            if (tactLines === tactLinesThreshold) {
+                result.push(tactCounter - 1)
+                pageCount += 1
+                tactLines = 0
+                tactCounter = 0
+                tactWidth = 0
+            }
+        }
+        if (tactWidth < pageThreshold) {
+            result.push(tactCounter + pageCount)
+        }
+        console.log(result)
+
+        return result
+    }
+
+    console.log(song['tacts'].length)
 
     return (
         <div className='editor-drawer' id='#editor-drawer'>
-            <DrawerTop name={song['name']} subtitle={song['subtitle']} author={song['author']} />
             <div className='editor-drawer__inner'>
-                {song['tacts'].map((tact: Tact, tactIndex: number) =>
+                {countTactsOnPage(song).map((tactsCount: number, pageIndex: number) =>
                     <>
-                        <noscript>{pageCounter += tact.getWidth()}</noscript>
-                        <noscript>{tactCounter + tact.getWidth() > 96 ? tactCounter = tact.getWidth() : tactCounter += tact.getWidth()}</noscript>
-                        <DrawerTact song={song} tact={tact} tactCounter={tactCounter} tactIndex={tactIndex} />
+                        <DrawerPage currentPageTacts={currentPageTacts} pageIndex={pageIndex} song={song} tacts={song['tacts'].slice(currentPageTacts, currentPageTacts + tactsCount)} />
+                        <noscript>{currentPageTacts += tactsCount}</noscript>
+
                     </>
                 )}
             </div>

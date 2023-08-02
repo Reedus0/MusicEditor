@@ -1,7 +1,7 @@
 import { Track } from "./Track"
 
 export class Tact {
-    private duration: number = 63
+    private duration: number = 64
     private tracks: Track[] = []
     private tempo: number = 120
     private width: number = 12

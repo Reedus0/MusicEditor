@@ -29,11 +29,11 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
     document.onmousemove = (e: any) => {
         if (isMoving && !isEditing) {
             const drawerElement: HTMLElement = document.querySelector('.editor-drawer')!
-            const currentX = Number(window.getComputedStyle(drawerElement).left.split('px')[0]);
-            const currentY = Number(window.getComputedStyle(drawerElement).top.split('px')[0]);
-            const moveCoefficient: number = 0.7;
-            drawerElement.style.left = currentX + ((e.screenX - firstCordsX) * moveCoefficient) + 'px';
-            drawerElement.style.top = currentY + ((e.screenY - firstCordsY) * moveCoefficient) + 'px';
+            const currentX = Number(window.getComputedStyle(drawerElement).left.split('px')[0])
+            const currentY = Number(window.getComputedStyle(drawerElement).top.split('px')[0])
+            const moveCoefficient: number = 1;
+            drawerElement.style.left = currentX + ((e.screenX - firstCordsX) * moveCoefficient) + 'px'
+            drawerElement.style.top = currentY + ((e.screenY - firstCordsY) * moveCoefficient) + 'px'
             firstCordsX = e.screenX
             firstCordsY = e.screenY
         }
@@ -42,6 +42,18 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
             const hoverer = (instrument as any).hoverer
             hoverer.action(e, song)
         }
+    }
+
+    document.onwheel = (e: any) => {
+        const drawerElement: HTMLElement = document.querySelector('.editor-drawer')!
+        const matrix = new WebKitCSSMatrix((window.getComputedStyle(drawerElement)).transform)
+        let editorCurrentScale = matrix['a']
+        if (e.deltaY < 0 && editorCurrentScale < 3.2) {
+            editorCurrentScale += 0.2
+        } else if (e.deltaY > 0 && editorCurrentScale > 0.2) {
+            editorCurrentScale -= 0.2
+        }
+        drawerElement.style.transform = `scale(${editorCurrentScale})`
     }
 
     document.onmousedown = (e: any) => {
@@ -68,18 +80,6 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
             forceUpdate()
             setTimeout(forceUpdate, 0)
         }
-    }
-
-    document.onwheel = (e: any) => {
-        const drawerElement: HTMLElement = document.querySelector('.editor-drawer')!
-        const matrix = new WebKitCSSMatrix((window.getComputedStyle(drawerElement)).transform)
-        let editorCurrentScale = matrix['a']
-        if (e.deltaY < 0 && editorCurrentScale < 3.2) {
-            editorCurrentScale += 0.2
-        } else if (e.deltaY > 0 && editorCurrentScale > 0.2) {
-            editorCurrentScale -= 0.2
-        }
-        drawerElement.style.transform = `scale(${editorCurrentScale})`
     }
 
     document.onclick = (e: any) => {
