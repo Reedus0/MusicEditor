@@ -17,7 +17,7 @@ interface DrawerPageProps {
 const DrawerPage: FC<DrawerPageProps> = ({ currentPageTacts, pageIndex, song, tacts }) => {
     let tactCounter: number = 0
     return (
-        <div className='editor-drawer-page'>
+        <div className='editor-drawer-page' id={'page-' + pageIndex}>
             {pageIndex === 0 ?
                 <DrawerTop name={song['name']} subtitle={song['subtitle']} author={song['author']} />
                 :

@@ -169,21 +169,25 @@ const Editor: FC<EditorProps> = ({ }) => {
         stopPlaying()
 
         const doc: jsPDF = new jsPDF('portrait', 'mm', 'a4')
-
+        
         const width = doc.internal.pageSize.getWidth();
         const height = doc.internal.pageSize.getHeight();
+        
+        const pages = Array.from(document.getElementsByClassName('editor-drawer-page'))
 
+        for (let i = 0; i < pages.length; i++) {
+            const canvas: HTMLCanvasElement = await html2canvas(pages[i] as HTMLElement, {
+                windowHeight: 3508,
+                windowWidth: 2480,
+                scale: 3
+            })
+            const imgData: any = canvas.toDataURL('image/png')
 
+            if (i > 0) doc.addPage()
 
+            doc.addImage(imgData, 'PNG', 0, 0, width, height)
+        }
 
-        const canvas: HTMLCanvasElement = await html2canvas(document.querySelector('.editor-drawer')!, {
-            windowHeight: 3508,
-            windowWidth: 2480,
-            scale: 3
-        })
-        const imgData: any = canvas.toDataURL('image/png')
-
-        doc.addImage(imgData, 'PNG', 0, 0, width, height)
         doc.save('notes.pdf')
 
     }
