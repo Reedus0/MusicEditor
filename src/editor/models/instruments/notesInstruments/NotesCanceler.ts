@@ -1,8 +1,8 @@
-import { CancelMap, FlatMap, InvertMap, SharpMap, calculateHalfNote, getNoteFromHTML, halfMaps } from "../../utils"
-import { noteHalf } from "../Note"
-import { Song } from "../Song"
-import { Track } from "../Track"
-import { IInstrument } from "./IInsrument"
+import { getNoteFromHTML, calculateHalfNote, halfMaps, InvertMap } from "../../../utils"
+import { noteHalf } from "../../Note"
+import { Song } from "../../Song"
+import { Track } from "../../Track"
+import { IInstrument } from "../interfaces/IInsrument"
 
 export class NotesCanceler implements IInstrument {
     name: string = 'notesCanceler'

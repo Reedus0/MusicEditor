@@ -1,9 +1,10 @@
-import { getTactFromHTML } from "../../utils";
-import { Song } from "../Song";
-import { IInstrument } from "./IInsrument";
+import { getTactFromHTML } from "../../../utils"
+import { Song } from "../../Song"
+import { IInstrument } from "../interfaces/IInsrument"
+
 
 export class TactShorter implements IInstrument {
-    name: string = 'tactShorter'
+    name: string = 'tactsShorter'
     public action = (element: HTMLElement, song: Song) => {
         const currentTactNumber = Number(element!.id.split('-')[1])
 

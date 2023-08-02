@@ -1,4 +1,4 @@
-export interface IHoverer{
+export interface IHoverer {
     name: string
     action: Function
 }

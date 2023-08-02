@@ -1,11 +1,10 @@
-import { getNoteFromHTML } from "../../utils"
-import { Song } from "../Song"
-import { Track } from "../Track"
-import { IInstrument } from "./IInsrument"
-
+import { getNoteFromHTML } from "../../../utils"
+import { Song } from "../../Song"
+import { Track } from "../../Track"
+import { IInstrument } from "../interfaces/IInsrument"
 
 export class HalfsMover implements IInstrument {
-    name: string = 'halfsMover'
+    name: string = 'notesHalfsMover'
 
 
     public action = (element: HTMLElement, song: Song) => {

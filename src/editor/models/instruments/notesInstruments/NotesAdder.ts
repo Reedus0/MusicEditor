@@ -1,17 +1,22 @@
-import { clearHoverObjects, globalOffset } from "../../utils"
-import { Note, noteHalf } from "../Note"
-import { Song } from "../Song"
-import { Track } from "../Track"
-import { IAdder } from "./IAdder"
-import { IHoverer } from "./IHoverer"
-import { IInstrument } from "./IInsrument"
+
+import { clearHoverObjects, globalOffset } from "../../../utils"
+import { Note, noteHalf } from "../../Note"
+import { Song } from "../../Song"
+import { Track } from "../../Track"
+import { IAdder } from "../interfaces/IAdder"
+import { IHoverer } from "../interfaces/IHoverer"
+import { IInstrument } from "../interfaces/IInsrument"
 import { NotesHoverer } from "./NotesHoverer"
 
 
 export class NotesAdder implements IInstrument, IAdder {
     step: number = 1
     name: string = 'notesAdder'
-    hoverer: IHoverer = new NotesHoverer()
+    hoverer: IHoverer = new NotesHoverer(this.step)
+
+    constructor(step: number){
+        this.step = step
+    }
 
     public action = (element: HTMLElement, song: Song) => {
         const { cordsX, cordsY, currentTrack, noteSound } = this.calculateNotePosition(element, song)
@@ -24,7 +29,7 @@ export class NotesAdder implements IInstrument, IAdder {
             new Note(
                 cordsX,
                 cordsY,
-                this.step,
+                this.step * Number(currentTrack.getTimeSignature()[0]),
                 cordsY < 4.5 ? 1 : 2,
                 noteSound,
                 noteHalf.NONE

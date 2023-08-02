@@ -2,7 +2,7 @@ import { clefs } from "../../../utils"
 import { keys } from "../../../utils/keys"
 import { Note, noteHalf } from "../../Note"
 import { Track } from "../../Track"
-import { NotesNaturaler } from "../NotesNaturaler"
+import { NotesNaturaler } from "../notesInstruments/NotesNaturaler"
 
 const notesNaturaler = new NotesNaturaler()
 

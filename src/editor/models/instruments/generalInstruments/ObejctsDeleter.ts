@@ -1,9 +1,8 @@
-import { getNoteFromHTML } from "../../utils"
-import { Note } from "../Note"
-import { Song } from "../Song"
-import { Track } from "../Track"
-import { IInstrument } from "./IInsrument"
-
+import { getNoteFromHTML } from "../../../utils"
+import { Note } from "../../Note"
+import { Song } from "../../Song"
+import { Track } from "../../Track"
+import { IInstrument } from "../interfaces/IInsrument"
 
 export class ObjectsDeleter implements IInstrument {
     name: string = 'objectsDeleter'

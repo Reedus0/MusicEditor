@@ -1,11 +1,10 @@
-import { getNoteFromHTML, getNoteSymbolElement } from "../../utils";
-import { Note } from "../Note";
-import { Song } from "../Song";
-import { Track } from "../Track";
-import { IInstrument } from "./IInsrument";
-import { IUnion } from "./IUnion";
+import { getNoteFromHTML } from "../../../utils"
+import { Note } from "../../Note"
+import { Song } from "../../Song"
+import { Track } from "../../Track"
+import { IInstrument } from "../interfaces/IInsrument"
 
-export class NotesUnioner implements IInstrument, IUnion {
+export class NotesUnioner implements IInstrument {
     firstNote: Note = {} as Note
     secondNote: Note = {} as Note
     currentTrack: Track = {} as Track
@@ -17,7 +16,6 @@ export class NotesUnioner implements IInstrument, IUnion {
         } else {
             this.firstNote = currentTrack.getNote(cordsX, cordsY)
         }
-        console.log(this.firstNote, this.secondNote)
         if (Object.keys(this.firstNote).length !== 0 && Object.keys(this.secondNote).length !== 0) {
             if (!this.checkIfHasUnion()) {
                 this.unionNotes()
@@ -40,6 +38,7 @@ export class NotesUnioner implements IInstrument, IUnion {
 
     private unionNotes = () => {
         if (this.firstNote.getStyle() !== this.secondNote.getStyle()) return
+        if (this.firstNote.getStyle() !== 1 && this.firstNote.getStyle() !== 2) return
         try {
             let currentUnionNote = this.firstNote.getUnionNote()
             this.firstNote.setUnionNote({} as Note)
@@ -56,8 +55,6 @@ export class NotesUnioner implements IInstrument, IUnion {
 
         this.firstNote.setUnionNote(this.secondNote)
         this.secondNote.setUnionNote(this.firstNote)
-
-        console.log(this.firstNote, this.secondNote)
 
         this.firstNote = {} as Note
         this.secondNote = {} as Note

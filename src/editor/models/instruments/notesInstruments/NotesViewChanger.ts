@@ -1,7 +1,7 @@
-import { getNoteFromHTML, getNoteSymbolElement } from "../../utils";
-import { Song } from "../Song";
-import { Track } from "../Track";
-import { IInstrument } from "./IInsrument";
+import { getNoteFromHTML } from "../../../utils"
+import { Song } from "../../Song"
+import { Track } from "../../Track"
+import { IInstrument } from "../interfaces/IInsrument"
 
 export class NotesViewChanger implements IInstrument {
     name: string = 'notesViewChanger'

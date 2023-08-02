@@ -3,7 +3,7 @@ import { keys } from "../../../utils/keys"
 import { Note, noteHalf } from "../../Note"
 import { Rest } from "../../Rest"
 import { Track } from "../../Track"
-import { ObjectsDeleter } from "../ObejctsDeleter"
+import { ObjectsDeleter } from "../generalInstruments/ObejctsDeleter"
 
 const notesDeleter = new ObjectsDeleter()
 

@@ -1,17 +1,22 @@
-import { clearHoverObjects } from "../../utils"
-import { Rest } from "../Rest"
-import { Song } from "../Song"
-import { Track } from "../Track"
-import { IAdder } from "./IAdder"
-import { IHoverer } from "./IHoverer"
-import { IInstrument } from "./IInsrument"
+
+import { clearHoverObjects } from "../../../utils"
+import { Rest } from "../../Rest"
+import { Song } from "../../Song"
+import { Track } from "../../Track"
+import { IAdder } from "../interfaces/IAdder"
+import { IHoverer } from "../interfaces/IHoverer"
+import { IInstrument } from "../interfaces/IInsrument"
 import { RestsHoverer } from "./RestsHoverer"
 
 
 export class RestsAdder implements IInstrument, IAdder {
     step: number = 1
     name: string = 'restsAdder'
-    hoverer: IHoverer = new RestsHoverer()
+    hoverer: IHoverer = new RestsHoverer(this.step)
+
+    constructor(step: number){
+        this.step = step
+    }
 
     getStep() {
         return this.step

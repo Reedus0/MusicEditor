@@ -1,14 +1,16 @@
-.editor-drawer-top{
+.editor-drawer-top {
     user-select: none;
     padding: 20px 0;
-    &__name{
+
+    &__name {
+        margin-top: 10px;
         font-family: 'TimesNewRoman';
         font-weight: 700;
         text-align: center;
         font-size: 52px;
     }
 
-    &__subtitle{
+    &__subtitle {
         margin-top: 10px;
         font-family: 'TimesNewRoman';
         font-weight: 700;
@@ -16,7 +18,7 @@
         font-size: 28px;
     }
 
-    &__author{
+    &__author {
         margin-top: -22px;
         font-family: 'TimesNewRoman';
         font-weight: 700;

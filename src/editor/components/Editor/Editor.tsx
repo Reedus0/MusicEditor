@@ -3,7 +3,6 @@ import { Note } from '../../models/Note'
 import { Song } from '../../models/Song'
 import { Tact } from '../../models/Tact'
 import { Track } from '../../models/Track'
-import { IInstrument } from '../../models/editor/IInsrument'
 import { clearActiveTacts, clearHoverObjects, clefs, formatNoteForPlay, highlightTact } from '../../utils'
 import { keys } from '../../utils/keys'
 import React, { FC, useEffect, useRef, useState } from 'react'
@@ -11,6 +10,7 @@ import EditorInstruments from '../EditorInstruments/EditorInstruments'
 import EditorHandler from '../EditorHandler/EditorHandler'
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
+import { IInstrument } from '../../models/instruments/interfaces/IInsrument'
 
 
 
@@ -31,11 +31,26 @@ const Editor: FC<EditorProps> = ({ }) => {
 
     const tactWidth: number = 12
 
-    const tacts: Tact[] = [new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth * 2), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth),]
-    //const tacts: Tact[] = [new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)]), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)]), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)]), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)]), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)]), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)]), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)]), new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)])]
+    const tacts: Tact[] = [
+        new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth * 2),
+        new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth),
+        new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth),
+        new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth),
+        new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth),
+        new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth),
+        new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth),
+        new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth),
+        new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth),
+        new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth),
+        new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth),
+        new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth),
+        new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth),
+        new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth),
+        new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth),
+        new Tact([new Track([], [], mainKey, mainTimeSignature, clefs.TREBLE), new Track([], [], mainKey, mainTimeSignature, clefs.BASS)], tempo, tactWidth),
+    ]
 
-
-    const [song, setSong] = useState<Song>(new Song('Merry-Go-Round of Life', `Howl's moving castle`,'Composer: Joe Hisaishi', tacts, tempo, mainKey, mainTimeSignature))
+    const [song, setSong] = useState<Song>(new Song('Merry-Go-Round of Life', `Howl's moving castle`, 'Composer: Joe Hisaishi', tacts, tempo, mainKey, mainTimeSignature))
 
     let songIsReady = useRef(null)
     let incrementNotes = useRef(null)
@@ -130,7 +145,7 @@ const Editor: FC<EditorProps> = ({ }) => {
 
 
 
-        
+
         const canvas: HTMLCanvasElement = await html2canvas(document.querySelector('.editor-drawer')!, {
             windowHeight: 3508,
             windowWidth: 2480,

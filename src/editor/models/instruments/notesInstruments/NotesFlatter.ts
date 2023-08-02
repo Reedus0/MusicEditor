@@ -1,8 +1,8 @@
-import { calculateHalfNote, getNoteFromHTML, halfMaps } from "../../utils"
-import { noteHalf } from "../Note"
-import { Song } from "../Song"
-import { Track } from "../Track"
-import { IInstrument } from "./IInsrument"
+import { getNoteFromHTML, calculateHalfNote, halfMaps } from "../../../utils"
+import { noteHalf } from "../../Note"
+import { Song } from "../../Song"
+import { Track } from "../../Track"
+import { IInstrument } from "../interfaces/IInsrument"
 
 export class NotesFlatter implements IInstrument {
     name: string = 'notesFlatter'

@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useReducer } from 'react'
-import { IInstrument } from '../../models/editor/IInsrument'
 import { Song } from '../../models/Song'
 import EditorDrawer from '../EditorDrawer/EditorDrawer'
-import { IAdder } from '../../models/editor/IAdder'
 import { clearHoverObjects } from '../../utils'
+import { IInstrument } from '../../models/instruments/interfaces/IInsrument'
+import { adderInstruments, generalInstruments, hovererInstruments, notesInstruments, restsInstruments, tactsInstruments } from '../../models/instruments'
 
 interface EditorHandlerProps {
     song: Song,
@@ -32,16 +32,16 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
             const currentX = Number(window.getComputedStyle(drawerElement).left.split('px')[0]);
             const currentY = Number(window.getComputedStyle(drawerElement).top.split('px')[0]);
             const moveCoefficient: number = 0.7;
-            (document.querySelector('.editor-drawer')! as any).style.left = currentX + ((e.screenX - firstCordsX) * moveCoefficient) + 'px';
-            (document.querySelector('.editor-drawer')! as any).style.top = currentY + ((e.screenY - firstCordsY) * moveCoefficient) + 'px';
+            drawerElement.style.left = currentX + ((e.screenX - firstCordsX) * moveCoefficient) + 'px';
+            drawerElement.style.top = currentY + ((e.screenY - firstCordsY) * moveCoefficient) + 'px';
             firstCordsX = e.screenX
             firstCordsY = e.screenY
         }
         if (!isEditing) return
-        if (!(instrument.name.includes('Adder'))) return
-
-        const hoverer = (instrument as IAdder).hoverer
-        hoverer.action(e, (instrument as IAdder)['step'] * Number(song['timeSignature'][0]))
+        if (hovererInstruments.includes(instrument.name)) {
+            const hoverer = (instrument as any).hoverer
+            hoverer.action(e, song)
+        }
     }
 
     document.onmousedown = (e: any) => {
@@ -71,7 +71,10 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
     document.onclick = (e: any) => {
         if (e.target.classList.contains('editor-drawer-object')) {
             if (!isEditing) return
-            if (!instrument.name.includes('Adder')) {
+            let currentObjectInstruments: string[] = [...generalInstruments]
+            if (e.target.classList.contains('editor-drawer-note')) currentObjectInstruments.push(...notesInstruments)
+            if (e.target.classList.contains('editor-drawer-rest')) currentObjectInstruments.push(...restsInstruments)
+            if (currentObjectInstruments.includes(instrument.name)) {
                 instrument.action(e.target, song)
                 forceUpdate()
                 setTimeout(forceUpdate, 0)
@@ -80,7 +83,7 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
 
         if (e.target.closest('.editor-drawer-track__notes') !== undefined) {
             if (!isEditing) return
-            if ((instrument.name.includes('Adder'))) {
+            if (adderInstruments.includes(instrument.name)) {
                 instrument.action(e.target, song)
                 forceUpdate()
                 setTimeout(forceUpdate, 0)
@@ -89,12 +92,10 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
 
         if (e.target.closest('.editor-drawer-tact') !== undefined) {
             if (!isEditing) return
-            if (instrument.name.includes('tact')) {
-
+            if (tactsInstruments.includes(instrument.name)) {
                 instrument.action(e.target.closest('.editor-drawer-tact'), song)
                 forceUpdate()
                 setTimeout(forceUpdate, 0)
-
             }
         }
     }
