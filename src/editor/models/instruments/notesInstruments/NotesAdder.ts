@@ -12,10 +12,22 @@ import { NotesHoverer } from "./NotesHoverer"
 export class NotesAdder implements IInstrument, IAdder {
     step: number = 1
     name: string = 'notesAdder'
-    hoverer: IHoverer = new NotesHoverer(this.step)
+    hoverer: IHoverer = {} as IHoverer
 
     constructor(step: number){
         this.step = step
+        this.hoverer = new NotesHoverer(this.step)
+    }
+
+    getStep() {
+        return this.step
+    }
+
+    setStep(step: number) {
+        if (step >= 0 && step <= 32) {
+            this.step = step
+            this.hoverer = new NotesHoverer(this.step)
+        }
     }
 
     public action = (element: HTMLElement, song: Song) => {
@@ -29,11 +41,11 @@ export class NotesAdder implements IInstrument, IAdder {
             new Note(
                 cordsX,
                 cordsY,
-                this.step * Number(currentTrack.getTimeSignature()[0]),
+                16 / this.step,
                 cordsY < 4.5 ? 1 : 2,
                 noteSound,
                 noteHalf.NONE
-            )
+            ),
         )
         clearHoverObjects()
     }
@@ -42,21 +54,21 @@ export class NotesAdder implements IInstrument, IAdder {
         const tactElement = element.closest('.editor-drawer-tact')
         const trackElement = element.closest('.editor-drawer-track')
 
-
         const currentTactNumber = Number(tactElement!.id.split('-')[1])
         const currentTrackNumber = Number(trackElement!.id.split('-')[1])
 
-        const editingNote = document.getElementById('editing-note-' + currentTrackNumber)
+        const editingNote = document.getElementById('editing-object-' + currentTrackNumber)
 
         const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
         const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
+
+        const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
 
         const clefOffset = song['tacts'][currentTactNumber as number]['tracks'][currentTrackNumber]['clef']
 
         const noteVerticalPosition = ((noteBottom / 12) - clefOffset) % 3.5
         const noteOctave = 4 + Math.floor(((noteBottom / 12) - globalOffset - clefOffset) / 3.5)
 
-        const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
 
         const cordsX = Math.round((noteLeft - 6) * (16 * Number(currentTrack.getTimeSignature()[0])) / trackElement!.clientWidth)
         const cordsY = noteBottom / 12

@@ -38,7 +38,7 @@ const EditorInstruments: FC<EditorInstrumentsProps> = ({ isEditing, instrument, 
 
     return (
         <div className='editor-instruments'>
-            <input onChange={(e) => (instrument as IAdder).step = (Number(e.target.value)) }/>
+            <input onChange={(e) => (instrument as any).setStep(e.target.value) }/>
             <button onClick={() => handleChangeInstrument(new ObjectsMover())} >Move object</button>
             <button onClick={() => handleChangeInstrument(new NotesAdder(1))} >Add note</button>
             <button onClick={() => handleChangeInstrument(new RestsAdder(1))} >Add rest</button>

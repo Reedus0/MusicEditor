@@ -3,7 +3,7 @@ import { Song } from '../../models/Song'
 import EditorDrawer from '../EditorDrawer/EditorDrawer'
 import { clearHoverObjects } from '../../utils'
 import { IInstrument } from '../../models/instruments/interfaces/IInsrument'
-import { adderInstruments, generalInstruments, hovererInstruments, notesInstruments, restsInstruments, tactsInstruments } from '../../models/instruments'
+import { adderInstruments, generalInstruments, holdInstruments, hovererInstruments, notesInstruments, restsInstruments, tactsInstruments } from '../../models/instruments'
 
 interface EditorHandlerProps {
     song: Song,
@@ -48,12 +48,26 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
         firstCordsX = e.screenX
         firstCordsY = e.screenY
         isMoving = true
+        if (!isEditing) return
+        if(e.which !== 1) return
+        if (holdInstruments.includes(instrument.name)) {
+            (instrument as any).onHoldAction(e.target, song)
+            forceUpdate()
+            setTimeout(forceUpdate, 0)
+        }
     }
 
     document.onmouseup = (e: any) => {
         firstCordsX = 0
         firstCordsY = 0
         isMoving = false
+        if (!isEditing) return
+        if(e.which !== 1) return
+        if (holdInstruments.includes(instrument.name)) {
+            (instrument as any).onRealeseAction(e.target, song)
+            forceUpdate()
+            setTimeout(forceUpdate, 0)
+        }
     }
 
     document.onwheel = (e: any) => {
@@ -81,7 +95,7 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
             }
         }
 
-        if (e.target.closest('.editor-drawer-track__notes') !== undefined) {
+        if (e.target.closest('.editor-drawer-track__objects') !== undefined) {
             if (!isEditing) return
             if (adderInstruments.includes(instrument.name)) {
                 instrument.action(e.target, song)

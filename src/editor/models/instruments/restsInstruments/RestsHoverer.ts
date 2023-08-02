@@ -45,10 +45,12 @@ export class RestsHoverer implements IInstrument, IHoverer {
 
             clearHoverObjects()
 
-            currentTrackFake.innerHTML = `
-            <div class="editor-drawer-rest _edit " id="editing-rest-${currentTrackNumber}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
+            currentTrackFake.innerHTML = 
+            `
+            <div class="editor-drawer-rest _edit " id="editing-object-${currentTrackNumber}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
             <h3 class='editor-drawer-rest__symbol'>·</h3>
-            </div>`
+            </div>
+            `
         }
     }
 }

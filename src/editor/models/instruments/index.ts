@@ -29,4 +29,9 @@ export const adderInstruments = [
 export const hovererInstruments = [
     'notesAdder',
     'restsAdder',
+    'objectsMover'
+]
+
+export const holdInstruments = [
+    'objectsMover'
 ]

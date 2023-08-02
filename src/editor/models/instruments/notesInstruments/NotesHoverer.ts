@@ -6,7 +6,7 @@ import { IInstrument } from "../interfaces/IInsrument"
 export class NotesHoverer implements IInstrument, IHoverer {
     name: string = 'notesHoverer'
     private step: number = 1
-    
+
     constructor(step: number){
         this.step = step
     }
@@ -42,7 +42,6 @@ export class NotesHoverer implements IInstrument, IHoverer {
             const cordsXExpresion = currentTrackFake!.clientWidth / step
             const cordsYExpresion = tactOffsetY / 6
 
-
             // TODO: currentTrackFake!.clientWidth / signatureMap[timeSignature[0]] - 10
 
             const cordsX = Math.round((Math.floor((tactOffsetX + 0.001) / (cordsXExpresion))) * cordsXExpresion + 6)
@@ -52,20 +51,23 @@ export class NotesHoverer implements IInstrument, IHoverer {
             clearHoverObjects()
 
             if (cordsY < 54) {
-                currentTrackFake.innerHTML = `
-                <div class="editor-drawer-note _edit " id="editing-note-${currentTrackNumber}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
+                currentTrackFake.innerHTML = 
+                `
+                <div class="editor-drawer-note _edit " id="editing-object-${currentTrackNumber}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
                 <h3 class='editor-drawer-note__symbol'>q</h3>
-                </div>`
+                </div>
+                `
 
             } else {
-                currentTrackFake.innerHTML = `
-                <div class="editor-drawer-note _edit " id="editing-note-${currentTrackNumber}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
+                currentTrackFake.innerHTML = 
+                `
+                <div class="editor-drawer-note _edit " id="editing-object-${currentTrackNumber}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
                 <h3 class='editor-drawer-note__symbol'>Q</h3>
-                </div>`
+                </div>
+                `
             }
 
-
-            const editingNote: any = document.getElementById(`editing-note-${currentTrack}`)
+            const editingNote: any = document.getElementById(`editing-object-${currentTrackNumber}`)
 
             if (cordsY <= 18) {
                 if (cordsY % 12 === 0) {

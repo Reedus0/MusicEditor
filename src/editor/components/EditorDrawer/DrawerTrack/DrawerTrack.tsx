@@ -28,13 +28,15 @@ const DrawerTrack: FC<DrawerTrackProps> = ({ song, tact, track, tactCounter, tac
                 <div className={['editor-drawer-track__lines', trackIndex === 0 ? '_top' : ''].join(' ')}>
                     {[...Array(5)].map(() => <div className='editor-drawer-track__line'></div>)}
                 </div>
-                <div className='editor-drawer-track__notes'>
-                    {getNotesLine(track['notes']).map((line: number) =>
-                        <div className='editor-drawer__notes-line'>
-                            {track['notes'].filter((note: Note) => note['horizontalPosition'] === line).sort((a: Note, b: Note) => a['verticalPosition'] > b['verticalPosition'] ? 1 : -1).map((note: Note, noteIndex: number) =>
-                                <DrawerNote song={song} note={note} track={track} tactIndex={tactIndex} trackIndex={trackIndex} />
-                            )}
-                        </div>)}
+                <div className='editor-drawer-track__objects'>
+                    <div className='editor-drawer-track__notes'>
+                        {getNotesLine(track['notes']).map((line: number) =>
+                            <div className='editor-drawer__notes-line'>
+                                {track['notes'].filter((note: Note) => note['horizontalPosition'] === line).sort((a: Note, b: Note) => a['verticalPosition'] > b['verticalPosition'] ? 1 : -1).map((note: Note, noteIndex: number) =>
+                                    <DrawerNote song={song} note={note} track={track} tactIndex={tactIndex} trackIndex={trackIndex} />
+                                )}
+                            </div>)}
+                    </div>
                     <div className='editor-drawer-track__rests'>
                         {track['rests'].map((rest: Rest) =>
                             <DrawerRest song={song} rest={rest} tactIndex={tactIndex} trackIndex={trackIndex} />

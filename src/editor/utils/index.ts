@@ -174,6 +174,27 @@ export const getNoteFromHTML = (element: HTMLElement, song: Song): { cordsX: num
     return { cordsX, cordsY, currentTrack }
 }
 
+export const getRestFromHTML = (element: HTMLElement, song: Song): { cordsX: number, cordsY: number, currentTrack: Track } => {
+    const editingNote = element
+    const tactElement = element.closest('.editor-drawer-tact')
+    const trackElement = element.closest('.editor-drawer-track')
+
+    const currentTactNumber = Number(tactElement!.id.split('-')[1])
+    const currentTrackNumber = Number(trackElement!.id.split('-')[1])
+
+    const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
+    const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
+
+    const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
+
+    const cordsX = Math.round((noteLeft - 6) * (16 * Number(currentTrack.getTimeSignature()[0])) / trackElement!.clientWidth)
+    const cordsY = noteBottom / 12
+
+
+    return { cordsX, cordsY, currentTrack }
+}
+
+
 export const getTactFromHTML = (element: HTMLElement, song: Song): { currentTact: Tact } => {
     const editingTact = element
 

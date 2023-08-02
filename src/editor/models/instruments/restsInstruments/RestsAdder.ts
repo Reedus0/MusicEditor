@@ -12,10 +12,11 @@ import { RestsHoverer } from "./RestsHoverer"
 export class RestsAdder implements IInstrument, IAdder {
     step: number = 1
     name: string = 'restsAdder'
-    hoverer: IHoverer = new RestsHoverer(this.step)
+    hoverer: IHoverer = {} as IHoverer
 
     constructor(step: number){
         this.step = step
+        this.hoverer = new RestsHoverer(this.step)
     }
 
     getStep() {
@@ -25,6 +26,7 @@ export class RestsAdder implements IInstrument, IAdder {
     setStep(step: number) {
         if (step >= 0 && step <= 32) {
             this.step = step
+            this.hoverer = new RestsHoverer(this.step)
         }
     }
 
@@ -42,7 +44,7 @@ export class RestsAdder implements IInstrument, IAdder {
                 cordsX,
                 cordsY,
                 this.step
-            )
+            ),
         )
         clearHoverObjects()
     }
@@ -54,7 +56,7 @@ export class RestsAdder implements IInstrument, IAdder {
         const currentTactNumber = Number(tactElement!.id.split('-')[1])
         const currentTrackNumber = Number(trackElement!.id.split('-')[1])
 
-        const editingRest = document.getElementById('editing-rest-' + currentTrackNumber)
+        const editingRest = document.getElementById('editing-object-' + currentTrackNumber)
 
         const restBottom: number = (editingRest?.style['bottom'].split('px')[0] as any) || 0
         const restLeft: number = (editingRest?.style['left'].split('px')[0] as any) || 0
