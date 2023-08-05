@@ -11,10 +11,10 @@ export class Note {
         this.verticalPosition = verticalPosition
         this.sound = sound
         this.half = half
-        
-        if(horizontalPosition >= 0){
+
+        if (horizontalPosition >= 0) {
             this.horizontalPosition = horizontalPosition
-        }else {
+        } else {
             throw new Error('Horizontal Position out of range: ' + horizontalPosition)
         }
 
@@ -96,8 +96,8 @@ export enum noteHalf {
 }
 
 export const noteStyles: any = {
-    1: <h3 className='editor-drawer-note__symbol'>q</h3>,
-    2: <h3 className='editor-drawer-note__symbol'>Q</h3>,
-    3: <h3 className='editor-drawer-note__symbol _rotated'>Q</h3>,
-    4: <h3 className='editor-drawer-note__symbol _rotated'>q</h3>
+    1: <img className='editor-drawer-note__img _top' src={require('./../img/notes/noteUp.png')} />,
+    2: <img className='editor-drawer-note__img _bottom' src={require('./../img/notes/noteDown.png')} />,
+    3: <img className='editor-drawer-note__img _bottom _rotated' src={require('./../img/notes/noteDown.png')} />,
+    4: <img className='editor-drawer-note__img _top _rotated' src={require('./../img/notes/noteUp.png')} />,
 }

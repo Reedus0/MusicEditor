@@ -13,7 +13,6 @@
 
     &._edit {
         pointer-events: none;
-        color: rgb(116, 116, 116);
     }
 
     &._margin {
@@ -31,18 +30,43 @@
         }
     }
 
-    &__symbol {
+    &__img {
+        filter: grayscale(100%);
         pointer-events: none;
-        font-family: Maestro;
-        line-height: 0;
-        font-size: 48px;
         height: 48px;
-        margin-top: 38px;
+
+
+        
+
+        &._top{
+            margin-bottom: 35px;
+        }
+
+        &._bottom{
+            margin-top: 33px;
+        }
 
         &._rotated {
             transform: rotateY(180deg)
         }
+
+        &._edit{
+            filter: invert(40%);
+        }
     }
+
+    // &__symbol {
+    //     pointer-events: none;
+    //     font-family: Maestro;
+    //     line-height: 0;
+    //     font-size: 48px;
+    //     height: 48px;
+    //     margin-top: 38px;
+
+    //     &._rotated {
+    //         transform: rotateY(180deg)
+    //     }
+    // }
 
     &__flat,
     &__sharp,
@@ -107,8 +131,7 @@
     &__line-edit,
     &__line-up-edit,
     &__line-down-edit {
-        background: rgb(116, 116, 116);
-
+        filter: invert(40%);
     }
 
 

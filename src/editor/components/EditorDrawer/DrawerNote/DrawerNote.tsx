@@ -65,10 +65,10 @@ const DrawerNote: FC<DrawerNoteProps> = ({ song, note, track, tactIndex, trackIn
             {Object.keys(note.getUnionNote()).length && note['verticalPosition'] >= note.getUnionNote()['verticalPosition'] ?
                 <div className="editor-drawer-note__union"
                 style={{
-                    left: note['horizontalPosition'] < note.getUnionNote()['horizontalPosition'] ? note['verticalPosition'] < 4.5 ? 15 : 0 : 'unset',
-                    right: note['horizontalPosition'] > note.getUnionNote()['horizontalPosition'] ? note['verticalPosition'] >= 4.5 ? 15 : 0.4 : 'unset',
-                    top: note['verticalPosition'] >= 4.5 ? note['verticalPosition'] >= 4.5 && note['verticalPosition'] < note.getUnionNote()['verticalPosition'] ? 48 - (Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition']) * 12): 48 : 'unset',
-                    bottom: note['verticalPosition'] < 4.5 ? note['verticalPosition'] < 4.5 && note['verticalPosition'] > note.getUnionNote()['verticalPosition'] ? 48 - (Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition']) * 12) : 48 : 'unset',
+                    left: note['horizontalPosition'] < note.getUnionNote()['horizontalPosition'] ? note.getStyle() === 1 ? 15 : 0 : 'unset',
+                    right: note['horizontalPosition'] > note.getUnionNote()['horizontalPosition'] ? note.getStyle() === 2 ? 15 : 1 : 'unset',
+                    top: note.getStyle() === 2 ? note['verticalPosition'] >= 4.5 && note['verticalPosition'] < note.getUnionNote()['verticalPosition'] ? 47 - (Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition']) * 12): 47 : 'unset',
+                    bottom: note.getStyle() === 1 ? note['verticalPosition'] < 4.5 && note['verticalPosition'] > note.getUnionNote()['verticalPosition'] ? 47 - (Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition']) * 12) : 47 : 'unset',
                     width: (Math.abs(note['horizontalPosition'] - note.getUnionNote()['horizontalPosition'])) * widthUnit + 1,
                     height: Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition']) === 0 ? 5 : (Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition'])) * 12 + 1,
                     clipPath: note['verticalPosition'] >= 4.5 && (note['verticalPosition'] > note.getUnionNote()['verticalPosition'] && note['horizontalPosition'] < note.getUnionNote()['horizontalPosition'])

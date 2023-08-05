@@ -47,14 +47,12 @@ export class NotesHoverer implements IInstrument, IHoverer {
             const cordsX = Math.round((Math.floor((tactOffsetX + 0.001) / (cordsXExpresion))) * cordsXExpresion + 6)
             const cordsY = ((60 - (Math.floor(cordsYExpresion)) * 6) + 60)
 
-
             clearHoverObjects()
-
             if (cordsY < 54) {
                 currentTrackFake.innerHTML = 
                 `
                 <div class="editor-drawer-note _edit " id="editing-object-${currentTrackNumber}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
-                <h3 class='editor-drawer-note__symbol'>q</h3>
+                <img class='editor-drawer-note__img _top _edit' src=${require('./../../../img/notes/noteUp.png')} />
                 </div>
                 `
 
@@ -62,7 +60,7 @@ export class NotesHoverer implements IInstrument, IHoverer {
                 currentTrackFake.innerHTML = 
                 `
                 <div class="editor-drawer-note _edit " id="editing-object-${currentTrackNumber}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
-                <h3 class='editor-drawer-note__symbol'>Q</h3>
+                <img class='editor-drawer-note__img _bottom _edit' src=${require('./../../../img/notes/noteDown.png')} />
                 </div>
                 `
             }
