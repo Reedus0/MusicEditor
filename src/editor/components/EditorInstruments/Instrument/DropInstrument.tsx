@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react'
 import { IInstrument } from '../../../models/instruments/interfaces/IInsrument';
 
 import './Instrument.scss'
+import { clearAllInstrumentsDrop } from '../../../utils';
 
 interface DropInstrumentProps {
     instrumentsGroup: IInstrument[],
@@ -13,22 +14,20 @@ const DropInstrument: FC<DropInstrumentProps> = ({ instrumentsGroup, currentInst
 
     const [selectedInstrument, setSelectedInstrument] = useState<IInstrument>(instrumentsGroup[0]);
 
-    const clearAllDrop = () => {
-        Array.from(document.getElementsByClassName('editor-instruments-instrument')).forEach((element: any) => element.classList.remove('_drop'))
-    }
-
     const setDropHanlder = (e: any) => {
         const drop = e.target.closest('.editor-instruments-instrument')
-        if (!drop.classList.contains('_drop')) {
-            clearAllDrop()
+        if(isSelected && !drop.classList.contains('_drop')){
             drop.classList.add('_drop')
+        } else if(!drop.classList.contains('_drop')){
+            clearAllInstrumentsDrop()
+            handler(selectedInstrument)
         } else {
             drop.classList.remove('_drop')
         }
     }
 
     const handleSelectDropInstrument = (instrument: IInstrument) => {
-        clearAllDrop()
+        clearAllInstrumentsDrop()
         setSelectedInstrument(instrument)
         handler(instrument)
     }

@@ -226,6 +226,10 @@ export const clearActiveTacts = () => {
     Array.from(document.getElementsByClassName('editor-drawer-tact')).forEach((element: any) => element.classList.remove('_active'))
 }
 
+export const clearAllInstrumentsDrop = () => {
+    Array.from(document.getElementsByClassName('editor-instruments-instrument')).forEach((element: any) => element.classList.remove('_drop'))
+}
+
 export const highlightTact = (position: number) => {
     document.getElementById('tact-' + position)?.classList.add('_active')
     document.getElementById('tact-' + (position - 1))?.classList.remove('_active')

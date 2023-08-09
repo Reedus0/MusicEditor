@@ -16,7 +16,7 @@ import { TactsWider } from '../../models/instruments/tactsInstruments/TactsWider
 import { ObjectsMover } from '../../models/instruments/generalInstruments/ObjectsMover'
 import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
-import { clearHoverObjects } from '../../utils'
+import { clearAllInstrumentsDrop, clearHoverObjects } from '../../utils'
 
 import './EditorInstruments.scss'
 import Instrument from './Instrument/Instrument'
@@ -63,6 +63,7 @@ const EditorInstruments: FC<EditorInstrumentsProps> = ({ isEditing, instrument, 
 
     const handleChangeInstrument = (newInstrument: IInstrument) => {
         if (newInstrument['name'] !== instrument['name']) {
+            clearAllInstrumentsDrop()
             setIsEditing(true)
             setInstrument(newInstrument)
         } else {
@@ -86,8 +87,8 @@ const EditorInstruments: FC<EditorInstrumentsProps> = ({ isEditing, instrument, 
             <div className='editor-instruments__line'></div>
             <Instrument instrument={new ObjectsMover()} currentInstrument={instrument} handler={handleChangeInstrument} />
             {/* <Instrument instrument={{} as IInstrument} currentInstrument={instrument} handler={handleChangeInstrument} icon={require('./../../img/instruments/objectsSelector.png')} /> */}
-            <Instrument instrument={new NotesAdder(1)} currentInstrument={instrument} handler={handleChangeInstrument} />
-            <Instrument instrument={new RestsAdder(1)} currentInstrument={instrument} handler={handleChangeInstrument} />
+            <Instrument instrument={new NotesAdder(2)} currentInstrument={instrument} handler={handleChangeInstrument} />
+            <Instrument instrument={new RestsAdder(2)} currentInstrument={instrument} handler={handleChangeInstrument} />
             <Instrument instrument={new ObjectsDeleter()} currentInstrument={instrument} handler={handleChangeInstrument} />
             <DropInstrument
                 instrumentsGroup={[new NotesSharper(), new NotesFlatter(), new NotesNaturaler(), new NotesCanceler()]}
