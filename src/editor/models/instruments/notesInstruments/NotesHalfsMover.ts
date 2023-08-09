@@ -3,7 +3,7 @@ import { Song } from "../../Song"
 import { Track } from "../../Track"
 import { IInstrument } from "../interfaces/IInsrument"
 
-export class HalfsMover implements IInstrument {
+export class NotesHalfsMover implements IInstrument {
     name: string = 'notesHalfsMover'
 
 

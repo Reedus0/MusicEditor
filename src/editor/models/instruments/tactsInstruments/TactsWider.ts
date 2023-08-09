@@ -3,7 +3,7 @@ import { Song } from "../../Song"
 import { IInstrument } from "../interfaces/IInsrument"
 
 
-export class TactWider implements IInstrument {
+export class TactsWider implements IInstrument {
     name: string = 'tactsWider'
     public action = (element: HTMLElement, song: Song) => {
         const currentTactNumber = Number(element!.id.split('-')[1])

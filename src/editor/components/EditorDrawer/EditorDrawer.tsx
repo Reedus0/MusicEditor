@@ -44,12 +44,8 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
         if (tactWidth < pageThreshold) {
             result.push(tactCounter + pageCount)
         }
-        console.log(result)
-
         return result
     }
-
-    console.log(song['tacts'].length)
 
     return (
         <div className='editor-drawer' id='#editor-drawer'>
@@ -58,7 +54,6 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
                     <>
                         <DrawerPage currentPageTacts={currentPageTacts} pageIndex={pageIndex} song={song} tacts={song['tacts'].slice(currentPageTacts, currentPageTacts + tactsCount)} />
                         <noscript>{currentPageTacts += tactsCount}</noscript>
-
                     </>
                 )}
             </div>

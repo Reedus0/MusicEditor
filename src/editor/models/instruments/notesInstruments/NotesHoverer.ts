@@ -19,7 +19,7 @@ export class NotesHoverer implements IInstrument, IHoverer {
         const cursorX = mouseMoveEvent.clientX;
         const cursorY = mouseMoveEvent.clientY;
 
-        const currentTrackFake = document.elementFromPoint(cursorX, cursorY - window.scrollY)
+        const currentTrackFake = document.elementFromPoint(cursorX, cursorY)
 
         if (!currentTrackFake?.classList.contains('editor-drawer-track__fake')) clearHoverObjects()
         if (currentTrackFake?.classList.contains('editor-drawer-track__fake')) {

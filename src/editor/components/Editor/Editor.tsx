@@ -164,34 +164,6 @@ const Editor: FC<EditorProps> = ({ }) => {
         setIsPlaying(false)
     }
 
-    const saveToFile = async () => {
-        clearHoverObjects()
-        stopPlaying()
-
-        const doc: jsPDF = new jsPDF('portrait', 'mm', 'a4')
-        
-        const width = doc.internal.pageSize.getWidth();
-        const height = doc.internal.pageSize.getHeight();
-        
-        const pages = Array.from(document.getElementsByClassName('editor-drawer-page'))
-
-        for (let i = 0; i < pages.length; i++) {
-            const canvas: HTMLCanvasElement = await html2canvas(pages[i] as HTMLElement, {
-                windowHeight: 3508,
-                windowWidth: 2480,
-                scale: 3
-            })
-            const imgData: any = canvas.toDataURL('image/png')
-
-            if (i > 0) doc.addPage()
-
-            doc.addImage(imgData, 'PNG', 0, 0, width, height)
-        }
-
-        doc.save('notes.pdf')
-
-    }
-
     useEffect(() => {
         if (isPlaying) {
             setIsEditing(false);
@@ -213,10 +185,7 @@ const Editor: FC<EditorProps> = ({ }) => {
 
     return (
         <div className='editor'>
-            <button onClick={() => saveToFile()}>Save</button>
-            <button onClick={() => setIsPlaying(!isPlaying)} >Play/Stop</button>
-            <h3 >{isPlaying ? 'playing' : 'stoped'}</h3>
-            <EditorInstruments isEditing={isEditing} setIsEditing={setIsEditing} instrument={instrument} setInstrument={setInstrument} />
+            <EditorInstruments isEditing={isEditing} setIsEditing={setIsEditing} instrument={instrument} setInstrument={setInstrument} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
             <EditorHandler song={song} isEditing={isEditing} setIsEditing={setIsEditing} instrument={instrument} setInstrument={setInstrument} />
         </div>
     )
