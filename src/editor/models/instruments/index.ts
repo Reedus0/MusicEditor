@@ -19,6 +19,7 @@ export const restsInstruments = [
 export const tactsInstruments = [
     'tactsShorter',
     'tactsWider',
+    'tactsDurationChanger'
 ]
 
 export const adderInstruments = [

@@ -21,6 +21,7 @@ import { clearAllInstrumentsDrop, clearHoverObjects } from '../../utils'
 import './EditorInstruments.scss'
 import Instrument from './Instrument/Instrument'
 import DropInstrument from './Instrument/DropInstrument'
+import { TactsDurationChanger } from '../../models/instruments/tactsInstruments/TactsDurationChanger'
 
 interface EditorInstrumentsProps {
     isEditing: boolean,
@@ -98,6 +99,7 @@ const EditorInstruments: FC<EditorInstrumentsProps> = ({ isEditing, instrument, 
             />
             <Instrument instrument={new NotesViewChanger()} currentInstrument={instrument} handler={handleChangeInstrument} />
             <Instrument instrument={new NotesUnioner()} currentInstrument={instrument} handler={handleChangeInstrument} />
+            <Instrument instrument={new TactsDurationChanger()} currentInstrument={instrument} handler={handleChangeInstrument} />
             <div className='editor-instruments__line _end'></div>
             <button
                 className='editor-instruments__button'

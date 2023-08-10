@@ -113,4 +113,22 @@
         user-select: none;
         height: 220px;
     }
+
+    &__input{
+        font-family: 'TimesNewRoman';
+        font-weight: 700;
+        font-size: 20px;
+        text-align: center;
+
+        outline: none;
+        z-index: 1000;
+        position: absolute;
+        width: 30px;
+        top: 5px;
+        right: 5px;
+
+        background: none;
+        border: none;
+        border-bottom: 1px solid black;
+    }
 }

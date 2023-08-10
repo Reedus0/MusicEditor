@@ -94,7 +94,8 @@ const Editor: FC<EditorProps> = ({ }) => {
 
 
     const countNotes = () => {
-        if (iterratorNote > Number(song['tacts'][position]['tracks'][0].getTimeSignature()[0]) * 16) {
+        const timeSignature = Number(song['tacts'][position]['tracks'][0].getTimeSignature()[0])
+        if (iterratorNote >= timeSignature * 16) {
             iterratorNote = 0
             position += 1
             highlightTact(position)
@@ -105,7 +106,8 @@ const Editor: FC<EditorProps> = ({ }) => {
         }
 
         playSong(songSounds, position, iterratorNote)
-        iterratorNote += 1
+        console.log(iterratorNote)
+        iterratorNote += timeSignature * Number(song['tacts'][position].getDuration()) * (1 / timeSignature)
     }
 
     const loadSong = (song: Song): { [key: number]: HTMLAudioElement }[][] => {
