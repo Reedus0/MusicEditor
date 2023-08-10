@@ -31,9 +31,10 @@ export class RestsHoverer implements IInstrument, IHoverer {
             const currentTactNumber = Number(tactElement!.id.split('-')[1])
             const currentTrackNumber = Number(trackElement!.id.split('-')[1])
 
+            const currentTact = song['tacts'][currentTactNumber]
             const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
 
-            const step = this.step * Number(currentTrack.getTimeSignature()[0])
+            const step = (this.step * Number(currentTrack.getTimeSignature()[0])) / currentTact.getDuration()
 
             const { elementX, elementY } = getOffset(currentTrackFake)
 

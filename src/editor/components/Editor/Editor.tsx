@@ -106,8 +106,7 @@ const Editor: FC<EditorProps> = ({ }) => {
         }
 
         playSong(songSounds, position, iterratorNote)
-        console.log(iterratorNote)
-        iterratorNote += timeSignature * Number(song['tacts'][position].getDuration()) * (1 / timeSignature)
+        iterratorNote += Number(song['tacts'][position].getDuration())
     }
 
     const loadSong = (song: Song): { [key: number]: HTMLAudioElement }[][] => {
