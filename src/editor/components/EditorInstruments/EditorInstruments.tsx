@@ -66,9 +66,6 @@ const EditorInstruments: FC<EditorInstrumentsProps> = ({ isEditing, instrument, 
             clearAllInstrumentsDrop()
             setIsEditing(true)
             setInstrument(newInstrument)
-        } else {
-            setInstrument({} as IInstrument)
-            setIsEditing(false)
         }
     }
 
