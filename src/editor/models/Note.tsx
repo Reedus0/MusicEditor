@@ -3,7 +3,7 @@ export class Note {
     public verticalPosition: number = 0
     private duration: number = 0
     private halfPosition: number = 1
-    private sound: string = 'C5'
+    private sound: string = 'C4'
     private style: number = 1
     private unionNote: Note = {} as Note
     private half: noteHalf = noteHalf.NONE
@@ -95,9 +95,9 @@ export enum noteHalf {
     NONE = 'none'
 }
 
-export const noteStyles: any = {
-    1: <img className='editor-drawer-note__img _top' src={require('./../img/notes/noteUp.png')} />,
-    2: <img className='editor-drawer-note__img _bottom' src={require('./../img/notes/noteDown.png')} />,
-    3: <img className='editor-drawer-note__img _bottom _rotated' src={require('./../img/notes/noteDown.png')} />,
-    4: <img className='editor-drawer-note__img _top _rotated' src={require('./../img/notes/noteUp.png')} />,
+export const noteStylesClasses: any = {
+    1: '_top',
+    2: '_bottom',
+    3: '_bottom _rotated',
+    4: '_top _rotated'
 }

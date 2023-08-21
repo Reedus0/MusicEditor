@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import { ObjectsDeleter } from '../../models/instruments/generalInstruments/ObejctsDeleter'
-import { IAdder } from '../../models/instruments/interfaces/IAdder'
 import { IInstrument } from '../../models/instruments/interfaces/IInsrument'
 import { NotesHalfsMover } from '../../models/instruments/notesInstruments/NotesHalfsMover'
 import { NotesAdder } from '../../models/instruments/notesInstruments/NotesAdder'

@@ -52,16 +52,16 @@ export class NotesHoverer implements IInstrument, IHoverer {
             if (cordsY < 54) {
                 currentTrackFake.innerHTML = 
                 `
-                <div class="editor-drawer-note _edit " id="editing-object-${currentTrackNumber}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
-                <img class='editor-drawer-note__img _top _edit' src=${require('./../../../img/notes/noteUp.png')} />
+                <div class="editor-drawer-note _top _edit " id="editing-object-${currentTrackNumber}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
+                <img class='editor-drawer-note__img _edit' src=${require('./../../../img/notes/note-2.png')} />
                 </div>
                 `
 
             } else {
                 currentTrackFake.innerHTML = 
                 `
-                <div class="editor-drawer-note _edit " id="editing-object-${currentTrackNumber}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
-                <img class='editor-drawer-note__img _bottom _edit' src=${require('./../../../img/notes/noteDown.png')} />
+                <div class="editor-drawer-note _bottom _edit " id="editing-object-${currentTrackNumber}" style="bottom: ${cordsY}px; left: ${cordsX > 0 ? cordsX : 0}px;">
+                <img class='editor-drawer-note__img _edit' src=${require('./../../../img/notes/note-2.png')} />
                 </div>
                 `
             }

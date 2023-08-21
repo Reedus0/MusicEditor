@@ -61,7 +61,7 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
         firstCordsY = e.screenY
         isMoving = true
         if (!isEditing) return
-        if(e.which !== 1) return
+        if (e.which !== 1) return
         if (holdInstruments.includes(instrument.name)) {
             (instrument as any).onHoldAction(e.target, song)
             forceUpdate()
@@ -74,7 +74,7 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
         firstCordsY = 0
         isMoving = false
         if (!isEditing) return
-        if(e.which !== 1) return
+        if (e.which !== 1) return
         if (holdInstruments.includes(instrument.name)) {
             (instrument as any).onRealeseAction(e.target, song)
             forceUpdate()

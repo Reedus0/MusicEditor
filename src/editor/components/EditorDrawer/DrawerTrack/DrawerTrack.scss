@@ -15,9 +15,8 @@
         align-items: center;
     }
 
-
     &__fake {
-        z-index: 1000;
+        z-index: 100;
         top: 0;
         position: absolute;
         height: 130px;
@@ -27,7 +26,7 @@
     &__lines {
         pointer-events: none;
         position: relative;
-        z-index: 100;
+        z-index: 200;
         width: 100%;
 
         &._top {
@@ -43,6 +42,11 @@
             }
 
         }
+    }
+
+
+    &__objects{
+        z-index: 100;
     }
 
     &__line {
