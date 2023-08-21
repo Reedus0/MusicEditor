@@ -83,35 +83,35 @@ const DrawerNote: FC<DrawerNoteProps> = ({ song, note, track, tactIndex, trackIn
                                 ?
                                 `
                     polygon(
-                    0% calc(0% + 8px),
+                    0% calc(0% + 7px),
                     0% 0%,
-                    100% calc(100% - 8px),
+                    100% calc(100% - 7px),
                     100% 100%
                     )`
                                 :
                                 `
                     polygon(
-                    100% calc(0% + 8px),
+                    100% calc(0% + 7px),
                     100% 0%,
-                    0% calc(100% - 8px),
+                    0% calc(100% - 7px),
                     0% 100%
                     )`
 
                         }}
                     >
                     </div>
-                    {track.getNotes().filter((trackNote: Note) => trackNote.getStyle() === note.getStyle()).map((trackNote: Note) =>
+                    {track.getNotes().filter((trackNote: Note) => trackNote.getStyle() === note.getStyle() && note.getUnionNote() !== trackNote).map((trackNote: Note) =>
                         <div className='editor-drawer-note__union-line'
                             style={{
                                 left: trackNote['horizontalPosition'] * widthUnit,
-                                top: note.getStyle() === 1 ? 55 : 'unset',
-                                bottom: note.getStyle() === 2 ? 55  : 'unset',
+                                top: note.getStyle() === 1 ? 55 + Math.abs(note['verticalPosition'] - trackNote['verticalPosition']) * 1.2 : 'unset',
+                                bottom: note.getStyle() === 2 ? 55 + Math.abs(note['verticalPosition'] - trackNote['verticalPosition']) * 1.2 : 'unset',
                                 // top: note.getStyle() === 2 ? (note['verticalPosition'] - trackNote['verticalPosition']) * 7: 'unset',
                                 // bottom: note.getStyle() === 1 ? (trackNote['verticalPosition'] - note['verticalPosition']) * 7  : 'unset',
                                 height: (note.getStyle() === 1 ?
-                                    (note['verticalPosition'] - trackNote['verticalPosition']) + Math.abs((note['verticalPosition'] - trackNote['verticalPosition']) - 1) :
-                                    (trackNote['verticalPosition'] - note['verticalPosition']) + Math.abs((trackNote['verticalPosition'] - note['verticalPosition']) - 1)
-                                ) * 7 
+                                    (note['verticalPosition'] - trackNote['verticalPosition']) + (Math.abs((note['verticalPosition'] - trackNote['verticalPosition']) - 1) * 2) :
+                                    (trackNote['verticalPosition'] - note['verticalPosition']) + (Math.abs((trackNote['verticalPosition'] - note['verticalPosition']) - 1) * 2)
+                                ) * 7
                             }}
                         >
                         </div>
