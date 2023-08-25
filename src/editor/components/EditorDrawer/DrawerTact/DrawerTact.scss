@@ -9,16 +9,16 @@
 
     &._active {
         .editor-drawer-tact__tracks {
-            // &::before {
-            //     content: '';
-            //     width: 100%;
-            //     z-index: -1;
-            //     height: calc(100% - 120px);
-            //     position: absolute;
-            //     top: 45px;
-            //     background: rgb(231, 163, 163);
-            //     left: 0px;
-            // }
+            &::before {
+                content: '';
+                width: 100%;
+                z-index: -1;
+                height: calc(100% - 120px);
+                position: absolute;
+                top: 45px;
+                background: rgb(231, 163, 163);
+                left: 0px;
+            }
         }
 
 

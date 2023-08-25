@@ -68,15 +68,15 @@ const DrawerNote: FC<DrawerNoteProps> = ({ song, note, track, tactIndex, trackIn
                 <div className='editor-drawer-note__union' style={{
                     top: note.getStyle() === 2 ? 43 - (Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition']) * 12) : 'unset',
                     bottom: note.getStyle() === 1 ? 44 - (Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition']) * 12) : 'unset',
-                    left: note['horizontalPosition'] < note.getUnionNote()['horizontalPosition'] ? note.getStyle() === 1 ? 16 : 0 : 'unset',
-                    right: note['horizontalPosition'] > note.getUnionNote()['horizontalPosition'] ? note.getStyle() === 2 ? 16 : 0 : 'unset',
+                    left: note['horizontalPosition'] < note.getUnionNote()['horizontalPosition'] ? note.getStyle() === 1 ? 15 : 0 : 'unset',
+                    right: note['horizontalPosition'] > note.getUnionNote()['horizontalPosition'] ? note.getStyle() === 2 ? 15 : 0 : 'unset',
                     width: (Math.abs(note['horizontalPosition'] - note.getUnionNote()['horizontalPosition'])) * widthUnit + 2,
                     height: Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition']) === 0 ? 5 : (Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition'])) * 12 + 50,
                 }}>
                     <div className="editor-drawer-note__union-inner"
                         style={{
-                            top: note.getStyle() === 2 ? 0 : 50,
-                            height: Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition']) === 0 ? 5 : (Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition'])) * 12 + 1,
+                            top: note.getStyle() === 2 ? -5 : 49,
+                            height: Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition']) === 0 ? 5 : (Math.abs(note['verticalPosition'] - note.getUnionNote()['verticalPosition'])) * 12 + 7,
                             clipPath: note.getStyle() === 2 && note['horizontalPosition'] > note.getUnionNote()['horizontalPosition']
                                 ||
                                 note.getStyle() === 1 && note['horizontalPosition'] < note.getUnionNote()['horizontalPosition']
@@ -100,22 +100,6 @@ const DrawerNote: FC<DrawerNoteProps> = ({ song, note, track, tactIndex, trackIn
                         }}
                     >
                     </div>
-                    {track.getNotes().filter((trackNote: Note) => trackNote.getStyle() === note.getStyle() && note.getUnionNote() !== trackNote).map((trackNote: Note) =>
-                        <div className='editor-drawer-note__union-line'
-                            style={{
-                                left: trackNote['horizontalPosition'] * widthUnit,
-                                top: note.getStyle() === 1 ? 55 + Math.abs(note['verticalPosition'] - trackNote['verticalPosition']) * 1.2 : 'unset',
-                                bottom: note.getStyle() === 2 ? 55 + Math.abs(note['verticalPosition'] - trackNote['verticalPosition']) * 1.2 : 'unset',
-                                // top: note.getStyle() === 2 ? (note['verticalPosition'] - trackNote['verticalPosition']) * 7: 'unset',
-                                // bottom: note.getStyle() === 1 ? (trackNote['verticalPosition'] - note['verticalPosition']) * 7  : 'unset',
-                                height: (note.getStyle() === 1 ?
-                                    (note['verticalPosition'] - trackNote['verticalPosition']) + (Math.abs((note['verticalPosition'] - trackNote['verticalPosition']) - 1) * 2) :
-                                    (trackNote['verticalPosition'] - note['verticalPosition']) + (Math.abs((trackNote['verticalPosition'] - note['verticalPosition']) - 1) * 2)
-                                ) * 7
-                            }}
-                        >
-                        </div>
-                    )}
                 </div>
                 : <></>}
         </div>)
