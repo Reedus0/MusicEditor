@@ -8,8 +8,8 @@
     justify-content: center;
     align-items: center;
 
-
     &._edit {
+        z-index: 1000;
         pointer-events: none;
     }
 
@@ -28,7 +28,7 @@
     }
 
     &__img {
-        z-index: 100;
+        z-index: 200;
         filter: grayscale(100%);
         pointer-events: none;
         height: 12px;
@@ -39,12 +39,15 @@
 
 
     &._rotated {
-        z-index: 100;
         transform: rotateX(180deg);
     }
 
     &._edit {
+        z-index: 1000;
         filter: invert(40%);
+        &::after{
+            z-index: 1000;
+        }
     }
 
     &._top {
@@ -68,19 +71,6 @@
         height: 36px;
         background: black;
     }
-
-    // &__symbol {
-    //     pointer-events: none;
-    //     font-family: Maestro;
-    //     line-height: 0;
-    //     font-size: 48px;
-    //     height: 48px;
-    //     margin-top: 38px;
-
-    //     &._rotated {
-    //         transform: rotateY(180deg)
-    //     }
-    // }
 
     &__flat,
     &__sharp,
@@ -162,7 +152,6 @@
         pointer-events: none;
         width: 100%;
         height: 100%;
-        z-index: 80;
         position: absolute;
         background: black;
     }

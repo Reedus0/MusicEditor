@@ -31,7 +31,7 @@ const DrawerTrack: FC<DrawerTrackProps> = ({ song, tact, track, tactCounter, tac
                 <div className='editor-drawer-track__objects'>
                     <div className='editor-drawer-track__notes'>
                         {getNotesLine(track['notes']).map((line: number) =>
-                            <div className='editor-drawer__notes-line'>
+                            <div className='editor-drawer-track__notes-line'>
                                 {track['notes'].filter((note: Note) => note['horizontalPosition'] === line).sort((a: Note, b: Note) => a['verticalPosition'] > b['verticalPosition'] ? 1 : -1).map((note: Note, noteIndex: number) =>
                                     <DrawerNote song={song} note={note} track={track} tactIndex={tactIndex} trackIndex={trackIndex} />
                                 )}
