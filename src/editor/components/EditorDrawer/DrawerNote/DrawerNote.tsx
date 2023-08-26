@@ -100,7 +100,7 @@ const DrawerNote: FC<DrawerNoteProps> = ({ song, note, track, tactIndex, trackIn
                         }}
                     >
                     </div>
-                    {track.getNotes().filter((trackNote: Note) => trackNote.getStyle() === note.getStyle() && note.getUnionNote() !== trackNote).map((trackNote: Note) =>
+                    {/* {track.getNotes().filter((trackNote: Note) => trackNote.getStyle() === note.getStyle() && note.getUnionNote() !== trackNote).map((trackNote: Note) =>
                         <div className='editor-drawer-note__union-line'
                             style={{
                                 left: trackNote['horizontalPosition'] * widthUnit,
@@ -115,7 +115,7 @@ const DrawerNote: FC<DrawerNoteProps> = ({ song, note, track, tactIndex, trackIn
                             }}
                         >
                         </div>
-                    )}
+                    )} */}
                 </div>
                 : <></>}
         </div>)

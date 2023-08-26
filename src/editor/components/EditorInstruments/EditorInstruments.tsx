@@ -42,6 +42,13 @@ const EditorInstruments: FC<EditorInstrumentsProps> = ({ isEditing, instrument, 
         const width = doc.internal.pageSize.getWidth();
         const height = doc.internal.pageSize.getHeight();
 
+        const drawerElement = document.getElementById("editor-drawer")!
+
+        drawerElement.style.transform = 'scale(1.0)'
+        drawerElement.style.top = '170px'
+        drawerElement.style.left = `calc(50vw - 720px)`
+
+
         const pages = Array.from(document.getElementsByClassName('editor-drawer-page'))
 
         for (let i = 0; i < pages.length; i++) {
