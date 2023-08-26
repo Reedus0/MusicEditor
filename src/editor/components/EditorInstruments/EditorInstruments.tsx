@@ -13,14 +13,14 @@ import { RestsAdder } from '../../models/instruments/restsInstruments/RestsAdder
 import { TactsShorter } from '../../models/instruments/tactsInstruments/TactsShorter'
 import { TactsWider } from '../../models/instruments/tactsInstruments/TactsWider'
 import { ObjectsMover } from '../../models/instruments/generalInstruments/ObjectsMover'
-import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
-import { clearAllInstrumentsDrop, clearHoverObjects } from '../../utils'
+import { clearAllInstrumentsDrop, saveToFile } from '../../utils'
 
 import './EditorInstruments.scss'
 import Instrument from './Instrument/Instrument'
 import DropInstrument from './Instrument/DropInstrument'
 import { TactsDurationChanger } from '../../models/instruments/tactsInstruments/TactsDurationChanger'
+import { useActions } from '../../../hooks/useActions'
+import Notification from '../../../components/Notification/Notification'
 
 interface EditorInstrumentsProps {
     isEditing: boolean,
@@ -31,42 +31,9 @@ interface EditorInstrumentsProps {
     setIsPlaying: Function
 }
 
-const EditorInstruments: FC<EditorInstrumentsProps> = ({ isEditing, instrument, setIsEditing, setInstrument, isPlaying, setIsPlaying }) => {
+const EditorInstruments: FC<EditorInstrumentsProps> = ({ instrument, setIsEditing, setInstrument, isPlaying, setIsPlaying }) => {
 
-    const saveToFile = async () => {
-        setIsPlaying(false)
-        clearHoverObjects()
-
-        const doc: jsPDF = new jsPDF('portrait', 'mm', 'a4')
-
-        const width = doc.internal.pageSize.getWidth();
-        const height = doc.internal.pageSize.getHeight();
-
-        const drawerElement = document.getElementById("editor-drawer")!
-
-        drawerElement.style.transform = 'scale(1.0)'
-        drawerElement.style.top = '170px'
-        drawerElement.style.left = `calc(50vw - 720px)`
-
-
-        const pages = Array.from(document.getElementsByClassName('editor-drawer-page'))
-
-        for (let i = 0; i < pages.length; i++) {
-            const canvas: HTMLCanvasElement = await html2canvas(pages[i] as HTMLElement, {
-                windowHeight: 3508,
-                windowWidth: 2480,
-                scale: 3
-            })
-            const imgData: any = canvas.toDataURL('image/png')
-
-            if (i > 0) doc.addPage()
-
-            doc.addImage(imgData, 'PNG', 0, 0, width, height)
-        }
-
-        doc.save('notes.pdf')
-
-    }
+    const { setNotification } = useActions()
 
     const handleChangeInstrument = (newInstrument: IInstrument) => {
         if (newInstrument['name'] !== instrument['name']) {
@@ -74,6 +41,18 @@ const EditorInstruments: FC<EditorInstrumentsProps> = ({ isEditing, instrument, 
             setIsEditing(true)
             setInstrument(newInstrument)
         }
+    }
+
+    const handleSaving = () => {
+        setIsPlaying(false)
+        setTimeout(() => saveToFile(), 0)
+        setNotification(
+            <Notification>
+                <h3 className='notification__text'>Сохраняем файл...</h3>
+            </Notification>
+        )
+        setTimeout(() => setNotification(<></>), 5000)
+
     }
 
     return (
@@ -109,7 +88,7 @@ const EditorInstruments: FC<EditorInstrumentsProps> = ({ isEditing, instrument, 
             <div className='editor-instruments__line _end'></div>
             <button
                 className='editor-instruments__button'
-                onClick={() => saveToFile()}
+                onClick={() => handleSaving()}
             >
                 <img className='editor-instruments__button-img _end' src={require('./../../img/save.png')} />
             </button>
