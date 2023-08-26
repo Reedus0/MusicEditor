@@ -154,4 +154,11 @@
         position: absolute;
         background: black;
     }
+
+    &__union-line {
+        z-index: 80;
+        position: absolute;
+        width: 2px;
+        background: black;
+    }
 }

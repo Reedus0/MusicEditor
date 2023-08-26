@@ -12,7 +12,6 @@ const Notification = (props: any) => {
         <div className='notification__wrapper'>
 
           <button className="notification__close" onClick={() => setNotification(<></>)}>&#10006;</button>
-          <h1 className="notification__title">{props.title}</h1>
           <div className="notification__content">
             {props.children}
           </div>

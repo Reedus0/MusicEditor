@@ -24,8 +24,8 @@ const Editor: FC<EditorProps> = ({ }) => {
     const [instrument, setInstrument] = useState<IInstrument>({} as IInstrument)
 
     const mainKey = keys.Am
-    const mainTimeSignature = '3/8'
-    const tempo = 138
+    const mainTimeSignature = '4/4'
+    const tempo = 120
 
     const tactWidth: number = 12
 
@@ -79,7 +79,7 @@ const Editor: FC<EditorProps> = ({ }) => {
     ]
 
     // const [song, setSong] = useState<Song>(new Song('Merry-Go-Round of Life', `Howl's moving castle`, 'Composer: Joe Hisaishi', tacts, tempo, mainKey, mainTimeSignature))
-    const [song, setSong] = useState<Song>(new Song('Für Elise in A minor', `WoO 59`, 'Ludwig Van Beethoven', tacts, tempo, mainKey, mainTimeSignature))
+    const [song, setSong] = useState<Song>(new Song('Name', 'Subtitle', 'Author', tacts, tempo, mainKey, mainTimeSignature))
 
 
     let songIsReady = useRef(null)

@@ -48,7 +48,7 @@ const EditorDrawer: FC<EditorDrawerProps> = ({ song, ignored }) => {
     }
 
     return (
-        <div className='editor-drawer' id='#editor-drawer'>
+        <div className='editor-drawer' id='editor-drawer'>
             <div className='editor-drawer__inner'>
                 {countTactsOnPage(song).map((tactsCount: number, pageIndex: number) =>
                     <>

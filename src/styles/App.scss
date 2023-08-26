@@ -1,6 +1,13 @@
 @font-face {
-  font-family: "WenHei";
-  src: url("../fonts/zh-cn.woff2") format("woff2"),
+  font-family: "Montserrat";
+  font-weight: 400;
+  src: url("../fonts/Montserrat-Regular.ttf"),
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 700;
+  src: url("../fonts/Montserrat-Bold.ttf"),
 }
 
 
@@ -19,7 +26,7 @@ noscript{
 }
 
 * {
-  font-family: "WenHei";
+  font-family: "Montserrat";
   font-weight: 400;
   padding: 0;
   margin: 0;

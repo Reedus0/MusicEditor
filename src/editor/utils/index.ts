@@ -1,3 +1,5 @@
+import html2canvas from "html2canvas"
+import jsPDF from "jspdf"
 import { Note } from "../models/Note"
 import { Song } from "../models/Song"
 import { Tact } from "../models/Tact"
@@ -260,4 +262,36 @@ export const getNoteSymbolElement = (element: HTMLElement) => {
         }
     }
     return noteElement
+}
+
+export const saveToFile = async () => {
+    clearHoverObjects()
+
+    const doc: jsPDF = new jsPDF('portrait', 'mm', 'a4')
+
+    const width = doc.internal.pageSize.getWidth();
+    const height = doc.internal.pageSize.getHeight();
+
+    const drawerElement = document.getElementById("editor-drawer")!
+
+    drawerElement.style.transform = 'scale(1.0)'
+    drawerElement.style.top = '170px'
+    drawerElement.style.left = `calc(50vw - 720px)`
+
+    const pages = Array.from(document.getElementsByClassName('editor-drawer-page'))
+
+    for (let i = 0; i < pages.length; i++) {
+        const canvas: HTMLCanvasElement = await html2canvas(pages[i] as HTMLElement, {
+            windowHeight: 3508,
+            windowWidth: 2480,
+            scale: 3
+        })
+        const imgData: any = canvas.toDataURL('image/png')
+
+        if (i > 0) doc.addPage()
+
+        doc.addImage(imgData, 'PNG', 0, 0, width, height)
+    }
+
+    doc.save('notes.pdf')
 }

@@ -20,8 +20,6 @@
                 left: 0px;
             }
         }
-
-
     }
 
     &._last {
@@ -50,7 +48,7 @@
         display: flex;
         justify-content: flex-start;
         align-items: flex-end;
-        z-index: 200;
+        z-index: 100;
     }
 
     &__tempo-equal {

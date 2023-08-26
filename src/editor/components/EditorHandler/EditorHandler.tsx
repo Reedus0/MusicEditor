@@ -120,6 +120,16 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
         setInstrument({} as IInstrument)
     }
 
+    const editorInputs = Array.from(document.getElementsByClassName('editor-drawer-top__input')!) as HTMLInputElement[]
+
+    for(let input of editorInputs ) {
+        input.onchange = (e: any) => {
+            const value = input.id.split('-')[1] as 'name' | 'subtitle' | 'author'
+            console.log( e.target.value)
+            song[value] = e.target.value
+        }
+    }
+
     useEffect(() => {
         clearHoverObjects()
     }, [isEditing, instrument])
