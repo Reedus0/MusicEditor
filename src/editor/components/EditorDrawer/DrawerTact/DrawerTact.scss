@@ -7,7 +7,7 @@
     display: flex;
     align-items: center;
 
-    &._active {
+    &._active, &._ready {
         .editor-drawer-tact__tracks {
             &::before {
                 content: '';

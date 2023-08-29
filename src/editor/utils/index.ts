@@ -223,7 +223,6 @@ export const clearHoverObjects = () => {
     Array.from(document.getElementsByClassName('editor-drawer-track__fake')).forEach((element: any) => element.innerHTML = '')
 }
 
-
 export const clearActiveTacts = () => {
     Array.from(document.getElementsByClassName('editor-drawer-tact')).forEach((element: any) => element.classList.remove('_active'))
 }
@@ -233,8 +232,8 @@ export const clearAllInstrumentsDrop = () => {
 }
 
 export const highlightTact = (position: number) => {
+    Array.from(document.getElementsByClassName('editor-drawer-tact')).forEach((element: any) => element.classList.remove('_active'))
     document.getElementById('tact-' + position)?.classList.add('_active')
-    document.getElementById('tact-' + (position - 1))?.classList.remove('_active')
 }
 
 export const getNotesLine = (notes: Note[]): number[] => {

@@ -21,19 +21,16 @@ import DropInstrument from './Instrument/DropInstrument'
 import { TactsDurationChanger } from '../../models/instruments/tactsInstruments/TactsDurationChanger'
 import { useActions } from '../../../hooks/useActions'
 import Notification from '../../../components/Notification/Notification'
+import { useTypedSelector } from '../../../hooks/useTypedSelector'
 
 interface EditorInstrumentsProps {
-    isEditing: boolean,
-    setIsEditing: Function,
-    instrument: IInstrument,
-    setInstrument: Function,
-    isPlaying: boolean,
-    setIsPlaying: Function
+
 }
 
-const EditorInstruments: FC<EditorInstrumentsProps> = ({ instrument, setIsEditing, setInstrument, isPlaying, setIsPlaying }) => {
+const EditorInstruments: FC<EditorInstrumentsProps> = ({ }) => {
 
-    const { setNotification } = useActions()
+    const { setNotification, setIsEditing, setIsPlaying, setInstrument } = useActions()
+    const { isPlaying, instrument } = useTypedSelector(state => state.editor)
 
     const handleChangeInstrument = (newInstrument: IInstrument) => {
         if (newInstrument['name'] !== instrument['name']) {

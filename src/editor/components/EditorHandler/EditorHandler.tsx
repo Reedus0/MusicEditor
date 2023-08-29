@@ -1,19 +1,20 @@
 import React, { FC, useEffect, useReducer } from 'react'
 import { Song } from '../../models/Song'
 import EditorDrawer from '../EditorDrawer/EditorDrawer'
-import { clearHoverObjects } from '../../utils'
+import { clearHoverObjects, highlightTact } from '../../utils'
 import { IInstrument } from '../../models/instruments/interfaces/IInsrument'
 import { adderInstruments, generalInstruments, holdInstruments, hovererInstruments, notesInstruments, restsInstruments, tactsInstruments } from '../../models/instruments'
+import { useActions } from '../../../hooks/useActions'
+import { useTypedSelector } from '../../../hooks/useTypedSelector'
 
 interface EditorHandlerProps {
     song: Song,
-    isEditing: boolean,
-    setIsEditing: Function,
-    instrument: IInstrument,
-    setInstrument: Function
 }
 
-const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, setIsEditing, setInstrument }) => {
+const EditorHandler: FC<EditorHandlerProps> = ({ song }) => {
+
+    const { setIsEditing, setInstrument, setPosition, setNotesCounter } = useActions()
+    const { isEditing, isPlaying, instrument } = useTypedSelector(state => state.editor)
 
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
@@ -83,6 +84,22 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
     }
 
     document.onclick = (e: any) => {
+        if (e.target.closest('.editor-drawer-tact') !== undefined) {
+            if (!Object.keys(instrument).length && !isEditing) {
+                const tactElement = e.target.closest('.editor-drawer-tact')
+                const currentTactNumber = Number(tactElement!.id.split('-')[1])
+                highlightTact(currentTactNumber)
+                setPosition(currentTactNumber)
+                setNotesCounter(0)
+                return
+            }
+            if (!isEditing) return
+            if (tactsInstruments.includes(instrument.name)) {
+                instrument.action(e.target.closest('.editor-drawer-tact'), song)
+                forceUpdate()
+                setTimeout(forceUpdate, 0)
+            }
+        }
         if (e.target.classList.contains('editor-drawer-object')) {
             if (!isEditing) return
             let currentObjectInstruments: string[] = [...generalInstruments]
@@ -103,15 +120,6 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
                 setTimeout(forceUpdate, 0)
             }
         }
-
-        if (e.target.closest('.editor-drawer-tact') !== undefined) {
-            if (!isEditing) return
-            if (tactsInstruments.includes(instrument.name)) {
-                instrument.action(e.target.closest('.editor-drawer-tact'), song)
-                forceUpdate()
-                setTimeout(forceUpdate, 0)
-            }
-        }
     }
 
     document.oncontextmenu = (e: any) => {
@@ -122,10 +130,10 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song, isEditing, instrument, se
 
     const editorInputs = Array.from(document.getElementsByClassName('editor-drawer-top__input')!) as HTMLInputElement[]
 
-    for(let input of editorInputs ) {
+    for (let input of editorInputs) {
         input.onchange = (e: any) => {
             const value = input.id.split('-')[1] as 'name' | 'subtitle' | 'author'
-            console.log( e.target.value)
+            console.log(e.target.value)
             song[value] = e.target.value
         }
     }
