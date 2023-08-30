@@ -4,9 +4,6 @@ import { Note } from "../models/Note"
 import { Song } from "../models/Song"
 import { Tact } from "../models/Tact"
 import { Track } from "../models/Track"
-import { Rest } from "../models/Rest"
-import { keys, keysHalfsMap } from "./keys"
-import { serialize } from "class-transformer"
 
 export const globalOffset = 1.5
 

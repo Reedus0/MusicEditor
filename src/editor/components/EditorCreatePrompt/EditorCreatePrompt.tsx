@@ -5,8 +5,6 @@ import ButtonPrompt from '../../../components/Prompt/ButtonPrompt/ButtonPrompt';
 import './EditorCreatePrompt.scss'
 import { useActions } from '../../../hooks/useActions';
 import Notification from '../../../components/Notification/Notification';
-import { deserialize } from 'class-transformer';
-import { Song } from '../../models/Song';
 
 interface EditorCreatePromptProps {
     setSong: Function
