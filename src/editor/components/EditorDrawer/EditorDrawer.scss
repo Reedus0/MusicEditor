@@ -8,5 +8,9 @@
         position: relative;
 
         flex-wrap: wrap;
+
+        @media (max-width: 991px) {
+            display: none;
+        }
     }
 }

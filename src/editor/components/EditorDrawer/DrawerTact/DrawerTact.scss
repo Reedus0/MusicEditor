@@ -111,6 +111,7 @@
     }
 
     &__bracket-img {
+        pointer-events: none;
         user-select: none;
         height: 220px;
     }

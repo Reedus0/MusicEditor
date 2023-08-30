@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useReducer } from 'react'
 import { Song } from '../../models/Song'
 import EditorDrawer from '../EditorDrawer/EditorDrawer'
-import { clearHoverObjects, highlightTact } from '../../utils'
+import { clearActiveTacts, clearHoverObjects, highlightTact } from '../../utils'
 import { IInstrument } from '../../models/instruments/interfaces/IInsrument'
 import { adderInstruments, generalInstruments, holdInstruments, hovererInstruments, notesInstruments, restsInstruments, tactsInstruments } from '../../models/instruments'
 import { useActions } from '../../../hooks/useActions'
@@ -28,7 +28,7 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song }) => {
     }
 
     document.onmousemove = (e: any) => {
-        if (isMoving && !isEditing) {
+        if (isMoving && !isEditing && !isPlaying) {
             const drawerElement: HTMLElement = document.querySelector('.editor-drawer')!
             const currentX = Number(window.getComputedStyle(drawerElement).left.split('px')[0])
             const currentY = Number(window.getComputedStyle(drawerElement).top.split('px')[0])
@@ -62,6 +62,7 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song }) => {
         firstCordsY = e.screenY
         isMoving = true
         if (!isEditing) return
+        if (isPlaying) return
         if (e.which !== 1) return
         if (holdInstruments.includes(instrument.name)) {
             (instrument as any).onHoldAction(e.target, song)
@@ -75,6 +76,7 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song }) => {
         firstCordsY = 0
         isMoving = false
         if (!isEditing) return
+        if (isPlaying) return
         if (e.which !== 1) return
         if (holdInstruments.includes(instrument.name)) {
             (instrument as any).onRealeseAction(e.target, song)
@@ -88,9 +90,15 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song }) => {
             if (!Object.keys(instrument).length && !isEditing) {
                 const tactElement = e.target.closest('.editor-drawer-tact')
                 const currentTactNumber = Number(tactElement!.id.split('-')[1])
-                highlightTact(currentTactNumber)
-                setPosition(currentTactNumber)
-                setNotesCounter(0)
+                if (!tactElement.classList.contains('_active')) {
+                    highlightTact(currentTactNumber)
+                    setPosition(currentTactNumber)
+                    setNotesCounter(0)
+                } else {
+                    clearActiveTacts()
+                    setPosition(0)
+                    setNotesCounter(0)
+                }
                 return
             }
             if (!isEditing) return

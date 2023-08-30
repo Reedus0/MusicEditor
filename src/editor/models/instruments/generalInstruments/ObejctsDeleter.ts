@@ -1,4 +1,4 @@
-import { getNoteFromHTML } from "../../../utils"
+import { getObjectFromHTML } from "../../../utils"
 import { Note } from "../../Note"
 import { Song } from "../../Song"
 import { Track } from "../../Track"
@@ -8,7 +8,7 @@ export class ObjectsDeleter implements IInstrument {
     name: string = 'objectsDeleter'
     public action = (element: HTMLElement, song: Song) => {
 
-        const { cordsX, cordsY, currentTrack } = getNoteFromHTML(element, song)
+        const { cordsX, cordsY, currentTrack } = getObjectFromHTML(element, song)
 
         let obejctType: SongObject = '' as SongObject
 

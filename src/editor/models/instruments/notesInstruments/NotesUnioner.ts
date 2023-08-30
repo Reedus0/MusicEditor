@@ -1,4 +1,4 @@
-import { getNoteFromHTML } from "../../../utils"
+import { getObjectFromHTML } from "../../../utils"
 import { Note } from "../../Note"
 import { Song } from "../../Song"
 import { Track } from "../../Track"
@@ -10,7 +10,7 @@ export class NotesUnioner implements IInstrument {
     currentTrack: Track = {} as Track
     name: string = 'notesUnioner'
     public action = (element: HTMLElement, song: Song) => {
-        const { cordsX, cordsY, currentTrack } = getNoteFromHTML(element, song)
+        const { cordsX, cordsY, currentTrack } = getObjectFromHTML(element, song)
         if (Object.keys(this.firstNote).length !== 0 && this.firstNote !== currentTrack.getNote(cordsX, cordsY)) {
             this.secondNote = currentTrack.getNote(cordsX, cordsY)
         } else {

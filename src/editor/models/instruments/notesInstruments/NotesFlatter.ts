@@ -1,4 +1,4 @@
-import { getNoteFromHTML, calculateHalfNote, halfMaps } from "../../../utils"
+import { getObjectFromHTML, calculateHalfNote, halfMaps } from "../../../utils"
 import { noteHalf } from "../../Note"
 import { Song } from "../../Song"
 import { Track } from "../../Track"
@@ -10,7 +10,7 @@ export class NotesFlatter implements IInstrument {
 
     public action = (element: HTMLElement, song: Song) => {
 
-        const { cordsX, cordsY, currentTrack } = getNoteFromHTML(element, song)
+        const { cordsX, cordsY, currentTrack } = getObjectFromHTML(element, song)
 
         this.flatNote(cordsX, cordsY, currentTrack)
     }

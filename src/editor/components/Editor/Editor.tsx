@@ -4,10 +4,12 @@ import { Tact } from '../../models/Tact'
 import { Track } from '../../models/Track'
 import { clefs } from '../../utils'
 import { keys } from '../../utils/keys'
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import EditorInstruments from '../EditorInstruments/EditorInstruments'
 import EditorHandler from '../EditorHandler/EditorHandler'
 import EditorPlayer from '../EditorPlayer/EditorPlayer'
+import { useActions } from '../../../hooks/useActions'
+import EditorCreatePrompt from '../EditorCreatePrompt/EditorCreatePrompt'
 
 
 
@@ -17,7 +19,11 @@ interface EditorProps {
 
 const Editor: FC<EditorProps> = ({ }) => {
 
-    const mainKey = keys.Am
+    const isMobile = window.innerWidth < 991
+
+    const { setPrompt } = useActions()
+
+    const mainKey = keys.C
     const mainTimeSignature = '4/4'
     const tempo = 120
 
@@ -74,11 +80,19 @@ const Editor: FC<EditorProps> = ({ }) => {
 
     const [song, setSong] = useState<Song>(new Song('Name', 'Subtitle', 'Author', tacts, tempo, mainKey, mainTimeSignature))
 
+    useEffect(() => {
+        if(isMobile) return
+        setPrompt(<EditorCreatePrompt setSong={setSong} />)
+    }, [])
+
     return (
         <div className='editor'>
-            <EditorInstruments />
+            <EditorInstruments song={song} />
             <EditorHandler song={song} />
             <EditorPlayer song={song} />
+            <div className='editor__mobile'>
+                <h3 className='editor__mobile-text'>К сожалению, на данный момент приложение недоступно на мобильных устройствах</h3>
+            </div>
         </div>
     )
 }

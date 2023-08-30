@@ -5,13 +5,10 @@ import "./ButtonPrompt.scss"
 
 export default function ButtonPrompt(props: any) {
   return (
-    <button 
-    className='buttons-prompt__button' 
-    style={{backgroundColor: props.backgorundColor, color: props.color}} 
-    id={props.id}
-    onClick={(e) => props.function(e)}>
-      {props.name}
-    </button>
+    <div className='buttons-prompt__wrapper' onClick={props.function}>
+      <img className='buttons-prompt__button-img' src={props.img}  />
+      <h3 className='buttons-prompt__title'>{props.title}</h3>
+    </div>
   )
 }
 

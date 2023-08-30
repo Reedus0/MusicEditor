@@ -1,4 +1,4 @@
-import { clearHoverObjects, getNoteFromHTML, getRestFromHTML, globalOffset } from "../../../utils";
+import { clearHoverObjects, getObjectFromHTML, globalOffset } from "../../../utils";
 import { Note } from "../../Note";
 import { Rest } from "../../Rest";
 import { Song } from "../../Song";
@@ -20,7 +20,7 @@ export class ObjectsMover implements IInstrument, IHolder {
 
     public onHoldAction = (element: HTMLElement, song: Song) => {
         if (element.classList.contains('editor-drawer-object')) {
-            const { cordsX, cordsY, currentTrack } = getNoteFromHTML(element, song)
+            const { cordsX, cordsY, currentTrack } = getObjectFromHTML(element, song)
             if (element.classList.contains('editor-drawer-note')) {
                 this.adder = new NotesAdder(1)
                 this.hoverer = new NotesHoverer(1)
@@ -28,7 +28,7 @@ export class ObjectsMover implements IInstrument, IHolder {
             } else if (element.classList.contains('editor-drawer-rest')) {
                 this.adder = new RestsAdder(1)
                 this.hoverer = new RestsHoverer(1)
-                currentTrack.getRest(cordsX, cordsY)
+                currentTrack.deleteRest(cordsX, cordsY)
             }
         }
     }

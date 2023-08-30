@@ -1,4 +1,4 @@
-import { getNoteFromHTML, calculateHalfNote, halfMaps, InvertMap } from "../../../utils"
+import { getObjectFromHTML, calculateHalfNote, halfMaps, InvertMap } from "../../../utils"
 import { noteHalf } from "../../Note"
 import { Song } from "../../Song"
 import { Track } from "../../Track"
@@ -10,7 +10,7 @@ export class NotesCanceler implements IInstrument {
 
     public action = (element: HTMLElement, song: Song) => {
 
-        const { cordsX, cordsY, currentTrack } = getNoteFromHTML(element, song)
+        const { cordsX, cordsY, currentTrack } = getObjectFromHTML(element, song)
 
         this.cancelNote(cordsX, cordsY, currentTrack)
     }

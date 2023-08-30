@@ -1,4 +1,4 @@
-import { getNoteFromHTML } from "../../../utils"
+import { getObjectFromHTML } from "../../../utils"
 import { Song } from "../../Song"
 import { Track } from "../../Track"
 import { IInstrument } from "../interfaces/IInsrument"
@@ -9,7 +9,7 @@ export class NotesHalfsMover implements IInstrument {
 
     public action = (element: HTMLElement, song: Song) => {
 
-        const { cordsX, cordsY, currentTrack } = getNoteFromHTML(element, song)
+        const { cordsX, cordsY, currentTrack } = getObjectFromHTML(element, song)
 
         this.moveHlaf(cordsX, cordsY, currentTrack)
     }

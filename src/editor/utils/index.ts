@@ -4,6 +4,9 @@ import { Note } from "../models/Note"
 import { Song } from "../models/Song"
 import { Tact } from "../models/Tact"
 import { Track } from "../models/Track"
+import { Rest } from "../models/Rest"
+import { keys, keysHalfsMap } from "./keys"
+import { serialize } from "class-transformer"
 
 export const globalOffset = 1.5
 
@@ -156,7 +159,7 @@ export const calculateHalfNote = (sound: string, halfMap: halfMaps) => {
     return (halfMap as any)[oldSound] + oldOctave.toString()
 }
 
-export const getNoteFromHTML = (element: HTMLElement, song: Song): { cordsX: number, cordsY: number, currentTrack: Track } => {
+export const getObjectFromHTML = (element: HTMLElement, song: Song): { cordsX: number, cordsY: number, currentTrack: Track } => {
     const editingNote = element
     const tactElement = element.closest('.editor-drawer-tact')
     const trackElement = element.closest('.editor-drawer-track')
@@ -175,27 +178,6 @@ export const getNoteFromHTML = (element: HTMLElement, song: Song): { cordsX: num
 
     return { cordsX, cordsY, currentTrack }
 }
-
-export const getRestFromHTML = (element: HTMLElement, song: Song): { cordsX: number, cordsY: number, currentTrack: Track } => {
-    const editingNote = element
-    const tactElement = element.closest('.editor-drawer-tact')
-    const trackElement = element.closest('.editor-drawer-track')
-
-    const currentTactNumber = Number(tactElement!.id.split('-')[1])
-    const currentTrackNumber = Number(trackElement!.id.split('-')[1])
-
-    const noteBottom: number = (editingNote?.style['bottom'].split('px')[0] as any) || 0
-    const noteLeft: number = (editingNote?.style['left'].split('px')[0] as any) || 0
-
-    const currentTrack = song['tacts'][currentTactNumber]['tracks'][currentTrackNumber]
-
-    const cordsX = Math.round((noteLeft - 6) * (16 * Number(currentTrack.getTimeSignature()[0])) / trackElement!.clientWidth)
-    const cordsY = noteBottom / 12
-
-
-    return { cordsX, cordsY, currentTrack }
-}
-
 
 export const getTactFromHTML = (element: HTMLElement, song: Song): { currentTact: Tact } => {
     const editingTact = element
@@ -293,4 +275,32 @@ export const saveToFile = async () => {
     }
 
     doc.save('notes.pdf')
+}
+
+export const saveToJson = (song: Song) => {
+    const blob = new Blob([JSON.stringify(song)], { 'type': 'applictaion/json' })
+    const file = blobToFile(blob, `${song['name']}.json`)
+    download(file)
+}
+
+export const blobToFile = (blob: Blob, fileName: string): File => {
+    const b: any = blob;
+
+    b.lastModifiedDate = new Date();
+    b.name = fileName;
+
+    return <File>blob;
+}
+
+export const download = (file: File) => {
+    const link = document.createElement('a')
+    const url = URL.createObjectURL(file)
+
+    link.href = url
+    link.download = file.name
+    document.body.appendChild(link)
+    link.click()
+
+    document.body.removeChild(link)
+    window.URL.revokeObjectURL(url)
 }

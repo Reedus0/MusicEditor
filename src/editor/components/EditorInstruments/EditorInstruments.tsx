@@ -20,16 +20,17 @@ import Instrument from './Instrument/Instrument'
 import DropInstrument from './Instrument/DropInstrument'
 import { TactsDurationChanger } from '../../models/instruments/tactsInstruments/TactsDurationChanger'
 import { useActions } from '../../../hooks/useActions'
-import Notification from '../../../components/Notification/Notification'
 import { useTypedSelector } from '../../../hooks/useTypedSelector'
+import EditorSavePrompt from '../EditorSavePrompt/EditorSavePrompt'
+import { Song } from '../../models/Song'
 
 interface EditorInstrumentsProps {
-
+    song: Song
 }
 
-const EditorInstruments: FC<EditorInstrumentsProps> = ({ }) => {
+const EditorInstruments: FC<EditorInstrumentsProps> = ({ song }) => {
 
-    const { setNotification, setIsEditing, setIsPlaying, setInstrument } = useActions()
+    const { setNotification, setIsEditing, setIsPlaying, setInstrument, setPrompt } = useActions()
     const { isPlaying, instrument } = useTypedSelector(state => state.editor)
 
     const handleChangeInstrument = (newInstrument: IInstrument) => {
@@ -38,18 +39,6 @@ const EditorInstruments: FC<EditorInstrumentsProps> = ({ }) => {
             setIsEditing(true)
             setInstrument(newInstrument)
         }
-    }
-
-    const handleSaving = () => {
-        setIsPlaying(false)
-        setTimeout(() => saveToFile(), 0)
-        setNotification(
-            <Notification>
-                <h3 className='notification__text'>Сохраняем файл...</h3>
-            </Notification>
-        )
-        setTimeout(() => setNotification(<></>), 5000)
-
     }
 
     return (
@@ -85,7 +74,7 @@ const EditorInstruments: FC<EditorInstrumentsProps> = ({ }) => {
             <div className='editor-instruments__line _end'></div>
             <button
                 className='editor-instruments__button'
-                onClick={() => handleSaving()}
+                onClick={() => setPrompt(<EditorSavePrompt song={song}/>)}
             >
                 <img className='editor-instruments__button-img _end' src={require('./../../img/save.png')} />
             </button>

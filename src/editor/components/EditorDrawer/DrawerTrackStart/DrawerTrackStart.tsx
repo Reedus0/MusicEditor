@@ -36,7 +36,6 @@ const DrawerTrackStart: FC<DrawerTrackStartProps> = ({ song, tact, track, tactCo
                             </div>
                     }
                 </div> : <></>}
-
             {tactCounter === tact.getWidth() || tactIndex === 0 || (song['tacts'][tactIndex - 1] !== undefined && JSON.stringify(song['tacts'][tactIndex - 1]['tracks'][trackIndex].getKey()) !== JSON.stringify(track.getKey())) ?
                 <div className='editor-drawer-track-start__signs' style={{ width: Math.abs(keysHalfsMap.get(track.getKey())) * 17 }}>
                     {[...Array(Math.abs(keysHalfsMap.get(track.getKey())))].map((key: number, index: number) =>
