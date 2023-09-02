@@ -36,9 +36,9 @@ const EditorCreatePrompt: FC<EditorCreatePromptProps> = ({ setSong }) => {
         <Prompt title="Создание песни">
             <div className='editor-create'>
                 <div className='editor-create__buttons'>
+                    <input type='file' className='editor-create__input' id='file-input' />
                     <ButtonPrompt img={require('../../img/icons/json-file.png')} function={() => loadFile()} title='Загрузить' />
                     <ButtonPrompt img={require('../../img/icons/empty-file.png')} function={() => setPrompt(<></>)} title='Новый файл' />
-                    <input type='file' className='editor-create__input' id='file-input' />
                 </div>
                 <h3 className='editor-create__text'>Выберите способ создания новой песни</h3>
             </div>

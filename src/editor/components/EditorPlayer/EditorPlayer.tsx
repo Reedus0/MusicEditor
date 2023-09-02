@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import { Note } from '../../models/Note'
 import { Song } from '../../models/Song'
 import { IInstrument } from '../../models/instruments/interfaces/IInsrument'
@@ -13,10 +13,11 @@ interface EditorPlayerProps {
 
 const EditorPlayer: FC<EditorPlayerProps> = ({ song }) => {
 
-    const store = useStore()
+    const { setIsEditing, setIsPlaying, setInstrument, setPosition } = useActions()
+    const { isEditing, isPlaying, position, notesCounter } = useTypedSelector(state => state.editor)
 
-    const { setIsEditing, setIsPlaying, setInstrument, setPosition, setNotesCounter } = useActions()
-    const { isEditing, isPlaying, position } = useTypedSelector(state => state.editor)
+    const [currentPosition, setCurrentPosition] = useState<number>(0);
+    const [currentNotesCounter, setCurrentNotesCounter] = useState<number>(0);
 
     let songIsReady = useRef(null)
     let incrementNotes = useRef(null)
@@ -24,22 +25,28 @@ const EditorPlayer: FC<EditorPlayerProps> = ({ song }) => {
     let songSounds: { [key: number]: HTMLAudioElement }[][] = []
 
     const countNotes = () => {
-        const currentPosition = (store.getState() as any)['editor']['position']
-        const currentNotesCounter = (store.getState() as any)['editor']['notesCounter']
-        const timeSignature = Number(song['tacts'][currentPosition]['tracks'][0].getTimeSignature()[0])
-        if (currentNotesCounter >= timeSignature * 16) {
-            setNotesCounter(0)
-            setPosition(currentPosition + 1)
-            highlightTact(currentPosition + 1)
-            return
-        }
-        if (currentPosition >= song['tacts'].length) {
-            stopPlaying()
-            return
-        }
+        let timeSignature = Number(song['timeSignature'][0])
+        setCurrentNotesCounter((currentNotesCounter: number) => {
+            setCurrentPosition((currentPosition: number) => {
+                timeSignature = Number(song['tacts'][currentPosition]['tracks'][0].getTimeSignature()[0])
+                highlightTact(currentPosition)
+                playSong(songSounds, currentPosition, currentNotesCounter)
+                if (currentNotesCounter >= timeSignature * 16) {
+                    return currentPosition + 1
+                }
+                return currentPosition
 
-        playSong(songSounds, currentPosition, currentNotesCounter)
-        setNotesCounter(currentNotesCounter + Number(song['tacts'][currentPosition].getDuration()))
+            })
+            if (currentPosition >= song['tacts'].length) {
+                stopPlaying()
+                return 0
+            }
+            if (currentNotesCounter >= timeSignature * 16) {
+                return 0
+            }
+
+            return currentNotesCounter + Number(song['tacts'][currentPosition].getDuration())
+        })
     }
 
     const loadSong = (song: Song): { [key: number]: HTMLAudioElement }[][] => {
@@ -91,6 +98,8 @@ const EditorPlayer: FC<EditorPlayerProps> = ({ song }) => {
 
     const startPlaying = () => {
         (incrementNotes.current as any) = setInterval(countNotes, 3600 / song['tacts'][position].getTempo());
+        setCurrentPosition(position)
+        setCurrentNotesCounter(notesCounter)
         highlightTact(position)
         clearInterval((songIsReady as any))
         setIsPlaying(true)

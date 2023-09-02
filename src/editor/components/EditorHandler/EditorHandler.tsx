@@ -28,7 +28,7 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song }) => {
     }
 
     document.onmousemove = (e: any) => {
-        if (isMoving && !isEditing && !isPlaying) {
+        if (isMoving && !isEditing) {
             const drawerElement: HTMLElement = document.querySelector('.editor-drawer')!
             const currentX = Number(window.getComputedStyle(drawerElement).left.split('px')[0])
             const currentY = Number(window.getComputedStyle(drawerElement).top.split('px')[0])
@@ -87,7 +87,7 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song }) => {
 
     document.onclick = (e: any) => {
         if (e.target.closest('.editor-drawer-tact') !== undefined) {
-            if (!Object.keys(instrument).length && !isEditing) {
+            if (!Object.keys(instrument).length && !isEditing && !isPlaying) {
                 const tactElement = e.target.closest('.editor-drawer-tact')
                 const currentTactNumber = Number(tactElement!.id.split('-')[1])
                 if (!tactElement.classList.contains('_active')) {
@@ -99,7 +99,6 @@ const EditorHandler: FC<EditorHandlerProps> = ({ song }) => {
                     setPosition(0)
                     setNotesCounter(0)
                 }
-                return
             }
             if (!isEditing) return
             if (tactsInstruments.includes(instrument.name)) {
